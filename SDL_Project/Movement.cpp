@@ -48,7 +48,7 @@ void Movement::moveDown()
 	FIELD->calculatePlayerPos();
 	pX = FIELD->getPlayerXPos();
 	pY = FIELD->getPlayerYPos();
-	if (pY < /*FIELD->field.size()*/ FIELD->getPlayfieldYSize() - 1) {
+	if (pY <  FIELD->tileField.size() - 1) {/*FIELD->field.size()*/
 		if (FIELD->getObjectAtCoord(pX, pY + 1) != WALL) {
 			//std::cout << pY;
 			FIELD->enterObjectInField(pX, pY, BACKGROUND);
@@ -67,7 +67,7 @@ void Movement::moveRight()
 	FIELD->calculatePlayerPos();
 	pX = FIELD->getPlayerXPos();
 	pY = FIELD->getPlayerYPos();
-	if(pX < /*FIELD->field[pY].size()*/FIELD->getPlayfieldYSize() - 1){
+	if(pX < FIELD->tileField[pY].size() - 1){/*FIELD->field[pY].size()*/
 		if (FIELD->getObjectAtCoord(pX + 1, pY) != WALL) {
 			FIELD->enterObjectInField(pX, pY, BACKGROUND);
 			pX++;

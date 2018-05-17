@@ -43,8 +43,8 @@ private:
 
 public:
 
-	std::vector<std::vector<int>> field;
-	std::vector<std::vector<int>> bombs;
+	/*std::vector<std::vector<int>> field;
+	std::vector<std::vector<int>> bombs;*/
 
 	std::vector<std::vector<tile>> tileField;
 	
@@ -85,8 +85,7 @@ public:
 	void bombsProx();
 	int returnBombCount(int x, int y);
 	void setRandomWalls();
-	void writeNumbers();
-
+	
 	void drawField();
 };
 
