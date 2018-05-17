@@ -26,14 +26,14 @@ SDL_Texture * Textures::loadTexture(const std::string & file, SDL_Renderer * ren
 	}
 }
 
-void Textures::renderTexture(SDL_Texture * tex, SDL_Renderer * ren, int x, int y)
+void Textures::renderTexture(SDL_Texture * tex, SDL_Renderer * ren, int x, int y, int w, int h)
 {
 	SDL_Rect dst;
 	dst.x = x;
 	dst.y = y;
 	//SDL_QueryTexture(tex, NULL, NULL, &dst.w, &dst.h);
-	dst.h = 500;
-	dst.w = 500;
+	dst.h = h;
+	dst.w = w;
 	SDL_RenderCopy(ren, tex, NULL, &dst);
 
 

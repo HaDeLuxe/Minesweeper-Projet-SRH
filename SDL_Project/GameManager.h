@@ -8,7 +8,7 @@
 class GameManager
 {
 private:
-	
+
 
 public:
 	GameManager();
@@ -21,4 +21,3 @@ public:
 
 
 };
-

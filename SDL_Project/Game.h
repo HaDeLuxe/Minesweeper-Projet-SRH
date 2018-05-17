@@ -1,13 +1,13 @@
 #pragma once
 
 #include "Header.h"
-#include "Textures.h"
-#include "Field.h"
-
+//#include "Textures.h"
+//#include "Field.h"
+//#include "Windows.h"
 
 //#include "Textures.h"
 
-#define WINDOW Field::Instance()
+//#define WINDOW Field::Instance()
 
 
 class Game
@@ -19,9 +19,10 @@ private:
 public:
 	Game();
 	~Game();
+
+	
 	int TTF_Initiate();
-	void writeText(int x1, int y1, int x2, int y2, int pSize, std::string text);
-	SDL_Texture* SurfaceToTexture(SDL_Surface* surf);
+	void writeText(int x1, int y1, int x2, int y2, int pSize, std::string text, SDL_Renderer* ren);
+	//SDL_Texture* SurfaceToTexture(SDL_Surface* surf);
 
 };
-

@@ -1,20 +1,22 @@
 #pragma once
 #include "Header.h"
 #include "Enums.h"
-
-
-
-
-typedef struct Tile {
-	TileTypes currentTileType = TileTypes::Empty;
-	int bombsCount = 0;
-}tile;
+#include "Game.h"
+#include "Textures.h"
+#include "SDL_image.h"
 
 
 #define BACKGROUND 1
 #define WALL 2
 #define PLAYER 3
+#define BOMB 4
+#define NOBOMB 5
 
+typedef struct tile {
+	int tileType = 1;
+	int bombcount = 0;
+	bool isShown = true;
+}tile;
 
 class Field
 {
@@ -27,26 +29,29 @@ private:
 	int playerYPos;
 
 	static Field* instance;
-
-	
+	Textures * tex = new Textures();
+	bool bombCalculated = false;
 
 	Field();
 	Field(Field const&) {};
 	Field& operator =(Field const&) {};
 	static Field* m_pInstance;
 
+	Game* game;
 
-	
+	SDL_Texture * metalTileLarge = tex->loadTexture("Assets\\metalTileLarge.jpg", ren);
 
 public:
-	
-	std::vector<std::vector<TileTypes>> field;
-	
 
+	std::vector<std::vector<int>> field;
+	std::vector<std::vector<int>> bombs;
+
+	std::vector<std::vector<tile>> tileField;
+	
+	
+	int xOrigin;
 	static Field* Instance();
-
-
-
+	
 	~Field();
 	void createPlayField(int pX, int pY);
 	void createWindow();
@@ -59,7 +64,7 @@ public:
 
 	void calculatePlayerPos(); //Gets the player coordinates
 
-	#pragma region object draw functions
+#pragma region object draw functions
 	void drawRect(int x1, int y1, int x2, int y2);
 	void drawFillRect(int x1, int y1, int x2, int y2);
 	void drawFillCircle(int x, int y, int radius);
@@ -69,15 +74,21 @@ public:
 
 	int getPlayerXPos();
 	int getPlayerYPos();
+	int getPlayfieldXSize();
+	int getPlayfieldYSize();
+	int getWindowWidth();
 
-	TileTypes getObjectAtCoord(int x, int y);
-	void enterObjectInField(int x, int y, TileTypes type);
+	int getObjectAtCoord(int x, int y);
+	void enterObjectInField(int x, int y, int type);
 
+	void setBombsBoolToFalse();
+	void bombsProx();
+	int returnBombCount(int x, int y);
+	void setRandomWalls();
 	void writeNumbers();
 
 	void drawField();
 };
-
 
 
 

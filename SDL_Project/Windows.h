@@ -28,7 +28,6 @@ public:
 	~Splashscreen();
 	void RenderSplashScreen();
 	States Update(float deltaTime);
-	
-};
 
+};
 

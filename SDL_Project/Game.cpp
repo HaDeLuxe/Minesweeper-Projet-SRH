@@ -1,4 +1,6 @@
 #include "Game.h"
+#include <cstdlib>
+#include <iostream>
 
 
 
@@ -34,13 +36,12 @@ TTF_Font * Game::OpenFont(const char * file, int ptsize)
 	return font;
 }
 
-
-void Game::writeText(int x1,int y1,int x2,int y2, int pSize, std::string text)
+void Game::writeText(int x1, int y1, int x2, int y2, int pSize, std::string text, SDL_Renderer* ren)
 {
 	TTF_Initiate();
-	
+
 	std::string fontfile = "OpenSans-Regular.ttf";
-	
+
 	OpenFont(fontfile.c_str(), pSize);
 
 	SDL_Texture* solidTexture;
@@ -53,11 +54,11 @@ void Game::writeText(int x1,int y1,int x2,int y2, int pSize, std::string text)
 	SDL_Color textColor = { 255, 255, 255, 255 };
 	SDL_Surface * solid = TTF_RenderText_Solid(font, text.c_str(), textColor);
 
-	solidTexture = SDL_CreateTextureFromSurface(WINDOW->getRenderer(), solid);
+	solidTexture = SDL_CreateTextureFromSurface(ren, solid);
 	SDL_FreeSurface(solid);
-	std::cout << "Text has been written out" << std::endl;
-	SDL_RenderCopy(WINDOW->getRenderer(), solidTexture, NULL, &solidRect);
-
+	//std::cout << "Text has been written out" << std::endl;
+	SDL_RenderCopy(ren, solidTexture, NULL, &solidRect);
+	TTF_CloseFont(font);
+	SDL_DestroyTexture(solidTexture);
 }
-
 

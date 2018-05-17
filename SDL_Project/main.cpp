@@ -1,3 +1,4 @@
+
 #include "Header.h"
 
 #include "Field.h"
@@ -42,11 +43,13 @@ int main(int argc, char* argv[])
 	FIELD->createRenderer();
 	win = FIELD->getWindow();
 	currentGameState = States::Splashscreen;
-	FIELD->createPlayField(25, 15);
+	FIELD->createPlayField(50, 15);
+	FIELD->setRandomWalls();
+	FIELD->bombsProx();
 	PollEvents();
-	
 
-	
+
+
 
 	////textures->loadTexture("C:\\Users\\Pascal\\Desktop\\inf.jpg",  FIELD->getRenderer());
 	////textures->renderTexture(textures->getTex(),  FIELD->getRenderer(), 0, 0);
@@ -61,14 +64,15 @@ int main(int argc, char* argv[])
 
 
 
+
 void PollEvents() {
-	
+
 	SDL_Event event;
 	double i = 1;
 	Uint64 currentTimestamp = SDL_GetPerformanceCounter();
 	Uint64 lastTimestamp = 0;
 	float deltaTime = 0;
-	
+
 
 	while (i) {
 		FIELD->setRendererColor(50, 20, 50, 255);
@@ -85,25 +89,25 @@ void PollEvents() {
 				switch (event.key.keysym.sym) {
 				case SDLK_w:
 					if (currentGameState == States::Game) {
-							movement->moveUp();
+						movement->moveUp();
 					}
 					break;
 				case SDLK_s:
 					if (currentGameState == States::Game) {
-							movement->moveDown();
+						movement->moveDown();
 					}
 					break;
 				case SDLK_d:
 					if (currentGameState == States::Game) {
-							movement->moveRight();
+						movement->moveRight();
 					}
 					break;
 				case SDLK_a:
 					if (currentGameState == States::Game) {
-							movement->moveLeft();
+						movement->moveLeft();
 					}
 					break;
-					
+
 				}
 
 			}
@@ -120,7 +124,7 @@ void PollEvents() {
 						movement->moveAfterClick(mouseX, mouseY);
 					}
 					if (currentGameState == States::MainMenu) {
-						if (mainMenu->startButtonPushed(mouseX,mouseY)) currentGameState = States::Game;
+						if (mainMenu->startButtonPushed(mouseX, mouseY)) currentGameState = States::Game;
 						if (mainMenu->exitButtonPushed(mouseX, mouseY)) i = 0;
 					}
 					if (currentGameState == States::Splashscreen) {
@@ -132,7 +136,7 @@ void PollEvents() {
 			if (currentGameState == States::Game) {
 				//FIELD->drawField();
 			}
-			
+
 
 		}
 		lastTimestamp = currentTimestamp;
@@ -158,8 +162,10 @@ void PollEvents() {
 		}
 
 
-		
+
 		//game->writeNumbers();
 		SDL_RenderPresent(FIELD->getRenderer());
 	}
 }
+
+
