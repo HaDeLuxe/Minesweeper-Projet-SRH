@@ -16,6 +16,10 @@ private:
 
 	TTF_Font * OpenFont(const char *file, int ptsize);
 	TTF_Font *font;
+
+	SDL_Texture* text1;
+	SDL_Texture* text2;
+
 public:
 	Game();
 	~Game();

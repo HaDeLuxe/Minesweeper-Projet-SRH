@@ -199,6 +199,17 @@ void Field::enterObjectInField(int x, int y, int type)
 }
 
 
+void Field::placeMask()
+{
+	for (int y = 0; y < getPlayfieldYSize(); y++) {
+		for (int x = 0; x < getPlayfieldXSize(); x++) {
+			if (tileField[y][x].tileType != PLAYER && tileField[y][x].tileType != WALL) {
+				tileField[y][x].isShown = false;
+			}
+		}
+	}
+}
+
 void Field::setBombsBoolToFalse()
 {
 	bombCalculated = false;
@@ -431,6 +442,29 @@ void Field::setRandomWalls()
 
 }
 
+void Field::setRandowMines()
+{
+	int maxWallsCount = 100;
+	int i = 1;
+	int x = 0;
+	int y = 0;
+	srand(time(NULL));
+	while (i < maxWallsCount) {
+		x = rand() % 50;
+		y = rand() % 15;
+		if (tileField[y][x].tileType == BACKGROUND) {
+			enterObjectInField(x, y, BOMB);
+			i++;
+		}
+	}
+	bombsProx();
+}
+
+void Field::floodFill(int newPositionX, int nextPositionY)
+{
+
+}
+
 
 
 
@@ -440,7 +474,7 @@ void Field::drawField()
 	drawFillRect(0, 0, 1920, 1080);
 	/*setRendererColor(0, 255, 0, 255);
 	drawRect(335, 165, 1250, 750);*/
-	
+	//placeMask();
 
 	int r = 0;
 	int c = 0;
@@ -471,7 +505,14 @@ void Field::drawField()
 				setRendererColor(255, 0, 0, 255);
 				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
 				drawFillCircle(xOrigin + c * 50, 165 + r * 50, 25);
+				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
 			}
+			/*if (!tileField[i][m].isShown) {
+				setRendererColor(0, 0, 150, 255);
+				drawFillRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
+				setRendererColor(255, 255, 255, 255);
+				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
+			}*/
 			if (returnBombCount(m, i) == 1) {
 				setRendererColor(0, 0, 0, 255);
 				game->writeText(xOrigin + c * 50, 165 + r * 50, 40, 50, 100, "1", ren);

@@ -3,7 +3,7 @@
 #include "Enums.h"
 #include "Game.h"
 #include "Textures.h"
-#include "SDL_image.h"
+
 
 
 #define BACKGROUND 1
@@ -78,13 +78,17 @@ public:
 	int getPlayfieldYSize();
 	int getWindowWidth();
 
+
 	int getObjectAtCoord(int x, int y);
 	void enterObjectInField(int x, int y, int type);
 
+	void placeMask();
 	void setBombsBoolToFalse();
 	void bombsProx();
 	int returnBombCount(int x, int y);
 	void setRandomWalls();
+	void setRandowMines();
+	void floodFill(int newPositionX, int nextPositionY);
 	
 	void drawField();
 };

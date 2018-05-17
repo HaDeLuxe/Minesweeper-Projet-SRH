@@ -45,7 +45,8 @@ int main(int argc, char* argv[])
 	currentGameState = States::Splashscreen;
 	FIELD->createPlayField(50, 15);
 	FIELD->setRandomWalls();
-	FIELD->bombsProx();
+	FIELD->setRandowMines();
+	FIELD->placeMask();
 	PollEvents();
 
 

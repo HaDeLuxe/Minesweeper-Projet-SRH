@@ -62,3 +62,5 @@ void Game::writeText(int x1, int y1, int x2, int y2, int pSize, std::string text
 	SDL_DestroyTexture(solidTexture);
 }
 
+
+

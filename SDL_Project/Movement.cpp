@@ -31,13 +31,10 @@ void Movement::moveUp()
 			FIELD->enterObjectInField(pX, pY, BACKGROUND);
 			pY--;
 			FIELD->enterObjectInField(pX, pY, PLAYER);
+			FIELD->tileField[pY][pX].isShown = true;
 			//std::cout << pY << std::endl;
-
 		}
 	}
-	/*if (FIELD->getObjectAtCoord(pX, pY - 1) == BOMB) {
-		FIELD->setBombsBoolToFalse();
-	}*/
 }
 
 
@@ -54,6 +51,7 @@ void Movement::moveDown()
 			FIELD->enterObjectInField(pX, pY, BACKGROUND);
 			pY++;
 			FIELD->enterObjectInField(pX, pY, PLAYER);
+			FIELD->tileField[pY][pX].isShown = true;
 			//std::cout << pY << std::endl;
 		}
 	}
@@ -72,6 +70,7 @@ void Movement::moveRight()
 			FIELD->enterObjectInField(pX, pY, BACKGROUND);
 			pX++;
 			FIELD->enterObjectInField(pX, pY, PLAYER);
+			FIELD->tileField[pY][pX].isShown = true;
 		}
 	}
 	FIELD->calculatePlayerPos();
@@ -93,6 +92,7 @@ void Movement::moveLeft()
 			FIELD->enterObjectInField(pX, pY, BACKGROUND);
 			pX--;
 			FIELD->enterObjectInField(pX, pY, PLAYER);
+			FIELD->tileField[pY][pX].isShown = true;
 		}
 	}
 	FIELD->calculatePlayerPos();
