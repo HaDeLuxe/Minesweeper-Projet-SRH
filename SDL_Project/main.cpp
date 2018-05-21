@@ -8,13 +8,14 @@
 #include "GameManager.h"
 #include "Enums.h"
 
+
 #define FIELD Field::Instance()
 
 
 
 Textures* textures;
 Movement* movement;
-Game* game;
+text * textC;
 GameManager * gameManager;
 Menu* mainMenu;
 SDL_Window *win;
@@ -35,7 +36,7 @@ int main(int argc, char* argv[])
 
 	textures = new Textures();
 	movement = new Movement();
-	game = new Game();
+	textC = new text();
 	gameManager = new GameManager();
 	mainMenu = new Menu();
 	splashScreen = new Splashscreen();
@@ -43,10 +44,12 @@ int main(int argc, char* argv[])
 	FIELD->createRenderer();
 	win = FIELD->getWindow();
 	currentGameState = States::Splashscreen;
+	textC->preIntializeTexts(FIELD->getRenderer());
 	FIELD->createPlayField(50, 15);
 	FIELD->setRandomWalls();
 	FIELD->setRandowMines();
 	FIELD->placeMask();
+	
 	PollEvents();
 
 

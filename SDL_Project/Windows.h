@@ -11,7 +11,7 @@
 class Menu
 {
 private:
-	Game * game;
+	text * textC;
 public:
 	Menu();
 	~Menu();

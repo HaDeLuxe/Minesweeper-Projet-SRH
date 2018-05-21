@@ -1,25 +1,31 @@
 #pragma once
 
 #include "Header.h"
-//#include "Textures.h"
-//#include "Field.h"
-//#include "Windows.h"
 
-//#include "Textures.h"
 
-//#define WINDOW Field::Instance()
+
+#define WINDOW Field::Instance()
 
 typedef struct Texts {
 	std::string text = "";
 	SDL_Texture * texture;
 	SDL_Surface * surface;
 };
-class Game
+
+
+class text
 {
 private:
 
 	TTF_Font * OpenFont(const char *file, int ptsize);
 	TTF_Font *font;
+
+
+	
+	int TTF_Initiate();
+public:
+	text();
+	~text();
 
 	Texts t1;
 	Texts t2;
@@ -30,14 +36,10 @@ private:
 	Texts t7;
 	Texts t8;
 	Texts t9;
-	
-	int TTF_Initiate();
-public:
-	Game();
-	~Game();
 
-	void preIntializeTexts(SDL_Renderer* ren);
+	void preIntializeTexts(SDL_Renderer* ren);	//Creating Textures with Numbers to save processing power.
 	void RenderText(SDL_Renderer* ren, SDL_Texture * texture, int x1, int y1, int x2, int y2);
+	void renderNumber(int number, SDL_Renderer * ren, int x1, int y1, int x2, int y2);			//Renders an precreated number between 1 and 8 to the renderer.
 
 
 	void writeText(int x1, int y1, int x2, int y2, int pSize, std::string text, SDL_Renderer* ren);

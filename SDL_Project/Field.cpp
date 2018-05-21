@@ -4,7 +4,7 @@
 
 Field::Field()
 {
-	game = new Game();
+	
 }
 
 Field* Field::m_pInstance = NULL;
@@ -514,40 +514,31 @@ void Field::drawField()
 				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
 			}*/
 			if (returnBombCount(m, i) == 1) {
-				setRendererColor(0, 0, 0, 255);
-				game->writeText(xOrigin + c * 50, 165 + r * 50, 40, 50, 100, "1", ren);
+				textC->renderNumber(1, ren, xOrigin + c * 50, 165 + r * 50, 40, 50);
 			}
 			if (returnBombCount(m, i) == 2) {
-				setRendererColor(0, 0, 0, 255);
-				game->writeText(xOrigin + c * 50, 165 + r * 50, 40, 50, 100, "2", ren);
+				textC->renderNumber(2, ren, xOrigin + c * 50, 165 + r * 50, 40, 50);
 			}
 			if (returnBombCount(m, i) == 3) {
-				setRendererColor(0, 0, 0, 255);
-				game->writeText(xOrigin + c * 50, 165 + r * 50, 40, 50, 100, "3", ren);
+				textC->renderNumber(3, ren, xOrigin + c * 50, 165 + r * 50, 40, 50);
 			}
 			if (returnBombCount(m, 1) == 4) {
-				setRendererColor(0, 0, 0, 255);
-				game->writeText(xOrigin + c * 50, 165 + r * 50, 40, 50, 100, "4", ren);
+				textC->renderNumber(4, ren, xOrigin + c * 50, 165 + r * 50, 40, 50);
 			}
 			if (returnBombCount(m, 1) == 5) {
-				setRendererColor(0, 0, 0, 255);
-				game->writeText(xOrigin + c * 50, 165 + r * 50, 40, 50, 100, "5", ren);
+				textC->renderNumber(5, ren, xOrigin + c * 50, 165 + r * 50, 40, 50);
 			}
 			if (returnBombCount(m, 1) == 6) {
-				setRendererColor(0, 0, 0, 255);
-				game->writeText(xOrigin + c * 50, 165 + r * 50, 40, 50, 100, "6", ren);
+				textC->renderNumber(6, ren, xOrigin + c * 50, 165 + r * 50, 40, 50);
 			}
 			if (returnBombCount(m, 1) == 7) {
-				setRendererColor(0, 0, 0, 255);
-				game->writeText(xOrigin + c * 50, 165 + r * 50, 40, 50, 100, "7", ren);
+				textC->renderNumber(7, ren, xOrigin + c * 50, 165 + r * 50, 40, 50);
 			}
 			if (returnBombCount(m, 1) == 8) {
-				setRendererColor(0, 0, 0, 255);
-				game->writeText(xOrigin + c * 50, 165 + r * 50, 40, 50, 100, "8", ren);
+				textC->renderNumber(8, ren, xOrigin + c * 50, 165 + r * 50, 40, 50);
 			}
 			if (returnBombCount(m, 1) == 9) {
-				setRendererColor(0, 0, 0, 255);
-				game->writeText(xOrigin + c * 50, 165 + r * 50, 40, 50, 100, "9", ren);
+				textC->renderNumber(9, ren, xOrigin + c * 50, 165 + r * 50, 40, 50);
 			}
 
 			c++;

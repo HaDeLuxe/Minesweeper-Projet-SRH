@@ -4,7 +4,8 @@
 
 Menu::Menu()
 {
-	game = new Game();
+	
+	textC = new text();
 }
 
 Menu::~Menu()
@@ -20,12 +21,12 @@ void Menu::RenderMenu()
 	//Render Start Button	
 	FIELD->setRendererColor(66, 195, 148, 255);
 	FIELD->drawFillRect(300, 500, 300, 75);
-	game->writeText(310, 500, 280, 75, 50, "Start Game", FIELD->getRenderer());
+	textC->writeText(310, 500, 280, 75, 50, "Start Game", FIELD->getRenderer());
 
 	//Render Quit Button
 	FIELD->setRendererColor(66, 195, 148, 255);
 	FIELD->drawFillRect(300, 700, 300, 75);
-	game->writeText(300, 700, 200, 75, 50, "Quit", FIELD->getRenderer());
+	textC->writeText(300, 700, 200, 75, 50, "Quit", FIELD->getRenderer());
 }
 
 bool Menu::startButtonPushed(int x, int y) {

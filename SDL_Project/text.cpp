@@ -8,21 +8,25 @@
 
 
 
-Game::Game()
+text::text()
 {
+
 }
 
 
-Game::~Game()
+text::~text()
 {
 }
 
-void Game::preIntializeTexts(SDL_Renderer* ren)
+void text::preIntializeTexts(SDL_Renderer* ren)
 {
 	TTF_Initiate();
 	SDL_Color textColor = { 255, 255, 255, 255 };
-	OpenFont("OpenSans - Regular.ttf", 50);
-	t1.surface = TTF_RenderText_Solid(font, "1", textColor);
+	font = OpenFont("OpenSans - Regular.ttf", 50);
+	std::string text = "1";
+	SDL_Surface * solidSurface = TTF_RenderText_Solid(font, text.c_str(), textColor);
+
+	t1.surface = solidSurface;
 	t1.texture = SDL_CreateTextureFromSurface(ren, t1.surface);
 	t2.surface = TTF_RenderText_Solid(font, "2", textColor);
 	t2.texture = SDL_CreateTextureFromSurface(ren, t2.surface);
@@ -40,7 +44,7 @@ void Game::preIntializeTexts(SDL_Renderer* ren)
 	t8.texture = SDL_CreateTextureFromSurface(ren, t8.surface);
 }
 
-void Game::RenderText(SDL_Renderer * ren, SDL_Texture * texture, int x1, int y1, int x2, int y2)
+void text::RenderText(SDL_Renderer * ren, SDL_Texture * texture, int x1, int y1, int x2, int y2)
 {
 	SDL_Rect solidRect;
 	solidRect.x = x1;
@@ -50,7 +54,48 @@ void Game::RenderText(SDL_Renderer * ren, SDL_Texture * texture, int x1, int y1,
 	SDL_RenderCopy(ren, texture, NULL, &solidRect);
 }
 
-int Game::TTF_Initiate()
+void text::renderNumber(int number, SDL_Renderer * ren, int x1, int y1, int x2, int y2)
+{
+	if (number > 0 && number <= 8) {
+		SDL_Rect solidRect;
+		solidRect.x = x1;
+		solidRect.y = y1;
+		solidRect.h = y2;
+		solidRect.w = x2;
+		switch (number) {
+		case 0:
+			break;
+		case 1:
+			SDL_RenderCopy(ren, t1.texture, NULL, &solidRect);
+			break;
+		case 2:
+			SDL_RenderCopy(ren, t2.texture, NULL, &solidRect);
+			break;
+		case 3:
+			SDL_RenderCopy(ren, t3.texture, NULL, &solidRect);
+			break;
+		case 4:
+			SDL_RenderCopy(ren, t4.texture, NULL, &solidRect);
+			break;
+		case 5: 
+			SDL_RenderCopy(ren, t5.texture, NULL, &solidRect);
+			break;
+		case 6:
+			SDL_RenderCopy(ren, t6.texture, NULL, &solidRect);
+			break;
+		case 7:
+			SDL_RenderCopy(ren, t7.texture, NULL, &solidRect);
+			break;
+		case 8:
+			SDL_RenderCopy(ren, t8.texture, NULL, &solidRect);
+			break;
+		}
+	}
+	else std::cout << "renderNumber(): The entered Number is out of range!" << std::endl;
+}
+
+
+int text::TTF_Initiate()
 {
 	if (TTF_Init() == -1) {
 		std::cout << "TTF_Init: " << TTF_GetError() << std::endl;
@@ -59,7 +104,7 @@ int Game::TTF_Initiate()
 	return 1;
 }
 
-TTF_Font * Game::OpenFont(const char * file, int ptsize)
+TTF_Font * text::OpenFont(const char * file, int ptsize)
 {
 	font = TTF_OpenFont(file, ptsize);
 
@@ -70,7 +115,7 @@ TTF_Font * Game::OpenFont(const char * file, int ptsize)
 	return font;
 }
 
-void Game::writeText(int x1, int y1, int x2, int y2, int pSize, std::string text, SDL_Renderer* ren)
+void text::writeText(int x1, int y1, int x2, int y2, int pSize, std::string text, SDL_Renderer* ren)
 {
 	std::string fontfile = "OpenSans-Regular.ttf";
 

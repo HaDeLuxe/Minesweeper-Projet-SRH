@@ -37,7 +37,7 @@ private:
 	Field& operator =(Field const&) {};
 	static Field* m_pInstance;
 
-	Game* game;
+	text *textC = new text();
 
 	SDL_Texture * metalTileLarge = tex->loadTexture("Assets\\metalTileLarge.jpg", ren);
 
