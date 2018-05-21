@@ -1,7 +1,7 @@
 #pragma once
 #include "Header.h"
 #include "Enums.h"
-#include "Game.h"
+#include "text.h"
 #include "Textures.h"
 
 

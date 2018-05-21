@@ -3,7 +3,7 @@
 
 #include "Windows.h"
 #include "Enums.h"
-#include "Game.h"
+#include "text.h"
 
 class GameManager
 {

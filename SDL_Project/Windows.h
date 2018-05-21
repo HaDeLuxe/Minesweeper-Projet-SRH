@@ -1,7 +1,7 @@
 #pragma once
 #include "Header.h"
 #include "Field.h"
-#include "Game.h"
+#include "text.h"
 #include "Enums.h"
 
 

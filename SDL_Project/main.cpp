@@ -3,7 +3,7 @@
 
 #include "Field.h"
 #include "Textures.h"
-#include "Game.h"
+#include "text.h"
 #include "Movement.h"
 #include "GameManager.h"
 #include "Enums.h"
