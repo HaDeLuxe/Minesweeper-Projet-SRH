@@ -17,7 +17,7 @@ class text
 {
 private:
 
-	TTF_Font * OpenFont(const char *file, int ptsize);
+	void OpenFont(const char *file, int ptsize);
 	TTF_Font *font;
 
 
@@ -38,7 +38,7 @@ public:
 	Texts t9;
 	int TTF_Initiate();
 	void preIntializeTexts(SDL_Renderer* ren);	//Creating Textures with Numbers to save processing power.
-	void RenderText(SDL_Renderer* ren, SDL_Texture * texture, int x1, int y1, int x2, int y2);
+	//void RenderText(SDL_Renderer* ren, SDL_Texture * texture, int x1, int y1, int x2, int y2);
 	void renderNumber(int number, SDL_Renderer * ren, int x1, int y1, int x2, int y2);			//Renders an precreated number between 1 and 8 to the renderer.
 
 

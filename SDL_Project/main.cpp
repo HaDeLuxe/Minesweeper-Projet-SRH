@@ -37,6 +37,7 @@ int main(int argc, char* argv[])
 	textures = new Textures();
 	movement = new Movement();
 	textC = new text();
+	textC->TTF_Initiate();
 	gameManager = new GameManager();
 	mainMenu = new Menu();
 	splashScreen = new Splashscreen();
@@ -44,15 +45,15 @@ int main(int argc, char* argv[])
 	FIELD->createRenderer();
 	win = FIELD->getWindow();
 	currentGameState = States::Splashscreen;
-	//textC->TTF_Initiate();
 	textC->preIntializeTexts(FIELD->getRenderer());
 	FIELD->createPlayField(50, 15);
 	FIELD->setRandomWalls();
 	FIELD->setRandowMines();
-	FIELD->placeMask();
+	//FIELD->placeMask();
 	
 	PollEvents();
 
+	
 
 
 

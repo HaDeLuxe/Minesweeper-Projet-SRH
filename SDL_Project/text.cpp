@@ -21,10 +21,10 @@ text::~text()
 void text::preIntializeTexts(SDL_Renderer* ren)
 {
 	
-	SDL_Color textColor = { 255, 255, 255, 255 };
-	font = OpenFont("OpenSans - Regular.ttf", 50);
-	std::string text = "1";
-	SDL_Surface * solidSurface = TTF_RenderText_Solid(font, text.c_str(), textColor);
+	SDL_Color textColor = { 255, 0, 0, 255 };
+	OpenFont("OpenSans-Regular.ttf", 50);
+	std::string text1 = "1";
+	SDL_Surface * solidSurface = TTF_RenderText_Solid(font, text1.c_str(), textColor);
 
 	t1.surface = solidSurface;
 	t1.texture = SDL_CreateTextureFromSurface(ren, t1.surface);
@@ -44,15 +44,6 @@ void text::preIntializeTexts(SDL_Renderer* ren)
 	t8.texture = SDL_CreateTextureFromSurface(ren, t8.surface);
 }
 
-void text::RenderText(SDL_Renderer * ren, SDL_Texture * texture, int x1, int y1, int x2, int y2)
-{
-	SDL_Rect solidRect;
-	solidRect.x = x1;
-	solidRect.y = y1;
-	solidRect.h = y2;
-	solidRect.w = x2;
-	SDL_RenderCopy(ren, texture, NULL, &solidRect);
-}
 
 void text::renderNumber(int number, SDL_Renderer * ren, int x1, int y1, int x2, int y2)
 {
@@ -104,20 +95,21 @@ int text::TTF_Initiate()
 	return 1;
 }
 
-TTF_Font * text::OpenFont(const char * file, int ptsize)
+void text::OpenFont(const char * file, int ptsize)
 {
 	font = TTF_OpenFont(file, ptsize);
 
 	if (!font) {
 		printf("TTF_OpenFont: %s\n", TTF_GetError());
 		// handle error
+		exit(2);
 	}
-	return font;
+	
 }
 
 void text::writeText(int x1, int y1, int x2, int y2, int pSize, std::string text, SDL_Renderer* ren)
 {
-	int TTF_Initiate();
+	
 	std::string fontfile = "OpenSans-Regular.ttf";
 	OpenFont(fontfile.c_str(), 50);
 	
@@ -128,6 +120,10 @@ void text::writeText(int x1, int y1, int x2, int y2, int pSize, std::string text
 	solidRect.y = y1;
 	solidRect.h = y2;
 	solidRect.w = x2;
+
+	/*SDL_Color textColor = { 255, 255, 255, 255 };
+	std::string text1 = "1";
+	SDL_Surface * solidSurface = TTF_RenderText_Solid(font, text1.c_str(), textColor);*/
 
 	SDL_Color textColor = { 255, 255, 255, 255 };
 	SDL_Surface * solid = TTF_RenderText_Solid(font, text.c_str(), textColor);
