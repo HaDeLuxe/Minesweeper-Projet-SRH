@@ -10,7 +10,7 @@ typedef struct Texts {
 	std::string text = "";
 	SDL_Texture * texture;
 	SDL_Surface * surface;
-};
+}Texts;
 
 
 class text
