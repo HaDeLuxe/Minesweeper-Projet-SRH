@@ -44,6 +44,7 @@ int main(int argc, char* argv[])
 	FIELD->createRenderer();
 	win = FIELD->getWindow();
 	currentGameState = States::Splashscreen;
+	//textC->TTF_Initiate();
 	textC->preIntializeTexts(FIELD->getRenderer());
 	FIELD->createPlayField(50, 15);
 	FIELD->setRandomWalls();

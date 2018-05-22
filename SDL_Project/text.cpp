@@ -20,7 +20,7 @@ text::~text()
 
 void text::preIntializeTexts(SDL_Renderer* ren)
 {
-	TTF_Initiate();
+	
 	SDL_Color textColor = { 255, 255, 255, 255 };
 	font = OpenFont("OpenSans - Regular.ttf", 50);
 	std::string text = "1";
@@ -117,8 +117,9 @@ TTF_Font * text::OpenFont(const char * file, int ptsize)
 
 void text::writeText(int x1, int y1, int x2, int y2, int pSize, std::string text, SDL_Renderer* ren)
 {
+	int TTF_Initiate();
 	std::string fontfile = "OpenSans-Regular.ttf";
-
+	OpenFont(fontfile.c_str(), 50);
 	
 
 	SDL_Texture* solidTexture;

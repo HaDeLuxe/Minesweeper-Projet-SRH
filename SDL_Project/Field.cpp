@@ -444,12 +444,12 @@ void Field::setRandomWalls()
 
 void Field::setRandowMines()
 {
-	int maxWallsCount = 100;
+	int maxMinesCount = 50;
 	int i = 1;
 	int x = 0;
 	int y = 0;
 	srand(time(NULL));
-	while (i < maxWallsCount) {
+	while (i < maxMinesCount) {
 		x = rand() % 50;
 		y = rand() % 15;
 		if (tileField[y][x].tileType == BACKGROUND) {
@@ -507,12 +507,12 @@ void Field::drawField()
 				drawFillCircle(xOrigin + c * 50, 165 + r * 50, 25);
 				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
 			}
-			/*if (!tileField[i][m].isShown) {
+			if (!tileField[i][m].isShown) {
 				setRendererColor(0, 0, 150, 255);
 				drawFillRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
 				setRendererColor(255, 255, 255, 255);
 				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
-			}*/
+			}
 			if (returnBombCount(m, i) == 1) {
 				textC->renderNumber(1, ren, xOrigin + c * 50, 165 + r * 50, 40, 50);
 			}
