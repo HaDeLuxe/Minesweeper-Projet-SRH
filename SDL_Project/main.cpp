@@ -44,8 +44,8 @@ int main(int argc, char* argv[])
 	FIELD->createRenderer();
 	win = FIELD->getWindow();
 	currentGameState = States::Splashscreen;
-	//textC->TTF_Initiate();
-	textC->preIntializeTexts(FIELD->getRenderer());
+	textC->TTF_Initiate();
+	//textC->preIntializeTexts(FIELD->getRenderer());
 	FIELD->createPlayField(50, 15);
 	FIELD->setRandomWalls();
 	FIELD->setRandowMines();
@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
 	PollEvents();
 
 
-
+	//system("pause");
 
 	////textures->loadTexture("C:\\Users\\Pascal\\Desktop\\inf.jpg",  FIELD->getRenderer());
 	////textures->renderTexture(textures->getTex(),  FIELD->getRenderer(), 0, 0);

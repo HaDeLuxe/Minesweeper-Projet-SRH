@@ -22,7 +22,7 @@ void text::preIntializeTexts(SDL_Renderer* ren)
 {
 	
 	SDL_Color textColor = { 255, 255, 255, 255 };
-	font = OpenFont("OpenSans - Regular.ttf", 50);
+	//font = OpenFont("OpenSans - Regular.ttf", 50);
 	std::string text = "1";
 	SDL_Surface * solidSurface = TTF_RenderText_Solid(font, text.c_str(), textColor);
 
@@ -44,15 +44,16 @@ void text::preIntializeTexts(SDL_Renderer* ren)
 	t8.texture = SDL_CreateTextureFromSurface(ren, t8.surface);
 }
 
-void text::RenderText(SDL_Renderer * ren, SDL_Texture * texture, int x1, int y1, int x2, int y2)
-{
-	SDL_Rect solidRect;
-	solidRect.x = x1;
-	solidRect.y = y1;
-	solidRect.h = y2;
-	solidRect.w = x2;
-	SDL_RenderCopy(ren, texture, NULL, &solidRect);
-}
+//void text::RenderText(SDL_Renderer * ren, SDL_Texture * texture, int x1, int y1, int x2, int y2)
+//{
+//	//TTF_Initiate();
+//	SDL_Rect solidRect;
+//	solidRect.x = x1;
+//	solidRect.y = y1;
+//	solidRect.h = y2;
+//	solidRect.w = x2;
+//	SDL_RenderCopy(ren, texture, NULL, &solidRect);
+//}
 
 void text::renderNumber(int number, SDL_Renderer * ren, int x1, int y1, int x2, int y2)
 {
@@ -99,6 +100,7 @@ int text::TTF_Initiate()
 {
 	if (TTF_Init() == -1) {
 		std::cout << "TTF_Init: " << TTF_GetError() << std::endl;
+		return 0;
 		exit(2);
 	}
 	return 1;
@@ -108,8 +110,9 @@ TTF_Font * text::OpenFont(const char * file, int ptsize)
 {
 	font = TTF_OpenFont(file, ptsize);
 
-	if (!font) {
-		printf("TTF_OpenFont: %s\n", TTF_GetError());
+	if (font == NULL) {
+		std::cout << "TTF_OpenFont: " << TTF_GetError() << std::endl;
+		//exit(2);
 		// handle error
 	}
 	return font;
@@ -117,11 +120,11 @@ TTF_Font * text::OpenFont(const char * file, int ptsize)
 
 void text::writeText(int x1, int y1, int x2, int y2, int pSize, std::string text, SDL_Renderer* ren)
 {
-	int TTF_Initiate();
-	std::string fontfile = "OpenSans-Regular.ttf";
+	
+	//std::string fontfile = "OC:\\Users\\haas_\\Source\\Repos\\Minesweeper-Projet-SRH\\SDL_Project\\OpenSans-Regular.ttf";
+	std::string fontfile = "SDL_Project\\OpenSans-Regular";
 	OpenFont(fontfile.c_str(), 50);
 	
-
 	SDL_Texture* solidTexture;
 	SDL_Rect solidRect;
 	solidRect.x = x1;
@@ -136,7 +139,7 @@ void text::writeText(int x1, int y1, int x2, int y2, int pSize, std::string text
 	SDL_FreeSurface(solid);
 	//std::cout << "Text has been written out" << std::endl;
 	SDL_RenderCopy(ren, solidTexture, NULL, &solidRect);
-	TTF_CloseFont(font);
+	//TTF_CloseFont(font);
 	SDL_DestroyTexture(solidTexture);
 }
 

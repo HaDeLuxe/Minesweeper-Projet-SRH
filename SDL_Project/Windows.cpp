@@ -26,7 +26,7 @@ void Menu::RenderMenu()
 	//Render Quit Button
 	FIELD->setRendererColor(66, 195, 148, 255);
 	FIELD->drawFillRect(300, 700, 300, 75);
-	textC->writeText(300, 700, 200, 75, 50, "Quit", FIELD->getRenderer());
+	//textC->writeText(300, 700, 200, 75, 50, "Quit", FIELD->getRenderer());
 }
 
 bool Menu::startButtonPushed(int x, int y) {

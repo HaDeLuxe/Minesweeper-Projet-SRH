@@ -291,7 +291,7 @@ int Field::returnBombCount(int x, int y) {
 
 void Field::setRandomWalls()
 {
-	int maxWallsCount = 3;
+	int maxWallsCount = 4;
 	int i = 1;
 	int x = 0;
 	int y = 0;
@@ -304,8 +304,8 @@ void Field::setRandomWalls()
 		count = 0;
 		x = rand() % 50;
 		y = rand() % 15;
-		int a = (rand() % 30) + 5;
-		int b = (rand() % 20);
+		int a = (rand() % 50) + 5;
+		int b = (rand() % 50);
 		beginDir = rand() % 4;
 		secondDir = rand() % 2;
 		
@@ -513,7 +513,7 @@ void Field::drawField()
 				setRendererColor(255, 255, 255, 255);
 				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
 			}
-			if (returnBombCount(m, i) == 1) {
+			/*if (returnBombCount(m, i) == 1) {
 				textC->renderNumber(1, ren, xOrigin + c * 50, 165 + r * 50, 40, 50);
 			}
 			if (returnBombCount(m, i) == 2) {
@@ -539,7 +539,7 @@ void Field::drawField()
 			}
 			if (returnBombCount(m, 1) == 9) {
 				textC->renderNumber(9, ren, xOrigin + c * 50, 165 + r * 50, 40, 50);
-			}
+			}*/
 
 			c++;
 			if (c >= tileField[r].size() ) c = 0;/*field[r].size()*/ /*25*/
@@ -554,92 +554,3 @@ void Field::drawField()
 
 	SDL_RenderPresent(ren);
 }
-
-
-
-
-
-
-//BACKUP
-//void Field::drawField()
-//{
-//	setRendererColor(0, 0, 0, 255);
-//	drawFillRect(0, 0, 1920, 1080);
-//	setRendererColor(0, 255, 0, 255);
-//	drawRect(335, 165, 1250, 750);
-//
-//	
-//	int r = 0;
-//	int c = 0;
-//	
-//	for (int i = 0; i < field.size(); i++) {
-//		for (int m = 0; m < field[i].size() /*25*/; m++) {
-//			
-//				if (field[i][m] == BACKGROUND) {
-//					setRendererColor(0, 255, 0, 255);
-//
-//					drawRect(335 + m * 50 - scrollParameter * 50, 165 + r * 50, 50, 50);
-//				}
-//				if (field[i][m] == WALL) {
-//					setRendererColor(0, 255, 0, 255);
-//					drawFillRect(335 + c * 50 - (scrollParameter * 50), 165 + r * 50, 50, 50);
-//				}
-//				if (field[i][m] == PLAYER) {
-//					setRendererColor(0, 255, 0, 255);
-//					drawRect(335 + c * 50 - (scrollParameter * 50), 165 + r * 50, 50, 50);
-//					drawFillCircle(335 + c * 50, 165 + r * 50, 25);
-//				}
-//				if (field[i][m] == BOMB) {
-//					setRendererColor(255, 0, 0, 255);
-//					drawRect(335 + c * 50 - (scrollParameter * 50), 165 + r * 50, 50, 50);
-//					drawFillCircle(335 + c * 50 + (scrollParameter * 50), 165 + r * 50, 25);
-//				}
-//				if (returnBombCount(m, i) == 1) {
-//					setRendererColor(0, 0, 0, 255);
-//					game->writeText(335 + c * 50 + 8 - (scrollParameter * 50), 165 + r * 50, 40, 50, 100, "1", ren);
-//				}
-//				if (returnBombCount(m, i) == 2) {
-//					setRendererColor(0, 0, 0, 255);
-//					game->writeText(335 + c * 50 + 8 - (scrollParameter * 50), 165 + r * 50, 40, 50, 100, "2", ren);
-//				}
-//				if (returnBombCount(m, i) == 3) {
-//					setRendererColor(0, 0, 0, 255);
-//					game->writeText(335 + c * 50 + 8 - (scrollParameter * 50), 165 + r * 50, 40, 50, 100, "3", ren);
-//				}
-//				if (returnBombCount(m, 1) == 4) {
-//					setRendererColor(0, 0, 0, 255);
-//					game->writeText(335 + c * 50 + 8 - (scrollParameter * 50), 165 + r * 50, 40, 50, 100, "4", ren);
-//				}
-//				if (returnBombCount(m, 1) == 5) {
-//					setRendererColor(0, 0, 0, 255);
-//					game->writeText(335 + c * 50 + 8 - (scrollParameter * 50), 165 + r * 50, 40, 50, 100, "5", ren);
-//				}
-//				if (returnBombCount(m, 1) == 6) {
-//					setRendererColor(0, 0, 0, 255);
-//					game->writeText(335 + c * 50 + 8 - (scrollParameter * 50), 165 + r * 50, 40, 50, 100, "6", ren);
-//				}
-//				if (returnBombCount(m, 1) == 7) {
-//					setRendererColor(0, 0, 0, 255);
-//					game->writeText(335 + c * 50 + 8 - (scrollParameter * 50), 165 + r * 50, 40, 50, 100, "7", ren);
-//				}
-//				if (returnBombCount(m, 1) == 8) {
-//					setRendererColor(0, 0, 0, 255);
-//					game->writeText(335 + c * 50 + 8 - (scrollParameter * 50), 165 + r * 50, 40, 50, 100, "8", ren);
-//				}
-//				if (returnBombCount(m, 1) == 9) {
-//					setRendererColor(0, 0, 0, 255);
-//					game->writeText(335 + c * 50 + 8 - (scrollParameter * 50), 165 + r * 50, 40, 50, 100, "9", ren);
-//				}
-//
-//				c++;
-//				if (c >= /*field[r].size()*/ 25 ) c = 0;
-//			
-//				
-//			
-//		}
-//		r++;
-//		if (r >= field.size()) r = 0;
-//	}
-//
-//	SDL_RenderPresent(ren);
-//}
