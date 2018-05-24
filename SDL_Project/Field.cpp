@@ -104,9 +104,9 @@ void Field::renderClear()
 
 void Field::calculatePlayerPos()
 {
-	for (int i = 0; i < tileField.size(); i++) {/*field.size()*/
-		for (int m = 0; m < tileField[i].size(); m++) {/*field[i].size()*/
-			if (tileField[i][m].tileType == PLAYER) {
+	for (int i = 0; i < static_cast<int>(tileField.size()); i++) {
+		for (int m = 0; m < static_cast<int>(tileField[i].size()); m++) {
+			if (static_cast<int>(tileField[i][m].tileType) == PLAYER) {
 				playerXPos = m;
 				playerYPos = i;
 			}
@@ -220,72 +220,67 @@ void Field::bombsProx()
 	calculatePlayerPos();
 	
 	if (!bombCalculated) {
-		//reinitalizeBombCounts();
-		for (int i = 0; i < tileField.size(); i++) {/*field.size()*/
-			for (int m = 0; m < tileField[i].size(); m++) {/*field[i].size()*/
-				if (i != tileField.size() - 1) {/*field.size()*/
-					if (tileField[i+1][m].tileType  == BOMB) {/*field[i + 1][m]*/
-						//bombs[i][m]++;
-						tileField[i][m].bombcount++;
+		for (int y = 0; y < static_cast<int>(tileField.size()); y++) {
+			for (int x = 0; x < static_cast<int>(tileField[y].size()); x++) {
+				if (y != tileField.size() - 1) {
+					if (tileField[y+1][x].tileType  == BOMB) {
+						
+						tileField[y][x].bombcount++;
 					}
 				}
 
-				if (i != 0) {
-					if (tileField[i-1][m].tileType == BOMB) {/*field[i - 1][m]*/
-						//bombs[i][m]++;
-						tileField[i][m].bombcount++;
+				if (y != 0) {
+					if (tileField[y-1][x].tileType == BOMB) {
+						
+						tileField[y][x].bombcount++;
 					}
 				}
 
-				if (m != 0) {
-					if (tileField[i][m-1].tileType == BOMB) {/*field[i][m - 1]*/
-						//bombs[i][m]++;
-						tileField[i][m].bombcount++;
+				if (x != 0) {
+					if (tileField[y][x-1].tileType == BOMB) {
+						
+						tileField[y][x].bombcount++;
 					}
 				}
 
-				if (m != tileField[i].size() - 1) {/*field[i].size()*/
-					if (tileField[i][m+1].tileType == BOMB) {/*field[i][m + 1]*/
-						//bombs[i][m]++;
-						tileField[i][m].bombcount++;
+				if (x != tileField[y].size() - 1) {
+					if (tileField[y][x+1].tileType == BOMB) {
+						tileField[y][x].bombcount++;
 					}
 				}
 
-				if (i != tileField.size() - 1 && m != tileField[i].size() - 1) {/*field.size()*//*field[i].size()*/
-					if (tileField[i+1][m+1].tileType == BOMB) {/*field[i + 1][m + 1]*/
-						//bombs[i][m]++;
-						tileField[i][m].bombcount++;
+				if (y != tileField.size() - 1 && x != tileField[y].size() - 1) {
+					if (tileField[y+1][x+1].tileType == BOMB) {
+						tileField[y][x].bombcount++;
 					}
 				}
 
-				if (i != tileField.size() - 1 && m != 0) {/*field.size()*/
-					if (tileField[i+1][m-1].tileType == BOMB) {/*field[i + 1][m - 1]*/
-						//bombs[i][m]++;
-						tileField[i][m].bombcount++;
+				if (y != tileField.size() - 1 && x != 0) {
+					if (tileField[y+1][x-1].tileType == BOMB) {
+						tileField[y][x].bombcount++;
 					}
 				}
 
-				if (i != 0 && m != 0) {
-					if ( tileField[i-1][m-1].tileType == BOMB) {/*field[i - 1][m - 1]*/
-						//bombs[i][m]++;
-						tileField[i][m].bombcount++;
+				if (y != 0 && x != 0) {
+					if ( tileField[y-1][x-1].tileType == BOMB) {
+						tileField[y][x].bombcount++;
 					}
 				}
 
-				if (i != 0 && m != tileField[i].size() - 1) {/*field[i].size()*/
-					if ( tileField[i-1][m+1].tileType == BOMB) {/*field[i - 1][m + 1]*/
-						//bombs[i][m]++;
-						tileField[i][m].bombcount++;
+				if (y != 0 && x != tileField[y].size() - 1) {
+					if ( tileField[y-1][x+1].tileType == BOMB) {
+						tileField[y][x].bombcount++;
 					}
 				}
+				std::cout << tileField[y][x].bombcount << " ";
 			}
+			std::cout << std::endl;
 		}
 		bombCalculated = true;
 	}
 }
 
 int Field::returnBombCount(int x, int y) {
-	//return bombs[y][x];
 	return tileField[y][x].bombcount;
 }
 
@@ -298,7 +293,7 @@ void Field::setRandomWalls()
 	int beginDir = 0;
 	int secondDir = 0;
 	int count = 0;
-	srand(time(NULL));
+	(srand((unsigned int)time(NULL)));
 	while (i <= maxWallsCount) {
 
 		count = 0;
@@ -311,7 +306,7 @@ void Field::setRandomWalls()
 		
 
 		if (tileField[y][x].tileType != WALL) {/*field[y][x]*/
-			if (x > 1 && x < tileField[0].size() - 1 && y > 1 && y < tileField.size() - 1) {/*field[0].size()*//*field.size()*/
+			if (x > 1 && x < static_cast<int>(tileField[0].size()) - 1 && y > 1 && y < static_cast<int>(tileField.size()) - 1) {/*field[0].size()*//*field.size()*/
 				if (tileField[y-1][x].tileType == WALL)/*field[y - 1][x]*/
 					count++;
 				if (tileField[y+1][x].tileType == WALL)/*field[y + 1][x]*/
@@ -332,13 +327,13 @@ void Field::setRandomWalls()
 				switch (beginDir) {
 				case 0: //down
 					for (int m = 0; m < a; m++) {
-						if (count <= 2 && tempy < tileField.size() - 1) {/*field.size()*/
+						if (count <= 2 && tempy < static_cast<int>(tileField.size()) - 1) {
 							tempy++;
 							enterObjectInField(tempx, tempy, WALL);
 							switch (secondDir) {
 							case 0: // right
 								for (int m = 0; m < b; m++) {
-									if (count <= 2 && tempx <tileField[0].size() - 1) { /*field[0].size()*/
+									if (count <= 2 && tempx < static_cast<int>(tileField[0].size()) - 1) {
 										tempx++;
 										enterObjectInField(tempx, tempy, WALL);
 									}
@@ -364,7 +359,7 @@ void Field::setRandomWalls()
 							switch (secondDir) {
 							case 0: // right
 								for (int m = 0; m < b; m++) {
-									if (count <= 2 && tempx < tileField[0].size() - 1) {/*field[0].size()*/
+									if (count <= 2 && tempx < static_cast<int>(tileField[0].size()) - 1) {/*field[0].size()*/
 										tempx++;
 										enterObjectInField(tempx, tempy, WALL);
 									}
@@ -384,7 +379,7 @@ void Field::setRandomWalls()
 					break;
 				case 2: //right
 					for (int m = 0; m < a; m++) {
-						if (count <= 2 && tempx < tileField[0].size() -1) {/*field[0].size()*/
+						if (count <= 2 && tempx < static_cast<int>(tileField[0].size() -1)) {
 							tempx++;
 							enterObjectInField(tempx, tempy, WALL);
 							switch (secondDir) {
@@ -398,7 +393,7 @@ void Field::setRandomWalls()
 								break;
 							case 1: //down
 								for (int m = 0; m < b; m++) {
-									if (count <= 2 && tempy < tileField.size() - 1) {/*field.size()*/
+									if (count <= 2 && tempy < static_cast<int>(tileField.size() - 1)) {/*field.size()*/
 										tempy++;
 										enterObjectInField(tempx, tempy, WALL);
 									}
@@ -424,7 +419,7 @@ void Field::setRandomWalls()
 								break;
 							case 1: //down
 								for (int m = 0; m < b; m++) {
-									if (count <= 2 && tempy <  tileField.size() - 1) {/*field.size()*/
+									if (count <= 2 && tempy <  static_cast<int>(tileField.size() - 1)) {
 										tempy++;
 										enterObjectInField(tempx, tempy, WALL);
 									}
@@ -444,11 +439,11 @@ void Field::setRandomWalls()
 
 void Field::setRandowMines()
 {
-	int maxMinesCount = 50;
+	int maxMinesCount = 150;
 	int i = 1;
 	int x = 0;
 	int y = 0;
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 	while (i < maxMinesCount) {
 		x = rand() % 50;
 		y = rand() % 15;
@@ -465,7 +460,10 @@ void Field::floodFill(int newPositionX, int nextPositionY)
 
 }
 
-
+void Field::initializeTextC() {
+	textC->TTF_Initiate();
+	textC->preIntializeTexts(ren);
+}
 
 
 void Field::drawField()
@@ -479,77 +477,77 @@ void Field::drawField()
 	int r = 0;
 	int c = 0;
 
-	for (int i = 0; i < tileField.size() ; i++) {/*field.size()*/
-		for (int m = 0; m < tileField[i].size() ; m++) {/*field[i].size()*/ /*25*/
+	for (int y = 0; y < static_cast<int>(tileField.size()) ; y++) {/*field.size()*/
+		for (int x = 0; x < static_cast<int>(tileField[y].size()) ; x++) {/*field[y].size()*/ /*25*/
 			xOrigin = (getWindowWidth()/2) - (playerXPos * 50) ;
 			
 
-			if (tileField[i][m].tileType == BACKGROUND) {/*field[i][m]*/
+			if (tileField[y][x].tileType == BACKGROUND) {/*field[y][x]*/
 				setRendererColor(0, 255, 0, 255);
 
 				drawRect(xOrigin + c*50, 165 + r * 50, 50, 50);
 				//tex->renderTexture(tex->loadTexture("astronaut_SE.png", ren), ren, xOrigin + c * 50, 165 + r * 50, 50, 50);
 			}
-			if (tileField[i][m].tileType == WALL) {/*field[i][m]*/
+			if (tileField[y][x].tileType == WALL) {/*field[y][x]*/
 				setRendererColor(0, 255, 0, 255);
 				drawFillRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
 			}
-			if (tileField[i][m].tileType == PLAYER) {/*field[i][m]*/
+			if (tileField[y][x].tileType == PLAYER) {/*field[y][x]*/
 				setRendererColor(0, 255, 0, 255);
 				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
 				drawFillCircle(xOrigin + c * 50, 165 + r * 50, 25);
 				
 				//tex->renderTexture(tex->loadTexture("Assets\\metalTileLarge.jpg", ren), ren, xOrigin + c * 50, 165 + r * 50, 45,67);
 			}
-			if (tileField[i][m].tileType == BOMB) {/*field[i][m]*/
+			if (tileField[y][x].tileType == BOMB) {/*field[y][x]*/
 				setRendererColor(255, 0, 0, 255);
 				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
 				drawFillCircle(xOrigin + c * 50, 165 + r * 50, 25);
 				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
 			}
-			if (!tileField[i][m].isShown) {
+			if (!tileField[y][x].isShown) {
 				setRendererColor(0, 0, 150, 255);
 				drawFillRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
 				setRendererColor(255, 255, 255, 255);
 				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
 			}
-			/*if (returnBombCount(m, i) == 1) {
-				textC->renderNumber(1, ren, xOrigin + c * 50, 165 + r * 50, 40, 50);
+			if (returnBombCount(x, y) == 1 && getObjectAtCoord(x,y)) {
+				textC->renderNumber(1, ren, xOrigin + c * 50+8, 165 + r * 50, 40, 50);
+				
 			}
-			if (returnBombCount(m, i) == 2) {
-				textC->renderNumber(2, ren, xOrigin + c * 50, 165 + r * 50, 40, 50);
+			if (returnBombCount(x, y) == 2) {
+				textC->renderNumber(2, ren, xOrigin + c * 50+8, 165 + r * 50, 35, 50);
 			}
-			if (returnBombCount(m, i) == 3) {
-				textC->renderNumber(3, ren, xOrigin + c * 50, 165 + r * 50, 40, 50);
+			if (returnBombCount(x, y) == 3) {
+				textC->renderNumber(3, ren, xOrigin + c * 50+11, 165 + r * 50, 30, 50);
 			}
-			if (returnBombCount(m, 1) == 4) {
-				textC->renderNumber(4, ren, xOrigin + c * 50, 165 + r * 50, 40, 50);
+			if (returnBombCount(x, y) == 4) {
+				textC->renderNumber(4, ren, xOrigin + c * 50+8, 165 + r * 50, 40, 50);
 			}
-			if (returnBombCount(m, 1) == 5) {
-				textC->renderNumber(5, ren, xOrigin + c * 50, 165 + r * 50, 40, 50);
+			if (returnBombCount(x, y) == 5) {
+				textC->renderNumber(5, ren, xOrigin + c * 50+8, 165 + r * 50, 40, 50);
 			}
-			if (returnBombCount(m, 1) == 6) {
-				textC->renderNumber(6, ren, xOrigin + c * 50, 165 + r * 50, 40, 50);
+			if (returnBombCount(x, y) == 6) {
+				textC->renderNumber(6, ren, xOrigin + c * 50+8, 165 + r * 50, 40, 50);
 			}
-			if (returnBombCount(m, 1) == 7) {
-				textC->renderNumber(7, ren, xOrigin + c * 50, 165 + r * 50, 40, 50);
+			if (returnBombCount(x, y) == 7) {
+				textC->renderNumber(7, ren, xOrigin + c * 50+8, 165 + r * 50, 40, 50);
 			}
-			if (returnBombCount(m, 1) == 8) {
-				textC->renderNumber(8, ren, xOrigin + c * 50, 165 + r * 50, 40, 50);
+			if (returnBombCount(x, y) == 8) {
+				textC->renderNumber(8, ren, xOrigin + c * 50+8, 165 + r * 50, 40, 50);
 			}
-			if (returnBombCount(m, 1) == 9) {
-				textC->renderNumber(9, ren, xOrigin + c * 50, 165 + r * 50, 40, 50);
-			}*/
+			if (returnBombCount(x, y) == 9) {
+				textC->renderNumber(9, ren, xOrigin + c * 50+8, 165 + r * 50, 40, 50);
+			}
 
 			c++;
-			if (c >= tileField[r].size() ) c = 0;/*field[r].size()*/ /*25*/
+			if (c >= static_cast<int>(tileField[r].size()) ) c = 0;
 
 
 
 		}
 		r++;
-		//if (r >= field.size()) r = 0;
-		if (r >= tileField.size()) r = 0;
+		if (r >= static_cast<int>(tileField.size())) r = 0;
 	}
 
 	SDL_RenderPresent(ren);

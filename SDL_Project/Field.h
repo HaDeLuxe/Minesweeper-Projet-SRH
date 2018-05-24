@@ -38,7 +38,7 @@ private:
 	static Field* m_pInstance;
 
 	text *textC = new text();
-
+	
 	SDL_Texture * metalTileLarge = tex->loadTexture("Assets\\metalTileLarge.jpg", ren);
 
 public:
@@ -63,6 +63,7 @@ public:
 	void renderClear();
 
 	void calculatePlayerPos(); //Gets the player coordinates
+	void initializeTextC();
 
 #pragma region object draw functions
 	void drawRect(int x1, int y1, int x2, int y2);
