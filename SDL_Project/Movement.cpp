@@ -31,33 +31,37 @@ void Movement::moveUp()
 			FIELD->enterObjectInField(pX, pY, BACKGROUND);
 			pY--;
 			FIELD->enterObjectInField(pX, pY, PLAYER);
-			FIELD->tileField[pY][pX].isShown = true;
+			
 			//std::cout << pY << std::endl;
+			FIELD->calculatePlayerPos();
+			FIELD->floodFillOpenFields(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
+			//FIELD->tileField[pY][pX].isShown = true;
 		}
 	}
+	
 }
 
 
 
 void Movement::moveDown()
 {
-
 	FIELD->calculatePlayerPos();
 	pX = FIELD->getPlayerXPos();
 	pY = FIELD->getPlayerYPos();
-	if (pY <  FIELD->tileField.size() - 1) {/*FIELD->field.size()*/
+	if (pY <  FIELD->tileField.size() - 1) {
 		if (FIELD->getObjectAtCoord(pX, pY + 1) != WALL) {
 			//std::cout << pY;
 			FIELD->enterObjectInField(pX, pY, BACKGROUND);
 			pY++;
 			FIELD->enterObjectInField(pX, pY, PLAYER);
-			FIELD->tileField[pY][pX].isShown = true;
+			
+			FIELD->calculatePlayerPos();
+			FIELD->floodFillOpenFields(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
+			//FIELD->tileField[pY][pX].isShown = true;
 			//std::cout << pY << std::endl;
 		}
 	}
-	/*if (FIELD->getObjectAtCoord(pX, pY + 1) == BOMB) {
-		FIELD->setBombsBoolToFalse();
-	}*/
+	
 }
 
 void Movement::moveRight()
@@ -65,21 +69,16 @@ void Movement::moveRight()
 	FIELD->calculatePlayerPos();
 	pX = FIELD->getPlayerXPos();
 	pY = FIELD->getPlayerYPos();
-	if(pX < FIELD->tileField[pY].size() - 1){/*FIELD->field[pY].size()*/
+	if(pX < FIELD->tileField[pY].size() - 1){
 		if (FIELD->getObjectAtCoord(pX + 1, pY) != WALL) {
 			FIELD->enterObjectInField(pX, pY, BACKGROUND);
 			pX++;
 			FIELD->enterObjectInField(pX, pY, PLAYER);
-			FIELD->tileField[pY][pX].isShown = true;
+			FIELD->calculatePlayerPos();
+			FIELD->floodFillOpenFields(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
+			//FIELD->tileField[pY][pX].isShown = true;
 		}
 	}
-	FIELD->calculatePlayerPos();
-	std::cout << "Move to the RIGHT" << std::endl;
-	std::cout << "Windowwidth: " << FIELD->getWindowWidth() << std::endl;
-	std::cout << "getPlayerXPos(): " << FIELD->getPlayerXPos() << std::endl;
-	std::cout << "getPlayerXPos * 50: " << FIELD->getPlayerXPos() * 50 << std::endl;
-	std::cout << "xOrigin:" << FIELD->xOrigin << std::endl;
-	std::cout << "__________________________________________" << std::endl;
 	
 }
 void Movement::moveLeft()
@@ -92,16 +91,12 @@ void Movement::moveLeft()
 			FIELD->enterObjectInField(pX, pY, BACKGROUND);
 			pX--;
 			FIELD->enterObjectInField(pX, pY, PLAYER);
-			FIELD->tileField[pY][pX].isShown = true;
+			
+			FIELD->calculatePlayerPos();
+			FIELD->floodFillOpenFields(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
+			//FIELD->tileField[pY][pX].isShown = true;
 		}
 	}
-	FIELD->calculatePlayerPos();
-	std::cout << "Move to the LEFT" << std::endl;
-	std::cout << "Windowwidth: " << FIELD->getWindowWidth() << std::endl;
-	std::cout << "getPlayerXPos(): " << FIELD->getPlayerXPos() << std::endl;
-	std::cout << "getPlayerXPos * 50: " << FIELD->getPlayerXPos() * 50 << std::endl;
-	std::cout << "xOrigin:" << FIELD->xOrigin << std::endl;
-	std::cout << "__________________________-" << std::endl;
 	
 }
 

@@ -46,11 +46,10 @@ int main(int argc, char* argv[])
 	win = FIELD->getWindow();
 	currentGameState = States::Splashscreen;
 	FIELD->initializeTextC();
-	//textC->preIntializeTexts(FIELD->getRenderer());
 	FIELD->createPlayField(50, 15);
 	FIELD->setRandomWalls();
 	FIELD->setRandowMines();
-	//FIELD->placeMask();
+	FIELD->placeMask();
 	
 	PollEvents();
 
@@ -75,19 +74,25 @@ int main(int argc, char* argv[])
 void PollEvents() {
 
 	SDL_Event event;
-	double i = 1;
+	short i = 1;
 	Uint64 currentTimestamp = SDL_GetPerformanceCounter();
 	Uint64 lastTimestamp = 0;
-	float deltaTime = 0;
-	
 
+	float deltaTime = 0;
+
+	/*int frameRate = 25;
+	int frameMs = 1000 / frameRate;*/
 	while (i) {
+		
+	//int startMs = SDL_GetTicks();
+
+	#pragma region gameLoop
 		FIELD->setRendererColor(50, 20, 50, 255);
 		FIELD->renderClear();
-
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_QUIT) {
 				i = 0;
+				
 				break;
 			}
 
@@ -174,7 +179,13 @@ void PollEvents() {
 
 		//game->writeNumbers();
 		SDL_RenderPresent(FIELD->getRenderer());
+#pragma endregion
+
+		/*int endMs = SDL_GetTicks();
+		int delayMs = frameMs - (endMs - startMs);
+		SDL_Delay(delayMs);*/
 	}
+
 }
 
 

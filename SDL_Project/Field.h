@@ -72,7 +72,6 @@ public:
 #pragma endregion Hier sind die Funktionen um Objekte wie Kreise und Rechtecke zu zeichnen.
 
 
-
 	int getPlayerXPos();
 	int getPlayerYPos();
 	int getPlayfieldXSize();
@@ -89,7 +88,7 @@ public:
 	int returnBombCount(int x, int y);
 	void setRandomWalls();
 	void setRandowMines();
-	void floodFill(int newPositionX, int nextPositionY);
+	void floodFillOpenFields(int newPositionX, int nextPositionY);
 	
 	void drawField();
 };

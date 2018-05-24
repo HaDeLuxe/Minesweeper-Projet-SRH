@@ -104,11 +104,11 @@ void Field::renderClear()
 
 void Field::calculatePlayerPos()
 {
-	for (int i = 0; i < static_cast<int>(tileField.size()); i++) {
-		for (int m = 0; m < static_cast<int>(tileField[i].size()); m++) {
-			if (static_cast<int>(tileField[i][m].tileType) == PLAYER) {
-				playerXPos = m;
-				playerYPos = i;
+	for (int y = 0; y < static_cast<int>(tileField.size()); y++) {
+		for (int x = 0; x < static_cast<int>(tileField[y].size()); x++) {
+			if (static_cast<int>(tileField[y][x].tileType) == PLAYER) {
+				playerXPos = x;
+				playerYPos = y;
 			}
 		}
 	}
@@ -203,7 +203,7 @@ void Field::placeMask()
 {
 	for (int y = 0; y < getPlayfieldYSize(); y++) {
 		for (int x = 0; x < getPlayfieldXSize(); x++) {
-			if (tileField[y][x].tileType != PLAYER && tileField[y][x].tileType != WALL) {
+			if (tileField[y][x].tileType != PLAYER/* && tileField[y][x].tileType != WALL*/) {
 				tileField[y][x].isShown = false;
 			}
 		}
@@ -439,7 +439,7 @@ void Field::setRandomWalls()
 
 void Field::setRandowMines()
 {
-	int maxMinesCount = 150;
+	int maxMinesCount = 2;
 	int i = 1;
 	int x = 0;
 	int y = 0;
@@ -455,9 +455,32 @@ void Field::setRandowMines()
 	bombsProx();
 }
 
-void Field::floodFill(int newPositionX, int nextPositionY)
+void Field::floodFillOpenFields(int nextPositionX, int nextPositionY)
 {
-
+	if (nextPositionX >= 0 && nextPositionY >= 0 && nextPositionX < static_cast<int>(tileField[0].size()) && nextPositionY < static_cast<int>(tileField.size())) {
+	
+		if (tileField[nextPositionY][nextPositionX].isShown == true) {
+			return;
+		}
+		if (tileField[nextPositionY][nextPositionX].isShown == false) {
+			if (tileField[nextPositionY][nextPositionX].bombcount != 0) {
+				tileField[nextPositionY][nextPositionX].isShown = true;
+				return;
+			}
+			if (tileField[nextPositionY][nextPositionX].tileType == WALL) {
+				return;
+			}
+			tileField[nextPositionY][nextPositionX].isShown = true;
+		}
+		
+		floodFillOpenFields(nextPositionX, nextPositionY--);
+		floodFillOpenFields(nextPositionX, nextPositionY++);
+		floodFillOpenFields(nextPositionX--, nextPositionY);
+		floodFillOpenFields(nextPositionX++, nextPositionY);
+		
+	}
+	return;
+	
 }
 
 void Field::initializeTextC() {
@@ -488,33 +511,24 @@ void Field::drawField()
 				drawRect(xOrigin + c*50, 165 + r * 50, 50, 50);
 				//tex->renderTexture(tex->loadTexture("astronaut_SE.png", ren), ren, xOrigin + c * 50, 165 + r * 50, 50, 50);
 			}
-			if (tileField[y][x].tileType == WALL) {/*field[y][x]*/
-				setRendererColor(0, 255, 0, 255);
-				drawFillRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
-			}
-			if (tileField[y][x].tileType == PLAYER) {/*field[y][x]*/
-				setRendererColor(0, 255, 0, 255);
-				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
-				drawFillCircle(xOrigin + c * 50, 165 + r * 50, 25);
-				
-				//tex->renderTexture(tex->loadTexture("Assets\\metalTileLarge.jpg", ren), ren, xOrigin + c * 50, 165 + r * 50, 45,67);
-			}
+			
 			if (tileField[y][x].tileType == BOMB) {/*field[y][x]*/
 				setRendererColor(255, 0, 0, 255);
 				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
 				drawFillCircle(xOrigin + c * 50, 165 + r * 50, 25);
 				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
 			}
-			if (!tileField[y][x].isShown) {
+			if (returnBombCount(x, y) == 1 && getObjectAtCoord(x,y)) {
+				textC->renderNumber(1, ren, xOrigin + c * 50+8, 165 + r * 50, 40, 50);
+				
+			}
+if (!tileField[y][x].isShown) {
 				setRendererColor(0, 0, 150, 255);
 				drawFillRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
 				setRendererColor(255, 255, 255, 255);
 				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
 			}
-			if (returnBombCount(x, y) == 1 && getObjectAtCoord(x,y)) {
-				textC->renderNumber(1, ren, xOrigin + c * 50+8, 165 + r * 50, 40, 50);
-				
-			}
+
 			if (returnBombCount(x, y) == 2) {
 				textC->renderNumber(2, ren, xOrigin + c * 50+8, 165 + r * 50, 35, 50);
 			}
@@ -538,6 +552,18 @@ void Field::drawField()
 			}
 			if (returnBombCount(x, y) == 9) {
 				textC->renderNumber(9, ren, xOrigin + c * 50+8, 165 + r * 50, 40, 50);
+			}
+			
+			if (tileField[y][x].tileType == WALL) {/*field[y][x]*/
+				setRendererColor(0, 255, 0, 255);
+				drawFillRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
+			}
+			if (tileField[y][x].tileType == PLAYER) {/*field[y][x]*/
+				setRendererColor(0, 255, 0, 255);
+				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
+				drawFillCircle(xOrigin + c * 50, 165 + r * 50, 25);
+
+				//tex->renderTexture(tex->loadTexture("Assets\\metalTileLarge.jpg", ren), ren, xOrigin + c * 50, 165 + r * 50, 45,67);
 			}
 
 			c++;
