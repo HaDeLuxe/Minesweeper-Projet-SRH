@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
 	FIELD->createPlayField(50, 15);
 	FIELD->setRandomWalls();
 	FIELD->setRandowMines();
-	FIELD->placeMask();
+	//FIELD->placeMask();
 	
 	PollEvents();
 

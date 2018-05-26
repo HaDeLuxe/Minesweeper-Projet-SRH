@@ -42,6 +42,7 @@ void Field::createPlayField(int pX, int pY)
 			/*temp.push_back(BACKGROUND);
 			temp2.push_back(0);*/
 			tile tileEmpty;
+			tileEmpty.tileType = BACKGROUND;
 			temp.push_back(tileEmpty);
 		}
 		/*field.push_back(temp);
@@ -54,6 +55,7 @@ void Field::createPlayField(int pX, int pY)
 	enterObjectInField(10, 12, BOMB);
 	enterObjectInField(10, 14, BOMB);
 	enterObjectInField(12, 12, BOMB);
+	enterObjectInField(48, 8, DEST);
 	
 }
 
@@ -153,6 +155,13 @@ void Field::drawFillCircle(int x, int y, int radius)
 		}
 	}
 }
+
+void Field::drawLine(int x1, int y1, int x2, int y2)
+{
+	SDL_RenderDrawLine(ren, x1, y1, x2, y2);
+}
+
+
 #pragma endregion Hier sind die Funktionen um Objekte wie Kreise und Rechtecke zu zeichnen.
 
 #pragma region getter
@@ -210,16 +219,11 @@ void Field::placeMask()
 	}
 }
 
-void Field::setBombsBoolToFalse()
-{
-	bombCalculated = false;
-}
-
 void Field::bombsProx()
 {
 	calculatePlayerPos();
 	
-	if (!bombCalculated) {
+	
 		for (int y = 0; y < static_cast<int>(tileField.size()); y++) {
 			for (int x = 0; x < static_cast<int>(tileField[y].size()); x++) {
 				if (y != tileField.size() - 1) {
@@ -272,12 +276,13 @@ void Field::bombsProx()
 						tileField[y][x].bombcount++;
 					}
 				}
-				std::cout << tileField[y][x].bombcount << " ";
+				//std::cout << tileField[y][x].bombcount << " ";
+				if (getObjectAtCoord(x, y) == BOMB) tileField[y][x].bombcount = 0;
 			}
 			std::cout << std::endl;
 		}
-		bombCalculated = true;
-	}
+		
+	
 }
 
 int Field::returnBombCount(int x, int y) {
@@ -439,7 +444,7 @@ void Field::setRandomWalls()
 
 void Field::setRandowMines()
 {
-	int maxMinesCount = 2;
+	int maxMinesCount = 50;
 	int i = 1;
 	int x = 0;
 	int y = 0;
@@ -455,10 +460,43 @@ void Field::setRandowMines()
 	bombsProx();
 }
 
-void Field::floodFillOpenFields(int nextPositionX, int nextPositionY)
+void Field::floodFillOpenFieldsUR(int nextPositionX, int nextPositionY)
+{
+
+
+	if (nextPositionX >= 0 && nextPositionY >= 0 && nextPositionX < static_cast<int>(tileField[1].size()) && nextPositionY < static_cast<int>(tileField.size())) {
+	
+
+		if (tileField[nextPositionY][nextPositionX].isShown == true) {
+			return;
+		}
+		if (tileField[nextPositionY][nextPositionX].isShown == false) {
+			if(tileField[nextPositionY][nextPositionX].bombcount != 0){
+				tileField[nextPositionY][nextPositionX].isShown = true;
+				return;
+			}
+			if (tileField[nextPositionY][nextPositionX].tileType == WALL) {
+				return;
+			}
+
+			//return;
+		}
+		
+		tileField[nextPositionY][nextPositionX].isShown = true;
+		floodFillOpenFieldsUR(nextPositionX, nextPositionY-1);
+		floodFillOpenFieldsUR(nextPositionX+1, nextPositionY);
+		floodFillOpenFieldsUR(nextPositionX, nextPositionY+1);
+		floodFillOpenFieldsUR(nextPositionX-1, nextPositionY);
+		
+	}
+	//return;
+	
+}
+
+void Field::floodFillOpenFieldsDL(int nextPositionX, int nextPositionY)
 {
 	if (nextPositionX >= 0 && nextPositionY >= 0 && nextPositionX < static_cast<int>(tileField[0].size()) && nextPositionY < static_cast<int>(tileField.size())) {
-	
+
 		if (tileField[nextPositionY][nextPositionX].isShown == true) {
 			return;
 		}
@@ -472,15 +510,17 @@ void Field::floodFillOpenFields(int nextPositionX, int nextPositionY)
 			}
 			tileField[nextPositionY][nextPositionX].isShown = true;
 		}
+		floodFillOpenFieldsDL(nextPositionX, nextPositionY++);
+		floodFillOpenFieldsDL(nextPositionX, nextPositionY--);
+		floodFillOpenFieldsDL(nextPositionX--, nextPositionY);
 		
-		floodFillOpenFields(nextPositionX, nextPositionY--);
-		floodFillOpenFields(nextPositionX, nextPositionY++);
-		floodFillOpenFields(nextPositionX--, nextPositionY);
-		floodFillOpenFields(nextPositionX++, nextPositionY);
 		
+		
+		floodFillOpenFieldsDL(nextPositionX++, nextPositionY);
+		
+
 	}
 	return;
-	
 }
 
 void Field::initializeTextC() {
@@ -491,7 +531,7 @@ void Field::initializeTextC() {
 
 void Field::drawField()
 {
-	setRendererColor(0, 0, 0, 255);
+	setRendererColor(0, 0, 30, 255);
 	drawFillRect(0, 0, 1920, 1080);
 	/*setRendererColor(0, 255, 0, 255);
 	drawRect(335, 165, 1250, 750);*/
@@ -512,7 +552,7 @@ void Field::drawField()
 				//tex->renderTexture(tex->loadTexture("astronaut_SE.png", ren), ren, xOrigin + c * 50, 165 + r * 50, 50, 50);
 			}
 			
-			if (tileField[y][x].tileType == BOMB) {/*field[y][x]*/
+			if (tileField[y][x].tileType == BOMB) {
 				setRendererColor(255, 0, 0, 255);
 				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
 				drawFillCircle(xOrigin + c * 50, 165 + r * 50, 25);
@@ -522,12 +562,11 @@ void Field::drawField()
 				textC->renderNumber(1, ren, xOrigin + c * 50+8, 165 + r * 50, 40, 50);
 				
 			}
-if (!tileField[y][x].isShown) {
-				setRendererColor(0, 0, 150, 255);
-				drawFillRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
+			if (tileField[y][x].tileType == DEST) {
 				setRendererColor(255, 255, 255, 255);
-				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
+				drawFillCircle(xOrigin + c * 50, 165 + r * 50, 25);
 			}
+		
 
 			if (returnBombCount(x, y) == 2) {
 				textC->renderNumber(2, ren, xOrigin + c * 50+8, 165 + r * 50, 35, 50);
@@ -553,17 +592,25 @@ if (!tileField[y][x].isShown) {
 			if (returnBombCount(x, y) == 9) {
 				textC->renderNumber(9, ren, xOrigin + c * 50+8, 165 + r * 50, 40, 50);
 			}
-			
-			if (tileField[y][x].tileType == WALL) {/*field[y][x]*/
+			if (!tileField[y][x].isShown) {
+				setRendererColor(0, 0, 150, 255);
+				drawFillRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
+				setRendererColor(255, 255, 255, 255);
+				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
+			}
+			if (tileField[y][x].tileType == WALL) {
 				setRendererColor(0, 255, 0, 255);
 				drawFillRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
+				/*SDL_Texture * text = tex->loadTexture("Assets/meteorBrown_med1.png", ren);
+				tex->renderTexture(text, ren, xOrigin + c * 50, 165 + r * 50, 50, 50);
+				SDL_DestroyTexture(text);*/
 			}
-			if (tileField[y][x].tileType == PLAYER) {/*field[y][x]*/
+			if (tileField[y][x].tileType == PLAYER) {
 				setRendererColor(0, 255, 0, 255);
 				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
 				drawFillCircle(xOrigin + c * 50, 165 + r * 50, 25);
 
-				//tex->renderTexture(tex->loadTexture("Assets\\metalTileLarge.jpg", ren), ren, xOrigin + c * 50, 165 + r * 50, 45,67);
+				//tex->renderTexture(tex->loadTexture("astronaut_SE.png", ren), ren, xOrigin + c * 50, 165 + r * 50, 50,50);
 			}
 
 			c++;

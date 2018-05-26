@@ -10,7 +10,8 @@
 #define WALL 2
 #define PLAYER 3
 #define BOMB 4
-#define NOBOMB 5
+#define DEST 5
+
 
 typedef struct tile {
 	int tileType = 1;
@@ -30,7 +31,7 @@ private:
 
 	static Field* instance;
 	Textures * tex = new Textures();
-	bool bombCalculated = false;
+	
 
 	Field();
 	Field(Field const&) {};
@@ -69,6 +70,7 @@ public:
 	void drawRect(int x1, int y1, int x2, int y2);
 	void drawFillRect(int x1, int y1, int x2, int y2);
 	void drawFillCircle(int x, int y, int radius);
+	void drawLine(int x1, int y1, int x2, int y2);
 #pragma endregion Hier sind die Funktionen um Objekte wie Kreise und Rechtecke zu zeichnen.
 
 
@@ -83,12 +85,12 @@ public:
 	void enterObjectInField(int x, int y, int type);
 
 	void placeMask();
-	void setBombsBoolToFalse();
 	void bombsProx();
 	int returnBombCount(int x, int y);
 	void setRandomWalls();
 	void setRandowMines();
-	void floodFillOpenFields(int newPositionX, int nextPositionY);
+	void floodFillOpenFieldsUR(int nextPositionX, int nextPositionY);
+	void floodFillOpenFieldsDL(int nextPositionX, int nextPositionY);
 	
 	void drawField();
 };

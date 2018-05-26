@@ -26,15 +26,20 @@ void Movement::moveUp()
 	pY = FIELD->getPlayerYPos();
 	if (pY > 0) {
 		if (FIELD->getObjectAtCoord(pX, pY - 1) != WALL) {
-
-			//std::cout << pY;
-			FIELD->enterObjectInField(pX, pY, BACKGROUND);
+			if (FIELD->getObjectAtCoord(pX, pY - 1) == BOMB) {
+				int tempTileBox = BOMB;
+			}
+			
+			FIELD->enterObjectInField(pX, pY, tempTileBox);
+			tempTileBox = BACKGROUND;
 			pY--;
 			FIELD->enterObjectInField(pX, pY, PLAYER);
 			
-			//std::cout << pY << std::endl;
 			FIELD->calculatePlayerPos();
-			FIELD->floodFillOpenFields(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
+
+			FIELD->floodFillOpenFieldsUR(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
+			//FIELD->floodFillOpenFieldsDL(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
+
 			//FIELD->tileField[pY][pX].isShown = true;
 		}
 	}
@@ -56,7 +61,9 @@ void Movement::moveDown()
 			FIELD->enterObjectInField(pX, pY, PLAYER);
 			
 			FIELD->calculatePlayerPos();
-			FIELD->floodFillOpenFields(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
+			FIELD->floodFillOpenFieldsUR(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
+			//FIELD->floodFillOpenFieldsDL(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
+
 			//FIELD->tileField[pY][pX].isShown = true;
 			//std::cout << pY << std::endl;
 		}
@@ -75,7 +82,9 @@ void Movement::moveRight()
 			pX++;
 			FIELD->enterObjectInField(pX, pY, PLAYER);
 			FIELD->calculatePlayerPos();
-			FIELD->floodFillOpenFields(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
+			FIELD->floodFillOpenFieldsUR(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
+						//FIELD->floodFillOpenFieldsDL(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
+
 			//FIELD->tileField[pY][pX].isShown = true;
 		}
 	}
@@ -93,7 +102,10 @@ void Movement::moveLeft()
 			FIELD->enterObjectInField(pX, pY, PLAYER);
 			
 			FIELD->calculatePlayerPos();
-			FIELD->floodFillOpenFields(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
+
+			FIELD->floodFillOpenFieldsUR(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
+			//FIELD->floodFillOpenFieldsDL(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
+
 			//FIELD->tileField[pY][pX].isShown = true;
 		}
 	}

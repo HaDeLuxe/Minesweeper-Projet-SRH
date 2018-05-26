@@ -14,7 +14,7 @@ class Movement
 {
 private:
 	int pX, pY;
-
+	int tempTileBox = BACKGROUND;
 public:
 	Movement();
 	~Movement();
