@@ -88,7 +88,7 @@ public:
 	void bombsProx();
 	int returnBombCount(int x, int y);
 	void setRandomWalls();
-	void setRandowMines();
+	void setRandomMines();
 	void floodFillOpenFieldsUR(int nextPositionX, int nextPositionY);
 	void floodFillOpenFieldsDL(int nextPositionX, int nextPositionY);
 	

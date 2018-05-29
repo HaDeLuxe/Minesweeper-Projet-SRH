@@ -47,8 +47,10 @@ int main(int argc, char* argv[])
 	currentGameState = States::Splashscreen;
 	FIELD->initializeTextC();
 	FIELD->createPlayField(50, 15);
-	FIELD->setRandomWalls();
-	FIELD->setRandowMines();
+	//FIELD->setRandomWalls();
+	FIELD->setRandomMines();
+	//gameManager->renewField();
+	gameManager->readWallData("Assets/Level1");
 	//FIELD->placeMask();
 	
 	PollEvents();

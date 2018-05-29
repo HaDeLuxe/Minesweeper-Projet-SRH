@@ -232,7 +232,6 @@ void Field::bombsProx()
 						tileField[y][x].bombcount++;
 					}
 				}
-
 				if (y != 0) {
 					if (tileField[y-1][x].tileType == BOMB) {
 						
@@ -276,7 +275,7 @@ void Field::bombsProx()
 						tileField[y][x].bombcount++;
 					}
 				}
-				//std::cout << tileField[y][x].bombcount << " ";
+				
 				if (getObjectAtCoord(x, y) == BOMB) tileField[y][x].bombcount = 0;
 			}
 			std::cout << std::endl;
@@ -310,15 +309,15 @@ void Field::setRandomWalls()
 		secondDir = rand() % 2;
 		
 
-		if (tileField[y][x].tileType != WALL) {/*field[y][x]*/
-			if (x > 1 && x < static_cast<int>(tileField[0].size()) - 1 && y > 1 && y < static_cast<int>(tileField.size()) - 1) {/*field[0].size()*//*field.size()*/
-				if (tileField[y-1][x].tileType == WALL)/*field[y - 1][x]*/
+		if (tileField[y][x].tileType != WALL) {
+			if (x > 1 && x < static_cast<int>(tileField[0].size()) - 1 && y > 1 && y < static_cast<int>(tileField.size()) - 1) {
+				if (tileField[y-1][x].tileType == WALL)
 					count++;
-				if (tileField[y+1][x].tileType == WALL)/*field[y + 1][x]*/
+				if (tileField[y+1][x].tileType == WALL)
 					count++;
-				if (tileField[y][x+1].tileType == WALL)/*field[y][x + 1]*/
+				if (tileField[y][x+1].tileType == WALL)
 					count++;
-				if (tileField[y][x-1].tileType == WALL)/*field[y][x - 1]*/
+				if (tileField[y][x-1].tileType == WALL)
 					count++;
 
 				int tempx, tempy;
@@ -364,7 +363,7 @@ void Field::setRandomWalls()
 							switch (secondDir) {
 							case 0: // right
 								for (int m = 0; m < b; m++) {
-									if (count <= 2 && tempx < static_cast<int>(tileField[0].size()) - 1) {/*field[0].size()*/
+									if (count <= 2 && tempx < static_cast<int>(tileField[0].size()) - 1) {
 										tempx++;
 										enterObjectInField(tempx, tempy, WALL);
 									}
@@ -398,7 +397,7 @@ void Field::setRandomWalls()
 								break;
 							case 1: //down
 								for (int m = 0; m < b; m++) {
-									if (count <= 2 && tempy < static_cast<int>(tileField.size() - 1)) {/*field.size()*/
+									if (count <= 2 && tempy < static_cast<int>(tileField.size() - 1)) {
 										tempy++;
 										enterObjectInField(tempx, tempy, WALL);
 									}
@@ -442,7 +441,7 @@ void Field::setRandomWalls()
 
 }
 
-void Field::setRandowMines()
+void Field::setRandomMines()
 {
 	int maxMinesCount = 50;
 	int i = 1;

@@ -26,21 +26,20 @@ void Movement::moveUp()
 	pY = FIELD->getPlayerYPos();
 	if (pY > 0) {
 		if (FIELD->getObjectAtCoord(pX, pY - 1) != WALL) {
-			if (FIELD->getObjectAtCoord(pX, pY - 1) == BOMB) {
-				int tempTileBox = BOMB;
-			}
+			
 			
 			FIELD->enterObjectInField(pX, pY, tempTileBox);
-			tempTileBox = BACKGROUND;
+			if (tempTileBox == BOMB) tempTileBox = BACKGROUND;
+			if (FIELD->getObjectAtCoord(pX, pY-1) == BOMB) {
+				tempTileBox = BOMB;
+			}
+			
 			pY--;
 			FIELD->enterObjectInField(pX, pY, PLAYER);
 			
 			FIELD->calculatePlayerPos();
 
 			FIELD->floodFillOpenFieldsUR(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
-			//FIELD->floodFillOpenFieldsDL(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
-
-			//FIELD->tileField[pY][pX].isShown = true;
 		}
 	}
 	
@@ -55,17 +54,19 @@ void Movement::moveDown()
 	pY = FIELD->getPlayerYPos();
 	if (pY <  FIELD->tileField.size() - 1) {
 		if (FIELD->getObjectAtCoord(pX, pY + 1) != WALL) {
-			//std::cout << pY;
-			FIELD->enterObjectInField(pX, pY, BACKGROUND);
+
+			FIELD->enterObjectInField(pX, pY, tempTileBox);
+			if (tempTileBox == BOMB) tempTileBox = BACKGROUND;
+			if (FIELD->getObjectAtCoord(pX, pY + 1) == BOMB) {
+				tempTileBox = BOMB;
+			}
+
 			pY++;
 			FIELD->enterObjectInField(pX, pY, PLAYER);
 			
 			FIELD->calculatePlayerPos();
 			FIELD->floodFillOpenFieldsUR(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
-			//FIELD->floodFillOpenFieldsDL(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
-
-			//FIELD->tileField[pY][pX].isShown = true;
-			//std::cout << pY << std::endl;
+		
 		}
 	}
 	
@@ -78,14 +79,15 @@ void Movement::moveRight()
 	pY = FIELD->getPlayerYPos();
 	if(pX < FIELD->tileField[pY].size() - 1){
 		if (FIELD->getObjectAtCoord(pX + 1, pY) != WALL) {
-			FIELD->enterObjectInField(pX, pY, BACKGROUND);
+			FIELD->enterObjectInField(pX, pY, tempTileBox);
+			if (tempTileBox == BOMB) tempTileBox = BACKGROUND;
+			if (FIELD->getObjectAtCoord(pX + 1, pY) == BOMB) {
+				tempTileBox = BOMB;
+			}
 			pX++;
 			FIELD->enterObjectInField(pX, pY, PLAYER);
 			FIELD->calculatePlayerPos();
 			FIELD->floodFillOpenFieldsUR(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
-						//FIELD->floodFillOpenFieldsDL(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
-
-			//FIELD->tileField[pY][pX].isShown = true;
 		}
 	}
 	
@@ -97,16 +99,18 @@ void Movement::moveLeft()
 	pY = FIELD->getPlayerYPos();
 	if(pX > 0){
 		if (FIELD->getObjectAtCoord(pX - 1, pY) != WALL) {
-			FIELD->enterObjectInField(pX, pY, BACKGROUND);
+			FIELD->enterObjectInField(pX, pY, tempTileBox);
+			if (tempTileBox == BOMB) tempTileBox = BACKGROUND;
+			if (FIELD->getObjectAtCoord(pX - 1, pY) == BOMB) {
+				tempTileBox = BOMB;
+			}
 			pX--;
 			FIELD->enterObjectInField(pX, pY, PLAYER);
 			
 			FIELD->calculatePlayerPos();
 
 			FIELD->floodFillOpenFieldsUR(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
-			//FIELD->floodFillOpenFieldsDL(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
-
-			//FIELD->tileField[pY][pX].isShown = true;
+			
 		}
 	}
 	
