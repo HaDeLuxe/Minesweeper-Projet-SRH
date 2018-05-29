@@ -22,7 +22,7 @@ void text::preIntializeTexts(SDL_Renderer* ren)
 {
 	
 	SDL_Color textColor = { 255, 0, 0, 255 };
-	OpenFont("OpenSans-Regular.ttf", 50);
+	OpenFont("Assets\\SFDistantGalaxy.ttf", 50);
 	std::string text1 = "1";
 	SDL_Surface * solidSurface = TTF_RenderText_Solid(font, text1.c_str(), textColor);
 
@@ -110,8 +110,8 @@ void text::OpenFont(const char * file, int ptsize)
 void text::writeText(int x1, int y1, int x2, int y2, int pSize, std::string text, SDL_Renderer* ren)
 {
 	
-	std::string fontfile = "OpenSans-Regular.ttf";
-	OpenFont(fontfile.c_str(), 50);
+	std::string fontfile = "Assets\\Nebulous-Regular.ttf";
+	OpenFont(fontfile.c_str(), 100);
 	
 
 	SDL_Texture* solidTexture;

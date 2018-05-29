@@ -63,7 +63,7 @@ void Field::createPlayField(int pX, int pY)
 
 
 void Field::createWindow() {
-	win = SDL_CreateWindow("Minesweeper Adventure", 0, 20, 1920, 1080, SDL_WINDOW_SHOWN);
+	win = SDL_CreateWindow("Minesweeper Adventure", 0, 30, 1920, 1010, SDL_WINDOW_SHOWN);
 	if (win == nullptr) {
 		std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
 		SDL_Quit();
@@ -193,6 +193,11 @@ int Field::getWindowWidth()
 	return SDL_GetWindowSurface(win)->w;
 }
 
+void Field::getDirection(int dir)
+{
+	lastDirection = dir;
+}
+
 int Field::getObjectAtCoord(int x, int y)
 {
 	//return field[y][x];
@@ -207,6 +212,11 @@ void Field::enterObjectInField(int x, int y, int type)
 	tileField[y][x].tileType = type;
 }
 
+
+bool Field::bombCollision()
+{
+	return tileField[playerYPos][playerXPos].tileType == BOMB;
+}
 
 void Field::placeMask()
 {
@@ -289,7 +299,7 @@ int Field::returnBombCount(int x, int y) {
 	return tileField[y][x].bombcount;
 }
 
-void Field::setRandomWalls()
+void Field::setRandomWalls() //nicht benutzt in momentenan Build, da es nocht nicht möglich ist gute, spielbare Maps zu bauen
 {
 	int maxWallsCount = 4;
 	int i = 1;
@@ -444,7 +454,7 @@ void Field::setRandomWalls()
 
 void Field::setRandomMines()
 {
-	int maxMinesCount = 50;
+	int maxMinesCount = 100;
 	int i = 1;
 	int x = 0;
 	int y = 0;
@@ -512,7 +522,7 @@ void Field::drawField()
 	//drawFillRect(0, 0, 1920, 1080);
 
 	/*setRendererColor(0, 255, 0, 255);
-	drawRect(335, 165, 1250, 750);*/
+	drawRect(335, 115, 1250, 750);*/
 	//placeMask();
 
 	int r = 0;
@@ -524,77 +534,80 @@ void Field::drawField()
 			
 
 			if (tileField[y][x].tileType == BACKGROUND) {/*field[y][x]*/
-				setRendererColor(0, 255, 0, 255);
+				setRendererColor(100, 100, 255, 50);
 
-				drawRect(xOrigin + c*50, 165 + r * 50, 50, 50);
-				//tex->renderTexture(tex->loadTexture("Assets//meteorBrown_med1.png", ren), ren, xOrigin + c * 50, 165 + r * 50, 50, 50);
+				drawRect(xOrigin + c*50, 115 + r * 50, 50, 50);
+				//tex->renderTexture(tex->loadTexture("Assets//meteorBrown_med1.png", ren), ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
 			}
 			
 			if (tileField[y][x].tileType == BOMB) {
-				setRendererColor(255, 0, 0, 255);
-				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
-				drawFillCircle(xOrigin + c * 50, 165 + r * 50, 25);
-				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
+				setRendererColor(100, 100, 255, 50);
+				/*drawRect(xOrigin + c * 50, 115 + r * 50, 50, 50);
+				drawFillCircle(xOrigin + c * 50, 115 + r * 50, 25);*/
+				drawRect(xOrigin + c * 50, 115 + r * 50, 50, 50);
 			}
-			if (returnBombCount(x, y) == 1 && getObjectAtCoord(x,y)) {
-				textC->renderNumber(1, ren, xOrigin + c * 50+8, 165 + r * 50, 40, 50);
-				
-			}
+
 			if (tileField[y][x].tileType == DEST) {
 				setRendererColor(255, 255, 255, 255);
-				drawFillCircle(xOrigin + c * 50, 165 + r * 50, 25);
+				drawFillCircle(xOrigin + c * 50, 115 + r * 50, 25);
 			}
-		
-
-			if (returnBombCount(x, y) == 2) {
-				textC->renderNumber(2, ren, xOrigin + c * 50+8, 165 + r * 50, 35, 50);
+			if (returnBombCount(x, y) == 1 && getObjectAtCoord(x,y)) {
+				textC->renderNumber(1, ren, xOrigin + c * 50+15, 115 + r * 50+10, 20, 35);
 			}
-			if (returnBombCount(x, y) == 3) {
-				textC->renderNumber(3, ren, xOrigin + c * 50+11, 165 + r * 50, 30, 50);
+			int bombCount = returnBombCount(x, y);
+			if (bombCount == 2) {
+				textC->renderNumber(2, ren, xOrigin + c * 50 + 15, 115 + r * 50 + 10, 20, 35);
 			}
-			if (returnBombCount(x, y) == 4) {
-				textC->renderNumber(4, ren, xOrigin + c * 50+8, 165 + r * 50, 40, 50);
+			if (bombCount == 3) {
+				textC->renderNumber(3, ren, xOrigin + c * 50 + 15, 115 + r * 50 + 10, 20, 35);
 			}
-			if (returnBombCount(x, y) == 5) {
-				textC->renderNumber(5, ren, xOrigin + c * 50+8, 165 + r * 50, 40, 50);
+			if (bombCount == 4) {
+				textC->renderNumber(4, ren, xOrigin + c * 50 + 15, 115 + r * 50 + 10, 20, 35);
 			}
-			if (returnBombCount(x, y) == 6) {
-				textC->renderNumber(6, ren, xOrigin + c * 50+8, 165 + r * 50, 40, 50);
+			if (bombCount == 5) {
+				textC->renderNumber(5, ren, xOrigin + c * 50 + 15, 115 + r * 50 + 10, 20, 35);
 			}
-			if (returnBombCount(x, y) == 7) {
-				textC->renderNumber(7, ren, xOrigin + c * 50+8, 165 + r * 50, 40, 50);
+			if (bombCount == 6) {
+				textC->renderNumber(6, ren, xOrigin + c * 50 + 15, 115 + r * 50 + 10, 20, 35);
 			}
-			if (returnBombCount(x, y) == 8) {
-				textC->renderNumber(8, ren, xOrigin + c * 50+8, 165 + r * 50, 40, 50);
+			if (bombCount == 7) {
+				textC->renderNumber(7, ren, xOrigin + c * 50 + 15, 115 + r * 50 + 10, 20, 35);
 			}
-			if (returnBombCount(x, y) == 9) {
-				textC->renderNumber(9, ren, xOrigin + c * 50+8, 165 + r * 50, 40, 50);
+			if (bombCount == 8) {
+				textC->renderNumber(8, ren, xOrigin + c * 50 + 15, 115 + r * 50 + 10, 20, 35);
+			}
+			if (bombCount == 9) {
+				textC->renderNumber(9, ren, xOrigin + c * 50 + 15, 115 + r * 50 + 10, 20, 35);
 			}
 			if (!tileField[y][x].isShown) {
 				setRendererColor(0, 0, 150, 255);
-				//drawFillRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
-				setRendererColor(255, 255, 255, 255);
-				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
-				tex->renderTexture(tex->maskTex, ren, xOrigin + c * 50, 165 + r * 50, 50, 50);
+				//drawFillRect(xOrigin + c * 50, 115 + r * 50, 50, 50);
+				setRendererColor(100, 100, 255, 50);
+				drawRect(xOrigin + c * 50, 115 + r * 50, 50, 50);
+				tex->renderTexture(tex->maskTex, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
 			}
 			if (tileField[y][x].tileType == WALL) {
-				setRendererColor(0, 0, 30, 255);
-				setRendererColor(0, 255, 0, 255);
-				//drawFillRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
-				/*SDL_Texture * text = tex->loadTexture("Assets/meteorBrown_med1.png", ren);
-				tex->renderTexture(text, ren, xOrigin + c * 50, 165 + r * 50, 50, 50);
-				SDL_DestroyTexture(text);*/
-				tex->renderTexture(tex->wallTex, ren, xOrigin + c * 50, 165 + r * 50, 50, 50);
-				//tex->renderTexture(tex->loadTexture("Assets//meteorBrown_med1.png", ren), ren, xOrigin + c * 50, 165 + r * 50, 50, 50);
+				
+				setRendererColor(100, 100, 255, 50);
+				drawRect(xOrigin + c * 50, 115 + r * 50, 50, 50);
+				//drawFillRect(xOrigin + c * 50, 115 + r * 50, 50, 50);
+			
+				tex->renderTexture(tex->wallTex, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
 			}
 			if (tileField[y][x].tileType == PLAYER) {
-				setRendererColor(0, 255, 0, 255);
-				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
-				//drawFillCircle(xOrigin + c * 50, 165 + r * 50, 25);
+				setRendererColor(100, 100, 255, 50);
+				drawRect(xOrigin + c * 50, 115 + r * 50, 50, 50);
+				//drawFillCircle(xOrigin + c * 50, 115 + r * 50, 25);
 				
-				tex->renderTexture(tex->playerTex, ren, xOrigin + c * 50, 165 + r * 50, 50,50);
-			}
+				if (lastDirection == 1)	tex->renderTexture(tex->playerTexUp, ren, xOrigin + c * 50, 115 + r * 50, 50,50);
+				if (lastDirection == 2) tex->renderTexture(tex->playerTexRight, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+				if (lastDirection == 3) tex->renderTexture(tex->playerTexDown, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+				if (lastDirection == 4) tex->renderTexture(tex->playerTexLeft, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
 
+			}
+			if (tileField[y][x].crosshair == true) {
+				tex->renderTexture(tex->crosshairTex, ren, xOrigin + c * 50+2, 115 + r * 50+2, 45, 45);
+			}
 			c++;
 			if (c >= static_cast<int>(tileField[r].size()) ) c = 0;
 
@@ -607,3 +620,4 @@ void Field::drawField()
 
 	SDL_RenderPresent(ren);
 }
+

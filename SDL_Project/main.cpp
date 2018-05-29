@@ -7,6 +7,7 @@
 #include "Movement.h"
 #include "GameManager.h"
 #include "Enums.h"
+#include "Player.h"
 
 
 #define FIELD Field::Instance()
@@ -20,7 +21,7 @@ GameManager * gameManager;
 Menu* mainMenu;
 SDL_Window *win;
 Splashscreen* splashScreen;
-
+Player * player;
 void PollEvents();
 
 
@@ -36,6 +37,7 @@ int main(int argc, char* argv[])
 
 	textures = new Textures();
 	movement = new Movement();
+	player = new Player();
 	textC = new text();
 	//textC->TTF_Initiate();
 	gameManager = new GameManager();
@@ -98,7 +100,6 @@ void PollEvents() {
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_QUIT) {
 				i = 0;
-				
 				break;
 			}
 
@@ -108,26 +109,32 @@ void PollEvents() {
 				case SDLK_w:
 					if (currentGameState == States::Game) {
 						movement->moveUp();
+						FIELD->getDirection(1);
 					}
 					break;
 				case SDLK_s:
 					if (currentGameState == States::Game) {
 						movement->moveDown();
+						FIELD->getDirection(3);
 					}
 					break;
 				case SDLK_d:
 					if (currentGameState == States::Game) {
 						movement->moveRight();
+						FIELD->getDirection(2);
 					}
 					break;
 				case SDLK_a:
 					if (currentGameState == States::Game) {
 						movement->moveLeft();
+						FIELD->getDirection(4);
 					}
 					break;
 
 				}
-
+				if(FIELD->bombCollision()){
+					player->reduceLife();
+				}
 			}
 			if (event.type == SDL_MOUSEBUTTONUP) {
 				int mouseX;
@@ -184,7 +191,7 @@ void PollEvents() {
 
 
 
-		//game->writeNumbers();
+		
 		SDL_RenderPresent(FIELD->getRenderer());
 #pragma endregion
 
@@ -194,5 +201,6 @@ void PollEvents() {
 	}
 
 }
+
 
 

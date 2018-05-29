@@ -16,8 +16,12 @@ public:
 	~Textures();
 	SDL_Texture * backgroundTex = NULL;
 	SDL_Texture * wallTex = NULL;
-	SDL_Texture * playerTex = NULL;
+	SDL_Texture * playerTexUp = NULL;
+	SDL_Texture * playerTexLeft = NULL;
+	SDL_Texture * playerTexRight = NULL;
+	SDL_Texture * playerTexDown = NULL;
 	SDL_Texture * maskTex = NULL;
+	SDL_Texture * crosshairTex = NULL;
 	
 
 	SDL_Texture* loadTexture(const std::string &file, SDL_Renderer *ren);

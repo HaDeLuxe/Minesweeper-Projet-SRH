@@ -1,7 +1,6 @@
 #include "Movement.h"
 
 
-
 Movement::Movement()
 {
 
@@ -11,38 +10,38 @@ Movement::~Movement()
 {
 } //deconstructor
 
-void Movement::setTale()
-{
-	FIELD->enterObjectInField(10, 10, PLAYER);
-}
+
 
 #pragma region Moving Functions
 
 void Movement::moveUp()
 {
-	
 	FIELD->calculatePlayerPos();
 	pX = FIELD->getPlayerXPos();
 	pY = FIELD->getPlayerYPos();
 	if (pY > 0) {
 		if (FIELD->getObjectAtCoord(pX, pY - 1) != WALL) {
 			
-			
-			FIELD->enterObjectInField(pX, pY, tempTileBox);
-			if (tempTileBox == BOMB) tempTileBox = BACKGROUND;
-			if (FIELD->getObjectAtCoord(pX, pY-1) == BOMB) {
-				tempTileBox = BOMB;
+			if (lastDirection == 1) {
+				FIELD->enterObjectInField(pX, pY, tempTileBox);
+				if (tempTileBox == BOMB) tempTileBox = BACKGROUND;
+				if (FIELD->getObjectAtCoord(pX, pY - 1) == BOMB) {
+					tempTileBox = BOMB;
+				}
+				pY--;
+				FIELD->enterObjectInField(pX, pY, PLAYER);
 			}
-			
-			pY--;
-			FIELD->enterObjectInField(pX, pY, PLAYER);
-			
 			FIELD->calculatePlayerPos();
-
 			FIELD->floodFillOpenFieldsUR(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
+			if (pY > 0) {
+				FIELD->tileField[_lastCrosshairYPos][_lastCrosshairXPos].crosshair = false;
+				FIELD->tileField[FIELD->getPlayerYPos() - 1][FIELD->getPlayerXPos()].crosshair = true;
+				_lastCrosshairXPos = FIELD->getPlayerXPos();
+				_lastCrosshairYPos = FIELD->getPlayerYPos()-1;
+			}
 		}
+		lastDirection = 1;
 	}
-	
 }
 
 
@@ -54,22 +53,26 @@ void Movement::moveDown()
 	pY = FIELD->getPlayerYPos();
 	if (pY <  FIELD->tileField.size() - 1) {
 		if (FIELD->getObjectAtCoord(pX, pY + 1) != WALL) {
-
-			FIELD->enterObjectInField(pX, pY, tempTileBox);
-			if (tempTileBox == BOMB) tempTileBox = BACKGROUND;
-			if (FIELD->getObjectAtCoord(pX, pY + 1) == BOMB) {
-				tempTileBox = BOMB;
+			if (lastDirection == 3) {
+				FIELD->enterObjectInField(pX, pY, tempTileBox);
+				if (tempTileBox == BOMB) tempTileBox = BACKGROUND;
+				if (FIELD->getObjectAtCoord(pX, pY + 1) == BOMB) {
+					tempTileBox = BOMB;
+				}
+				pY++;
+				FIELD->enterObjectInField(pX, pY, PLAYER);
 			}
-
-			pY++;
-			FIELD->enterObjectInField(pX, pY, PLAYER);
-			
 			FIELD->calculatePlayerPos();
 			FIELD->floodFillOpenFieldsUR(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
-		
+			if (pY <  FIELD->tileField.size() - 1) {
+				FIELD->tileField[_lastCrosshairYPos][_lastCrosshairXPos].crosshair = false;
+				FIELD->tileField[FIELD->getPlayerYPos()+1][FIELD->getPlayerXPos()].crosshair = true;
+				_lastCrosshairXPos = FIELD->getPlayerXPos();
+				_lastCrosshairYPos = FIELD->getPlayerYPos()+1;
+			}
 		}
 	}
-	
+	lastDirection = 3;
 }
 
 void Movement::moveRight()
@@ -79,41 +82,56 @@ void Movement::moveRight()
 	pY = FIELD->getPlayerYPos();
 	if(pX < FIELD->tileField[pY].size() - 1){
 		if (FIELD->getObjectAtCoord(pX + 1, pY) != WALL) {
-			FIELD->enterObjectInField(pX, pY, tempTileBox);
-			if (tempTileBox == BOMB) tempTileBox = BACKGROUND;
-			if (FIELD->getObjectAtCoord(pX + 1, pY) == BOMB) {
-				tempTileBox = BOMB;
+			if (lastDirection == 2) {
+				FIELD->enterObjectInField(pX, pY, tempTileBox);
+				if (tempTileBox == BOMB) tempTileBox = BACKGROUND;
+				if (FIELD->getObjectAtCoord(pX + 1, pY) == BOMB) {
+					tempTileBox = BOMB;
+				}
+				pX++;
+				FIELD->enterObjectInField(pX, pY, PLAYER);
 			}
-			pX++;
-			FIELD->enterObjectInField(pX, pY, PLAYER);
 			FIELD->calculatePlayerPos();
 			FIELD->floodFillOpenFieldsUR(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
-		}
-	}
-	
+
+			if (pX < FIELD->tileField[pY].size() - 1) {
+				FIELD->tileField[_lastCrosshairYPos][_lastCrosshairXPos].crosshair = false;
+				FIELD->tileField[FIELD->getPlayerYPos()][FIELD->getPlayerXPos() + 1].crosshair = true;
+				_lastCrosshairXPos = FIELD->getPlayerXPos()+1;
+				_lastCrosshairYPos = FIELD->getPlayerYPos();
+			}
+		}	}
+	lastDirection = 2;
 }
 void Movement::moveLeft()
 {
+	
 	FIELD->calculatePlayerPos();
 	pX = FIELD->getPlayerXPos();
 	pY = FIELD->getPlayerYPos();
 	if(pX > 0){
 		if (FIELD->getObjectAtCoord(pX - 1, pY) != WALL) {
-			FIELD->enterObjectInField(pX, pY, tempTileBox);
-			if (tempTileBox == BOMB) tempTileBox = BACKGROUND;
-			if (FIELD->getObjectAtCoord(pX - 1, pY) == BOMB) {
-				tempTileBox = BOMB;
+			if (lastDirection == 4) {
+				FIELD->enterObjectInField(pX, pY, tempTileBox);
+				if (tempTileBox == BOMB) tempTileBox = BACKGROUND;
+				if (FIELD->getObjectAtCoord(pX - 1, pY) == BOMB) {
+					tempTileBox = BOMB;
+				}
+				pX--;
+				FIELD->enterObjectInField(pX, pY, PLAYER);
 			}
-			pX--;
-			FIELD->enterObjectInField(pX, pY, PLAYER);
-			
 			FIELD->calculatePlayerPos();
-
 			FIELD->floodFillOpenFieldsUR(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
-			
+			if (pX > 0) {
+				FIELD->tileField[_lastCrosshairYPos][_lastCrosshairXPos].crosshair = false;
+				FIELD->tileField[FIELD->getPlayerYPos()][FIELD->getPlayerXPos()-1].crosshair = true;
+
+				_lastCrosshairXPos = FIELD->getPlayerXPos()-1;
+				_lastCrosshairYPos = FIELD->getPlayerYPos();
+			}
 		}
 	}
-	
+	lastDirection = 4;
 }
 
 #pragma endregion

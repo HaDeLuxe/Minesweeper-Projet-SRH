@@ -17,6 +17,7 @@ typedef struct tile {
 	int tileType = 1;
 	int bombcount = 0;
 	bool isShown = true;
+	bool crosshair = false;
 }tile;
 
 class Field
@@ -28,6 +29,7 @@ private:
 	SDL_Renderer *ren;
 	int playerXPos;
 	int playerYPos;
+	int lastDirection = 1;
 
 	static Field* instance;
 	Textures * tex = new Textures();
@@ -39,9 +41,6 @@ private:
 	static Field* m_pInstance;
 
 	text *textC = new text();
-	
-	SDL_Texture * metalTileLarge = tex->loadTexture("Assets\\metalTileLarge.jpg", ren);
-
 public:
 
 	/*std::vector<std::vector<int>> field;
@@ -80,11 +79,12 @@ public:
 	int getPlayfieldXSize();
 	int getPlayfieldYSize();
 	int getWindowWidth();
-	
-
+	void getDirection(int dir);
 	int getObjectAtCoord(int x, int y);
 	void enterObjectInField(int x, int y, int type);
 
+
+	bool bombCollision();
 	void placeMask();
 	void bombsProx();
 	int returnBombCount(int x, int y);

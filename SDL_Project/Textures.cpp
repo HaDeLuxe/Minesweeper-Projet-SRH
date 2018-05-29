@@ -45,7 +45,11 @@ void Textures::preLoadTextures(SDL_Renderer * ren)
 {
 	backgroundTex = loadTexture("Assets/milky-way.jpg", ren);
 	wallTex = loadTexture("Assets/meteorBrown_med1.png", ren);
-	playerTex = loadTexture("Assets/playerShip2_blue.png", ren);
+	playerTexUp = loadTexture("Assets/playerShip2_blue_Up.png", ren);
+	playerTexLeft = loadTexture("Assets/playerShip2_blue -Left.png", ren);
+	playerTexRight = loadTexture("Assets/playerShip2_blue -Right.png", ren);
+	playerTexDown = loadTexture("Assets/playerShip2_blue - Down.png", ren);
+	crosshairTex = loadTexture("Assets/crosshair110.png", ren);
 	maskTex = loadTexture("Assets/Mask.png", ren);
 }
 

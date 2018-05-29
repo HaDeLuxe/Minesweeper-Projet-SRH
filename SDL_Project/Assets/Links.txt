@@ -1,2 +1,7 @@
 Hintergrund:
 https://pixabay.com/de/milchstraﬂe-sternenhimmel-2695569/
+Nebulous-Regular.ttf:
+http://www.fontspace.com/category/space
+SFDistantGalaxy.ttf:
+http://www.fontspace.com/shyfoundry/sf-distant-galaxy
+

@@ -15,11 +15,13 @@ class Movement
 private:
 	int pX, pY;
 	int tempTileBox = BACKGROUND;
+	int _lastCrosshairXPos = 0;
+	int _lastCrosshairYPos = 0;
+	int lastDirection = 1;
 public:
 	Movement();
 	~Movement();
 
-	void setTale();
 
 	void moveUp();
 	void moveRight();

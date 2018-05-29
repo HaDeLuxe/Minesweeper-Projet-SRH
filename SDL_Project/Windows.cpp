@@ -21,12 +21,12 @@ void Menu::RenderMenu()
 	//Render Start Button	
 	FIELD->setRendererColor(66, 195, 148, 255);
 	FIELD->drawFillRect(300, 500, 300, 75);
-	textC->writeText(310, 500, 280, 75, 50, "Start Game", FIELD->getRenderer());
+	textC->writeText(305, 505, 280, 65, 95, "Start Game", FIELD->getRenderer());
 
 	//Render Quit Button
 	FIELD->setRendererColor(66, 195, 148, 255);
 	FIELD->drawFillRect(300, 700, 300, 75);
-	textC->writeText(300, 700, 200, 75, 50, "Quit", FIELD->getRenderer());
+	textC->writeText(345, 705, 200, 65, 95, "Quit", FIELD->getRenderer());
 }
 
 bool Menu::startButtonPushed(int x, int y) {

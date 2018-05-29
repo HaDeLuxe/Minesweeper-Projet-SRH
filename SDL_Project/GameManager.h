@@ -4,7 +4,7 @@
 #include "Windows.h"
 #include "Enums.h"
 #include "text.h"
-#include <queue>
+
 
 #define FIELD Field::Instance()
 
@@ -17,7 +17,6 @@ public:
 	GameManager();
 	~GameManager();
 
-	void checkForSolvability(int nextPositionX, int nextPositionY);
 	void renewField();
 	void readWallData(std::string filePath);
 
