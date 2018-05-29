@@ -548,7 +548,7 @@ void Field::drawField()
 				setRendererColor(0, 255, 0, 255);
 
 				drawRect(xOrigin + c*50, 165 + r * 50, 50, 50);
-				//tex->renderTexture(tex->loadTexture("astronaut_SE.png", ren), ren, xOrigin + c * 50, 165 + r * 50, 50, 50);
+				tex->renderTexture(tex->loadTexture("Assets//meteorBrown_med1.png", ren), ren, xOrigin + c * 50, 165 + r * 50, 50, 50);
 			}
 			
 			if (tileField[y][x].tileType == BOMB) {
