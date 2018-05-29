@@ -215,6 +215,7 @@ void Field::placeMask()
 			if (tileField[y][x].tileType != PLAYER/* && tileField[y][x].tileType != WALL*/) {
 				tileField[y][x].isShown = false;
 			}
+			if (tileField[y][x].tileType == WALL) tileField[y][x].isShown = true;
 		}
 	}
 }
@@ -492,46 +493,24 @@ void Field::floodFillOpenFieldsUR(int nextPositionX, int nextPositionY)
 	
 }
 
-void Field::floodFillOpenFieldsDL(int nextPositionX, int nextPositionY)
-{
-	if (nextPositionX >= 0 && nextPositionY >= 0 && nextPositionX < static_cast<int>(tileField[0].size()) && nextPositionY < static_cast<int>(tileField.size())) {
 
-		if (tileField[nextPositionY][nextPositionX].isShown == true) {
-			return;
-		}
-		if (tileField[nextPositionY][nextPositionX].isShown == false) {
-			if (tileField[nextPositionY][nextPositionX].bombcount != 0) {
-				tileField[nextPositionY][nextPositionX].isShown = true;
-				return;
-			}
-			if (tileField[nextPositionY][nextPositionX].tileType == WALL) {
-				return;
-			}
-			tileField[nextPositionY][nextPositionX].isShown = true;
-		}
-		floodFillOpenFieldsDL(nextPositionX, nextPositionY++);
-		floodFillOpenFieldsDL(nextPositionX, nextPositionY--);
-		floodFillOpenFieldsDL(nextPositionX--, nextPositionY);
-		
-		
-		
-		floodFillOpenFieldsDL(nextPositionX++, nextPositionY);
-		
-
-	}
-	return;
-}
 
 void Field::initializeTextC() {
 	textC->TTF_Initiate();
 	textC->preIntializeTexts(ren);
 }
 
+void Field::initializeTex()
+{
+	tex->preLoadTextures(ren);
+}
+
 
 void Field::drawField()
 {
-	setRendererColor(0, 0, 30, 255);
-	drawFillRect(0, 0, 1920, 1080);
+	//setRendererColor(0, 0, 30, 255);
+	//drawFillRect(0, 0, 1920, 1080);
+
 	/*setRendererColor(0, 255, 0, 255);
 	drawRect(335, 165, 1250, 750);*/
 	//placeMask();
@@ -548,7 +527,7 @@ void Field::drawField()
 				setRendererColor(0, 255, 0, 255);
 
 				drawRect(xOrigin + c*50, 165 + r * 50, 50, 50);
-				tex->renderTexture(tex->loadTexture("Assets//meteorBrown_med1.png", ren), ren, xOrigin + c * 50, 165 + r * 50, 50, 50);
+				//tex->renderTexture(tex->loadTexture("Assets//meteorBrown_med1.png", ren), ren, xOrigin + c * 50, 165 + r * 50, 50, 50);
 			}
 			
 			if (tileField[y][x].tileType == BOMB) {
@@ -593,23 +572,27 @@ void Field::drawField()
 			}
 			if (!tileField[y][x].isShown) {
 				setRendererColor(0, 0, 150, 255);
-				drawFillRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
+				//drawFillRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
 				setRendererColor(255, 255, 255, 255);
 				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
+				tex->renderTexture(tex->maskTex, ren, xOrigin + c * 50, 165 + r * 50, 50, 50);
 			}
 			if (tileField[y][x].tileType == WALL) {
+				setRendererColor(0, 0, 30, 255);
 				setRendererColor(0, 255, 0, 255);
-				drawFillRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
+				//drawFillRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
 				/*SDL_Texture * text = tex->loadTexture("Assets/meteorBrown_med1.png", ren);
 				tex->renderTexture(text, ren, xOrigin + c * 50, 165 + r * 50, 50, 50);
 				SDL_DestroyTexture(text);*/
+				tex->renderTexture(tex->wallTex, ren, xOrigin + c * 50, 165 + r * 50, 50, 50);
+				//tex->renderTexture(tex->loadTexture("Assets//meteorBrown_med1.png", ren), ren, xOrigin + c * 50, 165 + r * 50, 50, 50);
 			}
 			if (tileField[y][x].tileType == PLAYER) {
 				setRendererColor(0, 255, 0, 255);
 				drawRect(xOrigin + c * 50, 165 + r * 50, 50, 50);
-				drawFillCircle(xOrigin + c * 50, 165 + r * 50, 25);
-
-				//tex->renderTexture(tex->loadTexture("astronaut_SE.png", ren), ren, xOrigin + c * 50, 165 + r * 50, 50,50);
+				//drawFillCircle(xOrigin + c * 50, 165 + r * 50, 25);
+				
+				tex->renderTexture(tex->playerTex, ren, xOrigin + c * 50, 165 + r * 50, 50,50);
 			}
 
 			c++;

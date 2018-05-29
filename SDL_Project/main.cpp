@@ -46,6 +46,9 @@ int main(int argc, char* argv[])
 	win = FIELD->getWindow();
 	currentGameState = States::Splashscreen;
 	FIELD->initializeTextC();
+	FIELD->initializeTex();
+	textures->preLoadTextures(FIELD->getRenderer());
+	
 	FIELD->createPlayField(50, 15);
 	gameManager->readWallData("Assets/Level1");
 	//FIELD->setRandomWalls();
@@ -170,6 +173,7 @@ void PollEvents() {
 			break;
 		case States::Game:
 			FIELD->renderClear();
+			textures->renderTexture(textures->backgroundTex,FIELD->getRenderer(),0,0,1920,1080);
 
 			FIELD->drawField();
 

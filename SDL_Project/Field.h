@@ -65,6 +65,7 @@ public:
 
 	void calculatePlayerPos(); //Gets the player coordinates
 	void initializeTextC();
+	void initializeTex();
 
 #pragma region object draw functions
 	void drawRect(int x1, int y1, int x2, int y2);
@@ -79,7 +80,7 @@ public:
 	int getPlayfieldXSize();
 	int getPlayfieldYSize();
 	int getWindowWidth();
-
+	
 
 	int getObjectAtCoord(int x, int y);
 	void enterObjectInField(int x, int y, int type);
@@ -90,7 +91,6 @@ public:
 	void setRandomWalls();
 	void setRandomMines();
 	void floodFillOpenFieldsUR(int nextPositionX, int nextPositionY);
-	void floodFillOpenFieldsDL(int nextPositionX, int nextPositionY);
 	
 	void drawField();
 };

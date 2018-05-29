@@ -39,6 +39,16 @@ void Textures::renderTexture(SDL_Texture * tex, SDL_Renderer * ren, int x, int y
 
 }
 
+
+
+void Textures::preLoadTextures(SDL_Renderer * ren)
+{
+	backgroundTex = loadTexture("Assets/milky-way.jpg", ren);
+	wallTex = loadTexture("Assets/meteorBrown_med1.png", ren);
+	playerTex = loadTexture("Assets/playerShip2_blue.png", ren);
+	maskTex = loadTexture("Assets/Mask.png", ren);
+}
+
 SDL_Texture * Textures::getTex()
 {
 	return tex;

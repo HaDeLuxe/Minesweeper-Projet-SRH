@@ -95,6 +95,7 @@
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\SDL2\lib\$(PlatformTarget);$(SolutionDir)Dependencies\SDL2_image\lib\$(PlatformTarget);$(SolutionDir)Dependencies\SDL2_ttf\lib\$(PlatformTarget);$(SolutionDir)Dependencies\SDL2_mixer\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
+      <Profile>true</Profile>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d  "$(SolutionDir)Dependencies\SDL2\lib\$(PlatformTarget)\*.dll" "$(OutDir)"
@@ -114,6 +115,7 @@ xcopy /y /d  "$(SolutionDir)Dependencies\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\SDL2\lib\$(PlatformTarget);$(SolutionDir)Dependencies\SDL2_image\lib\$(PlatformTarget);$(SolutionDir)Dependencies\SDL2_ttf\lib\$(PlatformTarget);$(SolutionDir)Dependencies\SDL2_mixer\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
+      <Profile>true</Profile>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d  "$(SolutionDir)Dependencies\SDL2\lib\$(PlatformTarget)\*.dll" "$(OutDir)"

@@ -11,5 +11,11 @@ enum class TileTypes {
 	Empty,
 	Wall,
 	Player,
-	Bomb,
+	Bomb
+};
+
+enum class TextureName {
+	Background,
+	Wall,
+	Player
 };
