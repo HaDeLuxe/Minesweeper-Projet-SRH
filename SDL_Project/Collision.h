@@ -13,5 +13,6 @@ public:
 
 	void detectBombCollision(int adX, int adY);
 	bool getBombCollisionStatus();
+	void resetCollisionBool();
 };
 

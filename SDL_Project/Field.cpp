@@ -545,6 +545,7 @@ void Field::drawField()
 				/*drawRect(xOrigin + c * 50, 115 + r * 50, 50, 50);
 				drawFillCircle(xOrigin + c * 50, 115 + r * 50, 25);*/
 				drawRect(xOrigin + c * 50, 115 + r * 50, 50, 50);
+				tex->renderTexture(tex->bombLaser, ren, xOrigin + c * 50+12, 115 + r * 50+12, 25, 25);
 			}
 
 			if (tileField[y][x].tileType == DEST) {

@@ -20,10 +20,12 @@ text * textC;
 GameManager * gameManager;
 Menu* mainMenu;
 SDL_Window *win;
+Window * window;
 Splashscreen* splashScreen;
 Player * player;
 Collision * col;
 Losescreen * losescreen;
+credits * creditsS;
 
 void PollEvents();
 
@@ -44,9 +46,11 @@ int main(int argc, char* argv[])
 	textC = new text();
 	col = new Collision();
 	gameManager = new GameManager();
+	window = new Window();
 	mainMenu = new Menu();
 	splashScreen = new Splashscreen();
 	losescreen = new Losescreen();
+	creditsS = new credits();
 
 	FIELD->createWindow();
 	FIELD->createRenderer();
@@ -60,7 +64,7 @@ int main(int argc, char* argv[])
 	gameManager->readWallData("Assets/Level1");
 
 	FIELD->setRandomMines();
-	FIELD->placeMask();
+	//FIELD->placeMask();
 
 	std::cout << "Lifepoints in Main (2): " << lifePoints - 1 << std::endl;
 	PollEvents();
@@ -132,9 +136,7 @@ void PollEvents() {
 					break;
 
 				}
-				if(FIELD->bombCollision()){
-					player->reduceLife();
-				}
+
 			}
 			if (event.type == SDL_MOUSEBUTTONUP) {
 				int mouseX;
@@ -151,6 +153,7 @@ void PollEvents() {
 					if (currentGameState == States::MainMenu) {
 						if (mainMenu->startButtonPushed(mouseX, mouseY)) currentGameState = States::Game;
 						if (mainMenu->exitButtonPushed(mouseX, mouseY)) i = 0;
+						if (mainMenu->creditsButtonPushed(mouseX, mouseY)) currentGameState = States::Credits;
 					}
 					if (currentGameState == States::Splashscreen) {
 						currentGameState = States::MainMenu;
@@ -174,6 +177,7 @@ void PollEvents() {
 		case States::Splashscreen:
 			splashScreen->RenderSplashScreen();
 			currentGameState = splashScreen->Update(deltaTime);
+			textures->renderTexture(textures->splash, FIELD->getRenderer(), 0, 0, 1920, 1080);
 			break;
 		case States::MainMenu:
 			mainMenu->RenderMenu();
@@ -189,13 +193,11 @@ void PollEvents() {
 			losescreen->RenderEndScreen();
 			losescreen->writeWinText();
 			break;
+		case States::Credits:
+			creditsS->renderCreditsWindow();
 		}
 		
-		if (movement->getBombCollisionStatus()) {
-			player->reduceLife();
-			std::cout << "Player Life in Main: " << player->returnLifePoints();
-			//std::cout << "Bomb Collission detected!" << std::endl;
-		}
+		
 
 		
 		SDL_RenderPresent(FIELD->getRenderer());

@@ -3,26 +3,39 @@
 #include "Field.h"
 #include "text.h"
 #include "Enums.h"
+#include "Textures.h"
 
 
 
 #define FIELD Field::Instance()
 
-class Menu
+class Window {
+protected:
+	text * textC;
+	Textures * textures;
+public:
+	Window();
+	~Window();
+};
+
+class Menu : public Window
 {
 private:
-	text * textC;
+	
+	
 public:
 	Menu();
 	~Menu();
 	void RenderMenu();
 	bool startButtonPushed(int x, int y);
 	bool exitButtonPushed(int x, int y);
+	bool creditsButtonPushed(int x, int y);
 };
 
-class Splashscreen {
+class Splashscreen : public Window{
 private:
 	float passframe = 0;
+	
 public:
 	Splashscreen();
 	~Splashscreen();
@@ -31,9 +44,9 @@ public:
 
 };
 
-class EndScreen {
+class EndScreen : public Window{
 protected:
-	text * textC;
+	
 public:
 	
 	EndScreen();
@@ -44,4 +57,10 @@ public:
 class Losescreen : public EndScreen {
 public:
 	void writeWinText();
+};
+
+class credits : public Window {
+private:
+public:
+	void renderCreditsWindow();
 };

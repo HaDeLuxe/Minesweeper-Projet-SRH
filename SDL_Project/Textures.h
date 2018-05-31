@@ -34,6 +34,8 @@ public:
 	SDL_Texture * playerDam3Left = NULL;
 	SDL_Texture * maskTex = NULL;
 	SDL_Texture * crosshairTex = NULL;
+	SDL_Texture * bombLaser = NULL;
+	SDL_Texture * splash = NULL;
 	
 
 	SDL_Texture* loadTexture(const std::string &file, SDL_Renderer *ren);

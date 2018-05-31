@@ -4,11 +4,19 @@
 Movement::Movement()
 {
 	col = new Collision();
+	player = new Player();
 } //constructor
 
 Movement::~Movement()
 {
 } //deconstructor
+
+void Movement::bombCollision()
+{
+	if (col->getBombCollisionStatus()) {
+		player->reduceLife();
+	}
+}
 
 
 
@@ -19,11 +27,17 @@ void Movement::moveUp()
 	FIELD->calculatePlayerPos();
 	pX = FIELD->getPlayerXPos();
 	pY = FIELD->getPlayerYPos();
+	alreadyCheckedIfCol = false;
 	if (pY > 0) {
 		if (FIELD->getObjectAtCoord(pX, pY - 1) != WALL) {
 			
 			if (lastDirection == 1) {
-				col->detectBombCollision(0, -1);
+				if (!alreadyCheckedIfCol) {
+					col->detectBombCollision(0, -1);
+					alreadyCheckedIfCol = true;
+					bombCollision();
+					col->resetCollisionBool();
+				}
 				FIELD->enterObjectInField(pX, pY, tempTileBox);
 				if (tempTileBox == BOMB) tempTileBox = BACKGROUND;
 				if (FIELD->getObjectAtCoord(pX, pY - 1) == BOMB) {
@@ -53,11 +67,17 @@ void Movement::moveDown()
 	FIELD->calculatePlayerPos();
 	pX = FIELD->getPlayerXPos();
 	pY = FIELD->getPlayerYPos();
+	alreadyCheckedIfCol = false;
 	if (pY <  static_cast<int>(FIELD->tileField.size()) - 1) {
 		if (FIELD->getObjectAtCoord(pX, pY + 1) != WALL) {
 			
 			if (lastDirection == 3) {
-				col->detectBombCollision(0, 1);
+				if (!alreadyCheckedIfCol) {
+					col->detectBombCollision(0, 1);
+					alreadyCheckedIfCol = true;
+					bombCollision();
+					col->resetCollisionBool();
+				}
 				FIELD->enterObjectInField(pX, pY, tempTileBox);
 				if (tempTileBox == BOMB) tempTileBox = BACKGROUND;
 				if (FIELD->getObjectAtCoord(pX, pY + 1) == BOMB) {
@@ -85,11 +105,17 @@ void Movement::moveRight()
 	FIELD->calculatePlayerPos();
 	pX = FIELD->getPlayerXPos();
 	pY = FIELD->getPlayerYPos();
+	alreadyCheckedIfCol = false;
 	if(pX < static_cast<int>(FIELD->tileField[pY].size() - 1)){
 		if (FIELD->getObjectAtCoord(pX + 1, pY) != WALL) {
 			
 			if (lastDirection == 2) {
-				col->detectBombCollision(1, 0);
+				if (!alreadyCheckedIfCol) {
+					col->detectBombCollision(1, 0);
+					alreadyCheckedIfCol = true;
+					bombCollision();
+					col->resetCollisionBool();
+				}
 				FIELD->enterObjectInField(pX, pY, tempTileBox);
 				if (tempTileBox == BOMB) tempTileBox = BACKGROUND;
 				if (FIELD->getObjectAtCoord(pX + 1, pY) == BOMB) {
@@ -117,11 +143,17 @@ void Movement::moveLeft()
 	FIELD->calculatePlayerPos();
 	pX = FIELD->getPlayerXPos();
 	pY = FIELD->getPlayerYPos();
+	alreadyCheckedIfCol = false;
 	if(pX > 0){
 		if (FIELD->getObjectAtCoord(pX - 1, pY) != WALL) {
 			
 			if (lastDirection == 4) {
-				col->detectBombCollision(-1, 0);
+				if (!alreadyCheckedIfCol) {
+					col->detectBombCollision(-1, 0);
+					alreadyCheckedIfCol = true;
+					bombCollision();
+					col->resetCollisionBool();
+				}
 				FIELD->enterObjectInField(pX, pY, tempTileBox);
 				if (tempTileBox == BOMB) tempTileBox = BACKGROUND;
 				if (FIELD->getObjectAtCoord(pX - 1, pY) == BOMB) {
@@ -148,6 +180,11 @@ void Movement::moveLeft()
 bool Movement::getBombCollisionStatus()
 {
 	return col->getBombCollisionStatus();
+}
+
+void Movement::resetBombBool()
+{
+	col->resetCollisionBool();
 }
 
 #pragma endregion

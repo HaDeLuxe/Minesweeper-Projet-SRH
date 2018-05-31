@@ -4,6 +4,7 @@ enum class States {
 	Splashscreen,
 	MainMenu,
 	Game,
+	Credits,
 	End
 };
 

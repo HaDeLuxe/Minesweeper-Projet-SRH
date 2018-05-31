@@ -2,10 +2,18 @@
 #include "Windows.h"
 #include "Field.h"
 
+Window::Window()
+{
+	textures = new Textures();
+	textC = new text();
+}
+
+Window::~Window()
+{
+}
+
 Menu::Menu()
 {
-	
-	textC = new text();
 }
 
 Menu::~Menu()
@@ -28,6 +36,11 @@ void Menu::RenderMenu()
 	FIELD->setRendererColor(66, 195, 148, 255);
 	FIELD->drawFillRect(300, 700, 300, 75);
 	textC->writeText(345, 705, 200, 65, 95, "Quit", FIELD->getRenderer(), color);
+
+	//Render Credits Button
+	FIELD->setRendererColor(66, 195, 148, 255);
+	FIELD->drawFillRect(1450, 700, 300, 75);
+	textC->writeText(1500, 705, 200, 65, 95, "Credits", FIELD->getRenderer(), color);
 }
 
 bool Menu::startButtonPushed(int x, int y) {
@@ -46,20 +59,31 @@ bool Menu::exitButtonPushed(int x, int y)
 	else return false;
 }
 
+bool Menu::creditsButtonPushed(int x, int y)
+{
+	if (x > 1450 && x < 1750 && y > 700 && y < 775) {
+		return true;
+	}
+	else return false;
+}
 
+Splashscreen::Splashscreen() {
+}
+
+Splashscreen::~Splashscreen() {}
 
 void Splashscreen::RenderSplashScreen()
 {
 	FIELD->renderClear();
-	FIELD->setRendererColor(200, 200, 200, 255);
+	FIELD->setRendererColor(255, 200, 200, 255);
 	FIELD->drawFillRect(0, 0, 1920, 1080);
-
+	textures->renderTexture(textures->bombLaser, FIELD->getRenderer(), 0, 0, 1920, 1080);
 }
 
 
 
-Splashscreen::Splashscreen() {}
-Splashscreen::~Splashscreen() {}
+
+
 States Splashscreen::Update(float deltaTime)
 {
 	passframe += deltaTime;
@@ -70,7 +94,6 @@ States Splashscreen::Update(float deltaTime)
 
 EndScreen::EndScreen()
 {
-	textC = new text();
 }
 
 EndScreen::~EndScreen()
@@ -89,4 +112,13 @@ void Losescreen::writeWinText()
 {
 	SDL_Color color = { 255, 0, 0, 255 };
 	textC->writeText(700, 390, 500, 200, 300, "You Lose", FIELD->getRenderer(),color );
+}
+
+void credits::renderCreditsWindow()
+{
+	FIELD->setRendererColor(255, 255, 255, 20);
+	FIELD->drawFillRect(0, 0, 1920, 1080);
+	SDL_Color color = { 0, 0, 0, 255 };
+	textC->writeText(100, 100, 150, 100, 300, "Credits", FIELD->getRenderer(), color);
+	textC->writeText(700, 390, 350, 75, 100, "Haas Pascal", FIELD->getRenderer(), color);
 }

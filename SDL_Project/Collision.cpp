@@ -27,4 +27,11 @@ bool Collision::getBombCollisionStatus()
 	return bombCollision;
 }
 
+void Collision::resetCollisionBool()
+{
+	bombCollision = false;
+}
+
+
+
 

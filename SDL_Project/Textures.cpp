@@ -63,6 +63,8 @@ void Textures::preLoadTextures(SDL_Renderer * ren)
 	playerDam3Left = loadTexture("Assets/playerShip2_damage3_Left.png", ren);
 	crosshairTex = loadTexture("Assets/crosshair110.png", ren);
 	maskTex = loadTexture("Assets/Mask.png", ren);
+	bombLaser = loadTexture("Assets/laserRed11.png", ren);
+	splash = loadTexture("Assets/universe.jpg", ren);
 }
 
 SDL_Texture * Textures::getTex()
