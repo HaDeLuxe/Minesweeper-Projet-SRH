@@ -107,7 +107,7 @@ void text::OpenFont(const char * file, int ptsize)
 	
 }
 
-void text::writeText(int x1, int y1, int x2, int y2, int pSize, std::string text, SDL_Renderer* ren)
+void text::writeText(int x1, int y1, int x2, int y2, int pSize, std::string text, SDL_Renderer* ren, SDL_Color textColor)
 {
 	
 	std::string fontfile = "Assets\\Nebulous-Regular.ttf";
@@ -125,7 +125,6 @@ void text::writeText(int x1, int y1, int x2, int y2, int pSize, std::string text
 	std::string text1 = "1";
 	SDL_Surface * solidSurface = TTF_RenderText_Solid(font, text1.c_str(), textColor);*/
 
-	SDL_Color textColor = { 255, 255, 255, 255 };
 	SDL_Surface * solid = TTF_RenderText_Solid(font, text.c_str(), textColor);
 
 	solidTexture = SDL_CreateTextureFromSurface(ren, solid);

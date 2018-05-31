@@ -1,7 +1,7 @@
 #pragma once
 #include "Header.h"
 #include "Field.h"
-
+#include "Collision.h"
 
 
 
@@ -13,6 +13,7 @@
 class Movement
 {
 private:
+	Collision * col;
 	int pX, pY;
 	int tempTileBox = BACKGROUND;
 	int _lastCrosshairXPos = 0;
@@ -27,7 +28,7 @@ public:
 	void moveRight();
 	void moveDown();
 	void moveLeft();
-
+	bool getBombCollisionStatus();
 	void moveAfterClick(int x, int y);
 
 

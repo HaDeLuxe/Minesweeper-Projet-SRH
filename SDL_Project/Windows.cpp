@@ -21,12 +21,13 @@ void Menu::RenderMenu()
 	//Render Start Button	
 	FIELD->setRendererColor(66, 195, 148, 255);
 	FIELD->drawFillRect(300, 500, 300, 75);
-	textC->writeText(305, 505, 280, 65, 95, "Start Game", FIELD->getRenderer());
+	SDL_Color color = { 255, 255, 255, 255 };
+	textC->writeText(305, 505, 280, 65, 95, "Start Game", FIELD->getRenderer(), color);
 
 	//Render Quit Button
 	FIELD->setRendererColor(66, 195, 148, 255);
 	FIELD->drawFillRect(300, 700, 300, 75);
-	textC->writeText(345, 705, 200, 65, 95, "Quit", FIELD->getRenderer());
+	textC->writeText(345, 705, 200, 65, 95, "Quit", FIELD->getRenderer(), color);
 }
 
 bool Menu::startButtonPushed(int x, int y) {
@@ -65,4 +66,27 @@ States Splashscreen::Update(float deltaTime)
 	if (passframe >= 3)
 		return States::MainMenu;
 	return States::Splashscreen;
+}
+
+EndScreen::EndScreen()
+{
+	textC = new text();
+}
+
+EndScreen::~EndScreen()
+{
+}
+
+void EndScreen::RenderEndScreen()
+{
+	//FIELD->renderClear();
+	FIELD->setRendererColor(255, 255, 255, 20);
+	FIELD->drawFillRect(0, 0, 1920, 1080);
+	
+}
+
+void Losescreen::writeWinText()
+{
+	SDL_Color color = { 255, 0, 0, 255 };
+	textC->writeText(700, 390, 500, 200, 300, "You Lose", FIELD->getRenderer(),color );
 }

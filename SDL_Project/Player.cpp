@@ -1,6 +1,6 @@
 #include "Player.h"
 
-
+int lifePoints = 4;
 
 Player::Player()
 {
@@ -21,6 +21,7 @@ bool Player::reduceLife()
 	if (lifePoints <= 0) {
 		return false;
 	}
+	return false;
 }
 
 int Player::returnLifePoints()

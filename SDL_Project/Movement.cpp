@@ -3,7 +3,7 @@
 
 Movement::Movement()
 {
-
+	col = new Collision();
 } //constructor
 
 Movement::~Movement()
@@ -23,6 +23,7 @@ void Movement::moveUp()
 		if (FIELD->getObjectAtCoord(pX, pY - 1) != WALL) {
 			
 			if (lastDirection == 1) {
+				col->detectBombCollision(0, -1);
 				FIELD->enterObjectInField(pX, pY, tempTileBox);
 				if (tempTileBox == BOMB) tempTileBox = BACKGROUND;
 				if (FIELD->getObjectAtCoord(pX, pY - 1) == BOMB) {
@@ -42,6 +43,7 @@ void Movement::moveUp()
 		}
 		lastDirection = 1;
 	}
+		
 }
 
 
@@ -51,9 +53,11 @@ void Movement::moveDown()
 	FIELD->calculatePlayerPos();
 	pX = FIELD->getPlayerXPos();
 	pY = FIELD->getPlayerYPos();
-	if (pY <  FIELD->tileField.size() - 1) {
+	if (pY <  static_cast<int>(FIELD->tileField.size()) - 1) {
 		if (FIELD->getObjectAtCoord(pX, pY + 1) != WALL) {
+			
 			if (lastDirection == 3) {
+				col->detectBombCollision(0, 1);
 				FIELD->enterObjectInField(pX, pY, tempTileBox);
 				if (tempTileBox == BOMB) tempTileBox = BACKGROUND;
 				if (FIELD->getObjectAtCoord(pX, pY + 1) == BOMB) {
@@ -64,7 +68,7 @@ void Movement::moveDown()
 			}
 			FIELD->calculatePlayerPos();
 			FIELD->floodFillOpenFieldsUR(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
-			if (pY <  FIELD->tileField.size() - 1) {
+			if (pY <  static_cast<int>(FIELD->tileField.size() - 1)) {
 				FIELD->tileField[_lastCrosshairYPos][_lastCrosshairXPos].crosshair = false;
 				FIELD->tileField[FIELD->getPlayerYPos()+1][FIELD->getPlayerXPos()].crosshair = true;
 				_lastCrosshairXPos = FIELD->getPlayerXPos();
@@ -73,6 +77,7 @@ void Movement::moveDown()
 		}
 	}
 	lastDirection = 3;
+	
 }
 
 void Movement::moveRight()
@@ -80,9 +85,11 @@ void Movement::moveRight()
 	FIELD->calculatePlayerPos();
 	pX = FIELD->getPlayerXPos();
 	pY = FIELD->getPlayerYPos();
-	if(pX < FIELD->tileField[pY].size() - 1){
+	if(pX < static_cast<int>(FIELD->tileField[pY].size() - 1)){
 		if (FIELD->getObjectAtCoord(pX + 1, pY) != WALL) {
+			
 			if (lastDirection == 2) {
+				col->detectBombCollision(1, 0);
 				FIELD->enterObjectInField(pX, pY, tempTileBox);
 				if (tempTileBox == BOMB) tempTileBox = BACKGROUND;
 				if (FIELD->getObjectAtCoord(pX + 1, pY) == BOMB) {
@@ -94,7 +101,7 @@ void Movement::moveRight()
 			FIELD->calculatePlayerPos();
 			FIELD->floodFillOpenFieldsUR(FIELD->getPlayerXPos(), FIELD->getPlayerYPos());
 
-			if (pX < FIELD->tileField[pY].size() - 1) {
+			if (pX < static_cast<int>(FIELD->tileField[pY].size() - 1)) {
 				FIELD->tileField[_lastCrosshairYPos][_lastCrosshairXPos].crosshair = false;
 				FIELD->tileField[FIELD->getPlayerYPos()][FIELD->getPlayerXPos() + 1].crosshair = true;
 				_lastCrosshairXPos = FIELD->getPlayerXPos()+1;
@@ -102,6 +109,7 @@ void Movement::moveRight()
 			}
 		}	}
 	lastDirection = 2;
+	
 }
 void Movement::moveLeft()
 {
@@ -111,7 +119,9 @@ void Movement::moveLeft()
 	pY = FIELD->getPlayerYPos();
 	if(pX > 0){
 		if (FIELD->getObjectAtCoord(pX - 1, pY) != WALL) {
+			
 			if (lastDirection == 4) {
+				col->detectBombCollision(-1, 0);
 				FIELD->enterObjectInField(pX, pY, tempTileBox);
 				if (tempTileBox == BOMB) tempTileBox = BACKGROUND;
 				if (FIELD->getObjectAtCoord(pX - 1, pY) == BOMB) {
@@ -132,6 +142,12 @@ void Movement::moveLeft()
 		}
 	}
 	lastDirection = 4;
+	
+}
+
+bool Movement::getBombCollisionStatus()
+{
+	return col->getBombCollisionStatus();
 }
 
 #pragma endregion

@@ -31,3 +31,17 @@ public:
 
 };
 
+class EndScreen {
+protected:
+	text * textC;
+public:
+	
+	EndScreen();
+	~EndScreen();
+	void RenderEndScreen();
+};
+
+class Losescreen : public EndScreen {
+public:
+	void writeWinText();
+};

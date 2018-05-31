@@ -1,10 +1,13 @@
 #pragma once
 
 #include "Textures.h"
+
+extern int lifePoints;
+
 class Player
 {
 private:
-	 int lifePoints = 3;
+	
 public:
 	Player();
 	~Player();

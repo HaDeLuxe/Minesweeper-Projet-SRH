@@ -20,6 +20,18 @@ public:
 	SDL_Texture * playerTexLeft = NULL;
 	SDL_Texture * playerTexRight = NULL;
 	SDL_Texture * playerTexDown = NULL;
+	SDL_Texture * playerDam1Up = NULL;
+	SDL_Texture * playerDam1Right = NULL;
+	SDL_Texture * playerDam1Down = NULL;
+	SDL_Texture * playerDam1Left = NULL;
+	SDL_Texture * playerDam2Up = NULL;
+	SDL_Texture * playerDam2Right = NULL;
+	SDL_Texture * playerDam2Down = NULL;
+	SDL_Texture * playerDam2Left = NULL;
+	SDL_Texture * playerDam3Up = NULL;
+	SDL_Texture * playerDam3Right = NULL;
+	SDL_Texture * playerDam3Down = NULL;
+	SDL_Texture * playerDam3Left = NULL;
 	SDL_Texture * maskTex = NULL;
 	SDL_Texture * crosshairTex = NULL;
 	

@@ -3,7 +3,7 @@
 #include "Enums.h"
 #include "text.h"
 #include "Textures.h"
-
+#include "Player.h"
 
 
 #define BACKGROUND 1
@@ -71,6 +71,7 @@ public:
 	void drawFillRect(int x1, int y1, int x2, int y2);
 	void drawFillCircle(int x, int y, int radius);
 	void drawLine(int x1, int y1, int x2, int y2);
+	void drawTransparentRect(int x1, int y1, int x2, int y2);
 #pragma endregion Hier sind die Funktionen um Objekte wie Kreise und Rechtecke zu zeichnen.
 
 

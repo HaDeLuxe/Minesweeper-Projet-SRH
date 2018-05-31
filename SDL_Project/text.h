@@ -42,7 +42,7 @@ public:
 	void renderNumber(int number, SDL_Renderer * ren, int x1, int y1, int x2, int y2);			//Renders an precreated number between 1 and 8 to the renderer.
 
 
-	void writeText(int x1, int y1, int x2, int y2, int pSize, std::string text, SDL_Renderer* ren);
+	void writeText(int x1, int y1, int x2, int y2, int pSize, std::string text, SDL_Renderer* ren, SDL_Color textColor);
 	//SDL_Texture* SurfaceToTexture(SDL_Surface* surf);
 
 };

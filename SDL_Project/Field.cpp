@@ -9,9 +9,6 @@ Field::Field()
 
 Field* Field::m_pInstance = NULL;
 
-
-
-
 Field * Field::Instance()
 {
 	if (!m_pInstance) {
@@ -161,6 +158,11 @@ void Field::drawLine(int x1, int y1, int x2, int y2)
 	SDL_RenderDrawLine(ren, x1, y1, x2, y2);
 }
 
+void Field::drawTransparentRect(int x1, int y1, int x2, int y2)
+{
+	
+}
+
 
 #pragma endregion Hier sind die Funktionen um Objekte wie Kreise und Rechtecke zu zeichnen.
 
@@ -211,6 +213,8 @@ void Field::enterObjectInField(int x, int y, int type)
 	//field[y][x] = type;
 	tileField[y][x].tileType = type;
 }
+
+
 
 
 bool Field::bombCollision()
@@ -518,12 +522,8 @@ void Field::initializeTex()
 
 void Field::drawField()
 {
-	//setRendererColor(0, 0, 30, 255);
-	//drawFillRect(0, 0, 1920, 1080);
+	std::cout << "Lifepoints (3) in Field.cpp: " << lifePoints << std::endl;
 
-	/*setRendererColor(0, 255, 0, 255);
-	drawRect(335, 115, 1250, 750);*/
-	//placeMask();
 
 	int r = 0;
 	int c = 0;
@@ -599,10 +599,30 @@ void Field::drawField()
 				drawRect(xOrigin + c * 50, 115 + r * 50, 50, 50);
 				//drawFillCircle(xOrigin + c * 50, 115 + r * 50, 25);
 				
-				if (lastDirection == 1)	tex->renderTexture(tex->playerTexUp, ren, xOrigin + c * 50, 115 + r * 50, 50,50);
-				if (lastDirection == 2) tex->renderTexture(tex->playerTexRight, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
-				if (lastDirection == 3) tex->renderTexture(tex->playerTexDown, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
-				if (lastDirection == 4) tex->renderTexture(tex->playerTexLeft, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+				if (lastDirection == 1) {
+					tex->renderTexture(tex->playerTexUp, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+					if (lifePoints == 3) tex->renderTexture(tex->playerDam1Up, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+					if (lifePoints == 2) tex->renderTexture(tex->playerDam2Up, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+					if (lifePoints == 1) tex->renderTexture(tex->playerDam3Up, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+				}
+				if (lastDirection == 2) {
+					tex->renderTexture(tex->playerTexRight, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+					if (lifePoints == 3) tex->renderTexture(tex->playerDam1Right, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+					if (lifePoints == 2) tex->renderTexture(tex->playerDam2Right, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+					if (lifePoints == 1) tex->renderTexture(tex->playerDam3Right, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+				}
+				if (lastDirection == 3) {
+					tex->renderTexture(tex->playerTexDown, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+					if (lifePoints == 3) tex->renderTexture(tex->playerDam1Down, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+					if (lifePoints == 2) tex->renderTexture(tex->playerDam2Down, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+					if (lifePoints == 1) tex->renderTexture(tex->playerDam3Down, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+				}
+				if (lastDirection == 4) {
+					tex->renderTexture(tex->playerTexLeft, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+					if (lifePoints == 3) tex->renderTexture(tex->playerDam1Left, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+					if (lifePoints == 2) tex->renderTexture(tex->playerDam2Left, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+					if (lifePoints == 1) tex->renderTexture(tex->playerDam3Left, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+				}
 
 			}
 			if (tileField[y][x].crosshair == true) {
