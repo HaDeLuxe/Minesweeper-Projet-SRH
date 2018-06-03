@@ -61,9 +61,9 @@ int main(int argc, char* argv[])
 	textures->preLoadTextures(FIELD->getRenderer());
 	
 	FIELD->createPlayField(50, 15);
-
-	FIELD->setRandomMines();
 	gameManager->readWallData("Assets/Level1");
+	FIELD->setRandomMines();
+	
 	FIELD->placeMask();
 
 	std::cout << "Lifepoints in Main (2): " << lifePoints - 1 << std::endl;

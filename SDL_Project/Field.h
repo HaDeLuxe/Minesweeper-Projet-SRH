@@ -14,6 +14,7 @@
 #define DEST 5
 #define DOOR 6
 #define AMMU 7
+#define ENEMY 8
 
 
 

@@ -66,6 +66,7 @@ void Textures::preLoadTextures(SDL_Renderer * ren)
 	doorEnemy = loadTexture("Assets/enemyRed1.png", ren);
 	ammu = loadTexture("Assets/things_gold.png", ren);
 	HUD_ammu = loadTexture("Assets/things_bronze_Raender.png", ren);
+	enemy = loadTexture("Assets/spaceShips-enemy.png", ren);
 }
 
 SDL_Texture * Textures::getTex()
