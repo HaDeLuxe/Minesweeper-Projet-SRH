@@ -32,6 +32,26 @@ void Collision::resetCollisionBool()
 	bombCollision = false;
 }
 
+void Collision::detectAmmuCollision(int adX, int adY)
+{
+	FIELD->calculatePlayerPos();
+	if (FIELD->getObjectAtCoord(FIELD->getPlayerXPos() + adX, FIELD->getPlayerYPos() + adY) == AMMU) {
+		std::cout << "Ammu Collision" << std::endl;
+		ammuCollision = true;
+	}
+
+}
+
+bool Collision::getAmmuCollisionStatus()
+{
+	return ammuCollision;
+}
+
+void Collision::resetAmmuCollisionBool()
+{
+	ammuCollision = false;
+}
+
 
 
 

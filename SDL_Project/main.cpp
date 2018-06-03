@@ -61,10 +61,10 @@ int main(int argc, char* argv[])
 	textures->preLoadTextures(FIELD->getRenderer());
 	
 	FIELD->createPlayField(50, 15);
-	gameManager->readWallData("Assets/Level1");
 
 	FIELD->setRandomMines();
-	//FIELD->placeMask();
+	gameManager->readWallData("Assets/Level1");
+	FIELD->placeMask();
 
 	std::cout << "Lifepoints in Main (2): " << lifePoints - 1 << std::endl;
 	PollEvents();
@@ -134,7 +134,18 @@ void PollEvents() {
 						FIELD->getDirection(4);
 					}
 					break;
+				case SDLK_f:
+					if (currentGameState == States::Game) {
+						
+						//gameManager->removeFlag(movement->getCrosshairXPos(), movement->getCrosshairYPos());
+						gameManager->changeFlag(movement->getCrosshairXPos(), movement->getCrosshairYPos());
 
+						if (FIELD->tileField[movement->getCrosshairYPos()][movement->getCrosshairXPos()].tileType == DOOR && ammuCount == 3) {
+							FIELD->enterObjectInField(movement->getCrosshairXPos(), movement->getCrosshairYPos(), BACKGROUND);
+							ammuCount = 0;
+						}
+					}
+					break;
 				}
 
 			}
@@ -175,9 +186,9 @@ void PollEvents() {
 		default:
 
 		case States::Splashscreen:
-			splashScreen->RenderSplashScreen();
 			currentGameState = splashScreen->Update(deltaTime);
 			textures->renderTexture(textures->splash, FIELD->getRenderer(), 0, 0, 1920, 1080);
+			splashScreen->RenderSplashScreen();
 			break;
 		case States::MainMenu:
 			mainMenu->RenderMenu();

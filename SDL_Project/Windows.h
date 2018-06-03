@@ -12,7 +12,6 @@
 class Window {
 protected:
 	text * textC;
-	Textures * textures;
 public:
 	Window();
 	~Window();

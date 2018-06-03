@@ -163,6 +163,30 @@ void Field::drawTransparentRect(int x1, int y1, int x2, int y2)
 	
 }
 
+void Field::drawHUD()
+{
+	if (ammuCount <= 0) {
+		tex->renderTexture(tex->HUD_ammu, ren, 700, 910, 32, 32);
+		tex->renderTexture(tex->HUD_ammu, ren, 740, 910, 32, 32);
+		tex->renderTexture(tex->HUD_ammu, ren, 780, 910, 32, 32);
+	}
+	if (ammuCount == 1) {
+		tex->renderTexture(tex->ammu, ren, 700, 910, 32, 32);
+		tex->renderTexture(tex->HUD_ammu, ren, 740, 910, 32, 32);
+		tex->renderTexture(tex->HUD_ammu, ren, 780, 910, 32, 32);
+	}
+	if (ammuCount == 2) {
+		tex->renderTexture(tex->ammu, ren, 700, 910, 32, 32);
+		tex->renderTexture(tex->ammu, ren, 740, 910, 32, 32);
+		tex->renderTexture(tex->HUD_ammu, ren, 780, 910, 32, 32);
+	}
+	if (ammuCount == 3) {
+		tex->renderTexture(tex->ammu, ren, 700, 910, 32, 32);
+		tex->renderTexture(tex->ammu, ren, 740, 910, 32, 32);
+		tex->renderTexture(tex->ammu, ren, 780, 910, 32, 32);
+	}
+}
+
 
 #pragma endregion Hier sind die Funktionen um Objekte wie Kreise und Rechtecke zu zeichnen.
 
@@ -214,6 +238,11 @@ void Field::enterObjectInField(int x, int y, int type)
 	tileField[y][x].tileType = type;
 }
 
+bool Field::getFlagStatus(int x, int y)
+{
+	return tileField[y][x].flag;
+}
+
 
 
 
@@ -226,7 +255,7 @@ void Field::placeMask()
 {
 	for (int y = 0; y < getPlayfieldYSize(); y++) {
 		for (int x = 0; x < getPlayfieldXSize(); x++) {
-			if (tileField[y][x].tileType != PLAYER/* && tileField[y][x].tileType != WALL*/) {
+			if (tileField[y][x].tileType != PLAYER && tileField[y][x].tileType != DOOR) {
 				tileField[y][x].isShown = false;
 			}
 			if (tileField[y][x].tileType == WALL) tileField[y][x].isShown = true;
@@ -580,6 +609,9 @@ void Field::drawField()
 			if (bombCount == 9) {
 				textC->renderNumber(9, ren, xOrigin + c * 50 + 15, 115 + r * 50 + 10, 20, 35);
 			}
+			if (tileField[y][x].tileType == AMMU) {
+				tex->renderTexture(tex->ammu, ren, xOrigin + c * 50 + 9, 115 + r * 50 + 9, 32, 32);
+			}
 			if (!tileField[y][x].isShown) {
 				setRendererColor(0, 0, 150, 255);
 				//drawFillRect(xOrigin + c * 50, 115 + r * 50, 50, 50);
@@ -626,13 +658,20 @@ void Field::drawField()
 				}
 
 			}
+			if (tileField[y][x].tileType == DOOR) {
+				tex->renderTexture(tex->doorEnemy, ren, xOrigin + c * 50, 115 + r * 50+4, 50, 41);
+			}
 			if (tileField[y][x].crosshair == true) {
 				tex->renderTexture(tex->crosshairTex, ren, xOrigin + c * 50+2, 115 + r * 50+2, 45, 45);
 			}
+			if (tileField[y][x].flag == true) {
+				tex->renderTexture(tex->flag, ren, xOrigin + c * 50 + 15, 115 + r * 50 + 10, 19, 30);
+			}
+			
 			c++;
 			if (c >= static_cast<int>(tileField[r].size()) ) c = 0;
 
-
+			drawHUD();
 
 		}
 		r++;

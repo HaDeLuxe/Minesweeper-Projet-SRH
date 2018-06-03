@@ -7,6 +7,7 @@ class Collision
 {
 private:
 	bool bombCollision = false;
+	bool ammuCollision = false;
 public:
 	Collision();
 	~Collision();
@@ -14,5 +15,9 @@ public:
 	void detectBombCollision(int adX, int adY);
 	bool getBombCollisionStatus();
 	void resetCollisionBool();
+
+	void detectAmmuCollision(int adX, int adY);
+	bool getAmmuCollisionStatus();
+	void resetAmmuCollisionBool();
 };
 

@@ -4,7 +4,6 @@
 
 Window::Window()
 {
-	textures = new Textures();
 	textC = new text();
 }
 
@@ -74,10 +73,12 @@ Splashscreen::~Splashscreen() {}
 
 void Splashscreen::RenderSplashScreen()
 {
-	FIELD->renderClear();
-	FIELD->setRendererColor(255, 200, 200, 255);
-	FIELD->drawFillRect(0, 0, 1920, 1080);
-	textures->renderTexture(textures->bombLaser, FIELD->getRenderer(), 0, 0, 1920, 1080);
+	//FIELD->renderClear();
+	//FIELD->setRendererColor(255, 200, 200, 255);
+	//FIELD->drawFillRect(0, 0, 1920, 1080);
+	//textures->renderTexture(textures->splash, FIELD->getRenderer(), 0, 0, 1920, 1080);
+	SDL_Color color = { 255, 255, 255, 255 };
+	textC->writeText(300, 900, 1400, 20, 50, "Press Mouse Button to Continue Faster", FIELD->getRenderer(), color);
 }
 
 
@@ -103,7 +104,8 @@ EndScreen::~EndScreen()
 void EndScreen::RenderEndScreen()
 {
 	//FIELD->renderClear();
-	FIELD->setRendererColor(255, 255, 255, 20);
+	SDL_SetRenderDrawBlendMode(FIELD->getRenderer(), SDL_BLENDMODE_BLEND);
+	FIELD->setRendererColor(255, 255, 255, 1);
 	FIELD->drawFillRect(0, 0, 1920, 1080);
 	
 }
@@ -116,6 +118,7 @@ void Losescreen::writeWinText()
 
 void credits::renderCreditsWindow()
 {
+	
 	FIELD->setRendererColor(255, 255, 255, 20);
 	FIELD->drawFillRect(0, 0, 1920, 1080);
 	SDL_Color color = { 0, 0, 0, 255 };

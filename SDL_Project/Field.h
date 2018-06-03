@@ -4,6 +4,7 @@
 #include "text.h"
 #include "Textures.h"
 #include "Player.h"
+#include "GameManager.h"
 
 
 #define BACKGROUND 1
@@ -11,6 +12,9 @@
 #define PLAYER 3
 #define BOMB 4
 #define DEST 5
+#define DOOR 6
+#define AMMU 7
+
 
 
 typedef struct tile {
@@ -18,6 +22,7 @@ typedef struct tile {
 	int bombcount = 0;
 	bool isShown = true;
 	bool crosshair = false;
+	bool flag = false;
 }tile;
 
 class Field
@@ -33,6 +38,7 @@ private:
 
 	static Field* instance;
 	Textures * tex = new Textures();
+	//GameManager * gameManager = new GameManager();
 	
 
 	Field();
@@ -73,7 +79,7 @@ public:
 	void drawLine(int x1, int y1, int x2, int y2);
 	void drawTransparentRect(int x1, int y1, int x2, int y2);
 #pragma endregion Hier sind die Funktionen um Objekte wie Kreise und Rechtecke zu zeichnen.
-
+	void drawHUD();
 
 	int getPlayerXPos();
 	int getPlayerYPos();
@@ -83,6 +89,7 @@ public:
 	void getDirection(int dir);
 	int getObjectAtCoord(int x, int y);
 	void enterObjectInField(int x, int y, int type);
+	bool getFlagStatus(int x, int y);
 
 
 	bool bombCollision();

@@ -1,11 +1,8 @@
 #include "Textures.h"
 
-
-
 Textures::Textures()
 {
 }
-
 
 Textures::~Textures()
 {
@@ -16,7 +13,6 @@ SDL_Texture * Textures::loadTexture(const std::string & file, SDL_Renderer * ren
 	SDL_Surface * loadedImage = IMG_Load(file.c_str());
 	tex = SDL_CreateTextureFromSurface(ren, loadedImage);
 	SDL_FreeSurface(loadedImage);
-	return tex;
 
 	if (tex == nullptr) {
 		SDL_DestroyRenderer(ren);
@@ -24,6 +20,10 @@ SDL_Texture * Textures::loadTexture(const std::string & file, SDL_Renderer * ren
 		std::cout << "SDL_CreateTextureFromSurface Error: " << SDL_GetError() << std::endl;
 		SDL_Quit();
 	}
+
+
+	return tex;
+
 }
 
 void Textures::renderTexture(SDL_Texture * tex, SDL_Renderer * ren, int x, int y, int w, int h)
@@ -35,11 +35,8 @@ void Textures::renderTexture(SDL_Texture * tex, SDL_Renderer * ren, int x, int y
 	dst.h = h;
 	dst.w = w;
 	SDL_RenderCopy(ren, tex, NULL, &dst);
-
-
+	//SDL_DestroyTexture(tex);
 }
-
-
 
 void Textures::preLoadTextures(SDL_Renderer * ren)
 {
@@ -65,6 +62,10 @@ void Textures::preLoadTextures(SDL_Renderer * ren)
 	maskTex = loadTexture("Assets/Mask.png", ren);
 	bombLaser = loadTexture("Assets/laserRed11.png", ren);
 	splash = loadTexture("Assets/universe.jpg", ren);
+	flag = loadTexture("Assets/bolt_bronze.png",ren);
+	doorEnemy = loadTexture("Assets/enemyRed1.png", ren);
+	ammu = loadTexture("Assets/things_gold.png", ren);
+	HUD_ammu = loadTexture("Assets/things_bronze_Raender.png", ren);
 }
 
 SDL_Texture * Textures::getTex()

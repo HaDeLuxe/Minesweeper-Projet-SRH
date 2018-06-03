@@ -36,6 +36,10 @@ public:
 	SDL_Texture * crosshairTex = NULL;
 	SDL_Texture * bombLaser = NULL;
 	SDL_Texture * splash = NULL;
+	SDL_Texture * flag = NULL;
+	SDL_Texture * doorEnemy = NULL;
+	SDL_Texture * ammu = NULL;
+	SDL_Texture * HUD_ammu = NULL;
 	
 
 	SDL_Texture* loadTexture(const std::string &file, SDL_Renderer *ren);

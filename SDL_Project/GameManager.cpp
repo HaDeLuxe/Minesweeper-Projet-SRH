@@ -1,6 +1,6 @@
 #include "GameManager.h"
 
-
+short ammuCount = 0;
 
 GameManager::GameManager()
 {
@@ -46,6 +46,14 @@ void GameManager::readWallData(std::string filePath)
 			if (text[x] == 48) {
 				x1++;
 			}
+			if (text[x] == '6') {
+				FIELD->enterObjectInField(x1, y, DOOR);
+				x1++;
+			}
+			if (text[x] == '7') {
+				FIELD->enterObjectInField(x1, y, AMMU);
+				x1++;
+			}
 			x++;
 		}
 		x = 0;
@@ -53,5 +61,27 @@ void GameManager::readWallData(std::string filePath)
 	}
 		
 	}
+
+void GameManager::changeFlag(int crosshairX, int crosshairY)
+{
+	if (FIELD->tileField[crosshairY][crosshairX].isShown == false && !FIELD->tileField[crosshairY][crosshairX].flag) {
+		FIELD->tileField[crosshairY][crosshairX].flag = true;
+	}
+	else FIELD->tileField[crosshairY][crosshairX].flag = false;
+}
+
+
+
+void GameManager::addAmmuCount()
+{
+	if (ammuCount <= 3) {
+		ammuCount++;
+	}
+}
+
+int GameManager::getAmmuCount()
+{
+	return ammuCount;
+}
 
 

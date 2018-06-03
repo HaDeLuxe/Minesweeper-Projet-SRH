@@ -187,6 +187,7 @@ xcopy /y /d  "$(SolutionDir)Dependencies\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="text.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Header.h" />
@@ -194,6 +195,15 @@ xcopy /y /d  "$(SolutionDir)Dependencies\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "
     <ClInclude Include="Windows.h" />
     <ClInclude Include="Movement.h" />
     <ClInclude Include="Textures.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SDL_Project.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\playerShip2_red.ico" />
+    <Image Include="Assets\playerShip2_red.png" />
+    <Image Include="icon1.ico" />
+    <Image Include="icon2.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -126,12 +126,12 @@ void text::writeText(int x1, int y1, int x2, int y2, int pSize, std::string text
 	SDL_Surface * solidSurface = TTF_RenderText_Solid(font, text1.c_str(), textColor);*/
 
 	SDL_Surface * solid = TTF_RenderText_Solid(font, text.c_str(), textColor);
-
+	TTF_CloseFont(font);
 	solidTexture = SDL_CreateTextureFromSurface(ren, solid);
 	SDL_FreeSurface(solid);
 	//std::cout << "Text has been written out" << std::endl;
 	SDL_RenderCopy(ren, solidTexture, NULL, &solidRect);
-	TTF_CloseFont(font);
+	
 	SDL_DestroyTexture(solidTexture);
 }
 

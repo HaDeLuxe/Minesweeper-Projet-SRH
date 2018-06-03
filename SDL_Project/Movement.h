@@ -3,6 +3,7 @@
 #include "Field.h"
 #include "Collision.h"
 #include "Player.h"
+#include "GameManager.h"
 
 
 
@@ -16,6 +17,8 @@ class Movement
 private:
 	Collision * col;
 	Player * player;
+	GameManager * gameManager;
+
 	int pX, pY;
 	int tempTileBox = BACKGROUND;
 	int _lastCrosshairXPos = 0;
@@ -26,6 +29,7 @@ public:
 	Movement();
 	~Movement();
 	void bombCollision();
+	void ammuCollision();
 
 	void moveUp();
 	void moveRight();
@@ -34,6 +38,7 @@ public:
 	bool getBombCollisionStatus();
 	void resetBombBool();
 	void moveAfterClick(int x, int y);
-
+	int getCrosshairXPos();
+	int getCrosshairYPos();
 
 };
