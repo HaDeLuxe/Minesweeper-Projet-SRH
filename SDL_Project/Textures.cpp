@@ -67,6 +67,10 @@ void Textures::preLoadTextures(SDL_Renderer * ren)
 	ammu = loadTexture("Assets/things_gold.png", ren);
 	HUD_ammu = loadTexture("Assets/things_bronze_Raender.png", ren);
 	enemy = loadTexture("Assets/spaceShips-enemy.png", ren);
+	laserUp = loadTexture("Assets/laserRed16Up.png", ren);
+	laserRight = loadTexture("Assets/laserRed16Right.png", ren);
+	laserDown = loadTexture("Assets/laserRed16Down.png", ren);
+	laserLeft = loadTexture("Assets/laserRed16Left.png", ren);
 }
 
 SDL_Texture * Textures::getTex()

@@ -9,6 +9,7 @@
 #include "Enums.h"
 #include "Player.h"
 #include "Collision.h"
+#include "Enemy.h"
 
 #define FIELD Field::Instance()
 
@@ -26,6 +27,7 @@ Player * player;
 Collision * col;
 Losescreen * losescreen;
 credits * creditsS;
+Enemy * enemy1;
 
 void PollEvents();
 
@@ -51,6 +53,7 @@ int main(int argc, char* argv[])
 	splashScreen = new Splashscreen();
 	losescreen = new Losescreen();
 	creditsS = new credits();
+	
 
 	FIELD->createWindow();
 	FIELD->createRenderer();
@@ -63,6 +66,9 @@ int main(int argc, char* argv[])
 	FIELD->createPlayField(50, 15);
 	gameManager->readWallData("Assets/Level1");
 	FIELD->setRandomMines();
+	enemy1 = new Enemy(15, 5, 4);
+	enemy1->spawnMissile(0);
+	enemy1->manageMissiles();
 	
 	FIELD->placeMask();
 

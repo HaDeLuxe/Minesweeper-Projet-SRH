@@ -32,18 +32,12 @@ void Field::createPlayField(int pX, int pY)
 	
 
 	for (int y = 0; y < pY; y++) {
-		/*std::vector<int> temp;
-		std::vector<int> temp2;*/
 		std::vector<tile> temp;
 		for (int x = 0; x < pX; x++) {
-			/*temp.push_back(BACKGROUND);
-			temp2.push_back(0);*/
 			tile tileEmpty;
 			tileEmpty.tileType = BACKGROUND;
 			temp.push_back(tileEmpty);
 		}
-		/*field.push_back(temp);
-		bombs.push_back(temp2);*/
 		tileField.push_back(temp);
 	}
 	enterObjectInField(2, 2, PLAYER);
@@ -666,6 +660,12 @@ void Field::drawField()
 			}
 			if (tileField[y][x].flag == true) {
 				tex->renderTexture(tex->flag, ren, xOrigin + c * 50 + 15, 115 + r * 50 + 10, 19, 30);
+			}
+			if (tileField[y][x].tileType == ENEMY) {
+				tex->renderTexture(tex->doorEnemy, ren, xOrigin + c * 50, 115 + r * 50 + 4, 50, 41);
+			}
+			if (tileField[y][x].missile == true) {
+				tex->renderTexture(tex->laserLeft, ren, xOrigin + c * 50, 115 + r * 50 + 4, 50, 41);
 			}
 			
 			c++;

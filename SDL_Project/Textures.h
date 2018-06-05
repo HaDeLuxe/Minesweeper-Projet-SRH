@@ -41,6 +41,10 @@ public:
 	SDL_Texture * ammu = NULL;
 	SDL_Texture * HUD_ammu = NULL;
 	SDL_Texture * enemy = NULL;
+	SDL_Texture * laserUp = NULL;
+	SDL_Texture * laserRight = NULL;
+	SDL_Texture * laserDown = NULL;
+	SDL_Texture * laserLeft = NULL;
 	
 
 	SDL_Texture* loadTexture(const std::string &file, SDL_Renderer *ren);
