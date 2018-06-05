@@ -15,7 +15,8 @@ Collision::~Collision()
 void Collision::detectBombCollision(int adX, int adY)
 {
 	FIELD->calculatePlayerPos();
-	if (FIELD->getObjectAtCoord(FIELD->getPlayerXPos() + adX, FIELD->getPlayerYPos() + adY) == BOMB) {
+	if (FIELD->getObjectAtCoord(FIELD->getPlayerXPos() + adX, FIELD->getPlayerYPos() + adY) == BOMB ||
+		FIELD->tileField[FIELD->getPlayerYPos() + adY][FIELD->getPlayerXPos() + adX].round == true) {
 		std::cout << "Bomb Collision" << std::endl;
 		bombCollision = true;
 	}

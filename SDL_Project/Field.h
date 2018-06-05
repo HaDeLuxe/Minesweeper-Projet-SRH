@@ -24,6 +24,7 @@ typedef struct tile {
 	bool isShown = true;
 	bool crosshair = false;
 	bool flag = false;
+	bool round = false;
 }tile;
 
 class Field

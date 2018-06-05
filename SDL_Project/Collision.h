@@ -19,5 +19,7 @@ public:
 	void detectAmmuCollision(int adX, int adY);
 	bool getAmmuCollisionStatus();
 	void resetAmmuCollisionBool();
+
+	
 };
 
