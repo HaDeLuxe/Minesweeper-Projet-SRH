@@ -23,7 +23,11 @@ public:
 	void renewField();
 	void readWallData(std::string filePath);
 	void Tutorial();
+	void TutorialRemoveMask();
 	void Level1();
+
+	void manageMissiles(std::vector<Enemy>);
+	
 	void changeFlag(int crosshairX, int crosshairY);
 	void addAmmuCount();
 	int getAmmuCount();

@@ -69,15 +69,36 @@ void GameManager::Tutorial()
 	for (int y = 0; y < 10; y++) {
 		for (int x = 0; x < 10; x++) {
 			FIELD->enterObjectInField(x, y, BACKGROUND);
+		}
+	}
+	FIELD->enterObjectInField(5, 5, PLAYER);
+
+	Enemy * enemy1 = new Enemy(5,10, 4);
+	enemy1->spawnMissile(0);
+	enemy1->manageMissiles();
+
+
+}
+
+void GameManager::TutorialRemoveMask()
+{
+	for (int y = 0; y < 10; y++) {
+		for (int x = 0; x < 10; x++) {
 			FIELD->tileField[y][x].isShown = true;
 		}
 	}
-	FIELD->enterObjectInField(5, 2, PLAYER);
 }
 
 void GameManager::Level1()
 {
 	
+}
+
+void GameManager::manageMissiles(std::vector<Enemy> pTemp)
+{
+	for (int i = 0; i < pTemp.size(); i++) {
+		pTemp[i].manageMissiles();
+	}
 }
 
 void GameManager::changeFlag(int crosshairX, int crosshairY)

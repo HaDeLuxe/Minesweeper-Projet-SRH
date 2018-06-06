@@ -63,14 +63,16 @@ int main(int argc, char* argv[])
 	textures->preLoadTextures(FIELD->getRenderer());
 	
 	FIELD->createPlayField(50, 15);
-	gameManager->readWallData("Assets/Level1");
+	//gameManager->readWallData("Assets/Level1");
+	
+	gameManager->Tutorial();
 	FIELD->setRandomMines();
-	gameManager->Level1();
 	//enemy1 = new Enemy(15, 5, 4);
 	//enemy1->spawnMissile(0);
 	//enemy1->manageMissiles();
 	
 	FIELD->placeMask();
+	gameManager->TutorialRemoveMask();
 
 	std::cout << "Lifepoints in Main (2): " << lifePoints - 1 << std::endl;
 	PollEvents();
