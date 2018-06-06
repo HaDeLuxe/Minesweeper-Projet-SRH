@@ -481,7 +481,7 @@ void Field::setRandomWalls() //nicht benutzt in momentenan Build, da es nocht ni
 
 void Field::setRandomMines()
 {
-	int maxMinesCount = 100;
+	int maxMinesCount = 50;
 	int i = 1;
 	int x = 0;
 	int y = 0;

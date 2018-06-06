@@ -4,6 +4,7 @@
 #include "Collision.h"
 #include "Player.h"
 #include "GameManager.h"
+#include "Enemy.h"
 
 
 

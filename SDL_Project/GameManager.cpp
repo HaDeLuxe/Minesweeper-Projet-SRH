@@ -1,6 +1,7 @@
 #include "GameManager.h"
 
 short ammuCount = 0;
+int currentLevel = (int)(Levels::Tutorial);
 
 GameManager::GameManager()
 {
@@ -32,7 +33,7 @@ void GameManager::renewField()
 void GameManager::readWallData(std::string filePath)
 {
 	FILE* file;
-	fopen_s(&file, "Assets\\Level1.txt","r");
+	fopen_s(&file, "Levels\\Tutorial.txt","r");
 	int x = 0;
 	int x1 = 0;
 	for (int y = 0; y < 15; y++) {
@@ -61,6 +62,23 @@ void GameManager::readWallData(std::string filePath)
 	}
 		
 	}
+
+void GameManager::Tutorial()
+{
+	readWallData("Levels\\Level1.txt");
+	for (int y = 0; y < 10; y++) {
+		for (int x = 0; x < 10; x++) {
+			FIELD->enterObjectInField(x, y, BACKGROUND);
+			FIELD->tileField[y][x].isShown = true;
+		}
+	}
+	FIELD->enterObjectInField(5, 2, PLAYER);
+}
+
+void GameManager::Level1()
+{
+	
+}
 
 void GameManager::changeFlag(int crosshairX, int crosshairY)
 {
