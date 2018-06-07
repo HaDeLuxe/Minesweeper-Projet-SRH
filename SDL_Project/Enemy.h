@@ -3,7 +3,7 @@
 #include "Header.h"
 
 #define FIELD Field::Instance()
-
+extern int direction; //Move directions for missiles up = 1, right = 2, down = 3, left = 4
 class Enemy
 {
 private:
@@ -11,7 +11,7 @@ private:
 	
 	int x;				//x position enemy
 	int y;				//y position enemy
-	int direction = 4;	//Move directions for missiles up = 1, right = 2, down = 3, left = 4
+		
 	int steps = 5;
 	int tempSteps = 5;
 	

@@ -240,6 +240,19 @@ bool Field::getFlagStatus(int x, int y)
 
 
 
+int Field::getCorrectFlags()
+{
+	int correctFlagsCount = 0;
+	for (int y = 0; y < tileField.size(); y++) {
+		for (int x = 0; x < tileField.size(); x++) {
+			if (tileField[y][x].tileType == BOMB && tileField[y][x].flag == true) {
+				correctFlagsCount++;
+			}
+		}
+	}
+	return correctFlagsCount;
+}
+
 bool Field::bombCollision()
 {
 	return tileField[playerYPos][playerXPos].tileType == BOMB;
@@ -546,7 +559,7 @@ void Field::initializeTex()
 void Field::drawField()
 {
 	//std::cout << "Lifepoints (3) in Field.cpp: " << lifePoints << std::endl;
-
+	SDL_SetRenderDrawBlendMode(FIELD->getRenderer(), SDL_BLENDMODE_NONE);
 
 	int r = 0;
 	int c = 0;
@@ -665,7 +678,10 @@ void Field::drawField()
 				tex->renderTexture(tex->doorEnemy, ren, xOrigin + c * 50, 115 + r * 50 + 4, 50, 41);
 			}
 			if (tileField[y][x].missile == true) {
-				tex->renderTexture(tex->laserLeft, ren, xOrigin + c * 50, 115 + r * 50 + 4, 50, 41);
+				if(direction == 1) tex->renderTexture(tex->laserUp, ren, xOrigin + c * 50 + 20, 115 + r * 50, 10, 50);
+				if(direction == 2) tex->renderTexture(tex->laserRight, ren, xOrigin + c * 50, 115 + r * 50 + 20, 50, 10);
+				if(direction == 3) tex->renderTexture(tex->laserDown, ren, xOrigin + c * 50 + 20, 115 + r * 50, 10, 50);
+				if(direction == 4) tex->renderTexture(tex->laserLeft, ren, xOrigin + c * 50, 115 + r * 50 + 20, 50, 10);
 			}
 			
 			c++;

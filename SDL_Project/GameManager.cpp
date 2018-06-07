@@ -72,7 +72,7 @@ void GameManager::Tutorial()
 		}
 	}
 	FIELD->enterObjectInField(5, 5, PLAYER);
-	enemy1 = new Enemy(15,2,4);
+	enemy1 = new Enemy(15,2,3);
 	enemy1->changeEnemyPos(15, 2);
 }
 

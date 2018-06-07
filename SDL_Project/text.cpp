@@ -110,7 +110,7 @@ void text::OpenFont(const char * file, int ptsize)
 void text::writeText(int x1, int y1, int x2, int y2, int pSize, std::string text, SDL_Renderer* ren, SDL_Color textColor)
 {
 	
-	std::string fontfile = "Assets\\Nebulous-Regular.ttf";
+	std::string fontfile = "Assets\\SFDistantGalaxy.ttf";
 	OpenFont(fontfile.c_str(), 100);
 	
 

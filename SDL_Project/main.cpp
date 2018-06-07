@@ -90,7 +90,7 @@ int main(int argc, char* argv[])
 
 
 void PollEvents() {
-
+	bool pause = false;
 	SDL_Event event;
 	short i = 1;
 	Uint64 currentTimestamp = SDL_GetPerformanceCounter();
@@ -119,35 +119,35 @@ void PollEvents() {
 			if (event.type == SDL_KEYDOWN) { // && event.key.repeat == 0
 				switch (event.key.keysym.sym) {
 				case SDLK_w:
-					if (currentGameState == States::Game) {
+					if (currentGameState == States::Game && !pause) {
 						movement->moveUp();
 						FIELD->getDirection(1);
 						gameManager->manageMissiles();
 					}
 					break;
 				case SDLK_s:
-					if (currentGameState == States::Game) {
+					if (currentGameState == States::Game && !pause) {
 						movement->moveDown();
 						FIELD->getDirection(3);
 						gameManager->manageMissiles();
 					}
 					break;
 				case SDLK_d:
-					if (currentGameState == States::Game) {
+					if (currentGameState == States::Game && !pause) {
 						movement->moveRight();
 						FIELD->getDirection(2);
 						gameManager->manageMissiles();
 					}
 					break;
 				case SDLK_a:
-					if (currentGameState == States::Game) {
+					if (currentGameState == States::Game && !pause) {
 						movement->moveLeft();
 						FIELD->getDirection(4);
 						gameManager->manageMissiles();
 					}
 					break;
 				case SDLK_f:
-					if (currentGameState == States::Game) {
+					if (currentGameState == States::Game ) {
 						
 						//gameManager->removeFlag(movement->getCrosshairXPos(), movement->getCrosshairYPos());
 						gameManager->changeFlag(movement->getCrosshairXPos(), movement->getCrosshairYPos());
@@ -158,6 +158,12 @@ void PollEvents() {
 						}
 					}
 					break;
+				case SDLK_p:
+					if (!pause) pause = true;
+					else pause = false;
+					break;
+					}
+					
 				}
 
 			}
@@ -172,18 +178,23 @@ void PollEvents() {
 					if (currentGameState == States::Game)
 					{
 						movement->moveAfterClick(mouseX, mouseY);
+						if(pause) {
+							if (window->continueButtonPushed(mouseX, mouseY)) pause = false;
+							if (window->pauseExitButtonPushed(mouseX, mouseY)) currentGameState = States::MainMenu;
+						}
 					}
 					if (currentGameState == States::MainMenu) {
 						if (mainMenu->startButtonPushed(mouseX, mouseY)) currentGameState = States::Game;
-						if (mainMenu->exitButtonPushed(mouseX, mouseY)) i = 0;
+						//if (mainMenu->exitButtonPushed(mouseX, mouseY)) i = 0;
 						if (mainMenu->creditsButtonPushed(mouseX, mouseY)) currentGameState = States::Credits;
 					}
 					if (currentGameState == States::Splashscreen) {
 						currentGameState = States::MainMenu;
 					}
 					break;
+
 				}
-			}
+			
 			if (currentGameState == States::Game) {
 				//FIELD->drawField();
 			}
@@ -206,11 +217,16 @@ void PollEvents() {
 			mainMenu->RenderMenu();
 			break;
 		case States::Game:
-			FIELD->renderClear();
-			textures->renderTexture(textures->backgroundTex,FIELD->getRenderer(),0,0,1920,1080);
+			if (!pause) {
+				FIELD->renderClear();
+				textures->renderTexture(textures->backgroundTex, FIELD->getRenderer(), 0, 0, 1920, 1080);
 
-			FIELD->drawField();
-			if (player->returnLifePoints() == 0) currentGameState = States::End;
+				FIELD->drawField();
+				if (player->returnLifePoints() == 0) currentGameState = States::End;
+			}
+			if (pause) {
+				window->renderPauseScreen();
+			}
 			break;
 		case States::End:
 			losescreen->RenderEndScreen();

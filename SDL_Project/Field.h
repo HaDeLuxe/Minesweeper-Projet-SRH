@@ -40,7 +40,7 @@ private:
 
 	static Field* instance;
 	Textures * tex = new Textures();
-	//GameManager * gameManager = new GameManager();
+	
 	
 
 	Field();
@@ -51,8 +51,6 @@ private:
 	text *textC = new text();
 public:
 
-	/*std::vector<std::vector<int>> field;
-	std::vector<std::vector<int>> bombs;*/
 
 	std::vector<std::vector<tile>> tileField;
 	
@@ -92,8 +90,8 @@ public:
 	int getObjectAtCoord(int x, int y);
 	void enterObjectInField(int x, int y, int type);
 	bool getFlagStatus(int x, int y);
-
-
+	
+	int getCorrectFlags();
 	bool bombCollision();
 	void placeMask();
 	void bombsProx();

@@ -15,6 +15,9 @@ protected:
 public:
 	Window();
 	~Window();
+	void renderPauseScreen();
+	bool continueButtonPushed(int x, int y);
+	bool pauseExitButtonPushed(int x, int y);
 };
 
 class Menu : public Window
@@ -56,6 +59,7 @@ public:
 class Losescreen : public EndScreen {
 public:
 	void writeWinText();
+	
 };
 
 class credits : public Window {

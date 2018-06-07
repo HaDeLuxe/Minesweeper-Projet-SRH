@@ -11,6 +11,40 @@ Window::~Window()
 {
 }
 
+void Window::renderPauseScreen()
+{
+	FIELD->setRendererColor(255, 255, 255, 255);
+	SDL_SetRenderDrawBlendMode(FIELD->getRenderer(), SDL_BLENDMODE_BLEND);
+	FIELD->setRendererColor(0, 0, 0, 10);
+	FIELD->drawFillRect(0, 0, 1920, 1080);
+
+	FIELD->setRendererColor(66, 195, 148, 255);
+	//FIELD->drawFillRect(305, 505, 280, 55);
+	SDL_Color color = { 255, 255, 255, 255 };
+	textC->writeText(305, 505, 280, 65, 95, "Continue", FIELD->getRenderer(), color);
+
+	FIELD->setRendererColor(66, 195, 148, 255);
+	//FIELD->drawFillRect(305, 505, 280, 55);
+	
+	textC->writeText(305, 705, 280, 65, 95, "Main Menu", FIELD->getRenderer(), color);
+}
+
+bool Window::continueButtonPushed(int x, int y)
+{
+	if (x > 305 && x < 585 && y > 505 && y < 570) {
+		return true;
+	}
+	else return false;
+}
+
+bool Window::pauseExitButtonPushed(int x, int y)
+{
+	if (x > 305 && x < 585 && y > 705 && y < 770) {
+		return true;
+	}
+	else return false;
+}
+
 Menu::Menu()
 {
 }
@@ -114,6 +148,10 @@ void Losescreen::writeWinText()
 {
 	SDL_Color color = { 255, 0, 0, 255 };
 	textC->writeText(700, 390, 500, 200, 300, "You Lose", FIELD->getRenderer(),color );
+	std::stringstream temporary;
+	temporary << "Bombs found: " << (int)(FIELD->getCorrectFlags());
+	std::string highscore = temporary.str();
+	textC->writeText(100, 700, 500, 50, 300, highscore, FIELD->getRenderer(), color);
 }
 
 void credits::renderCreditsWindow()

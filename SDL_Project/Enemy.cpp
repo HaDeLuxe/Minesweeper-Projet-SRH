@@ -1,12 +1,12 @@
 #include "Enemy.h"
 
-
+int direction = 4;
 
 Enemy::Enemy(int pX, int pY, int dir)
 {
 	x = pX;
 	y = pY;
-	this->direction = dir;
+	direction = dir;
 	FIELD->enterObjectInField(pX, pY, ENEMY);
 }
 
@@ -31,20 +31,20 @@ void Enemy::spawnMissile()
 			
 			switch (direction) {
 			default:
-				mis.mX = x - 1;
+				mis.mX = x;
 				mis.mY = y;
 				break;
 			case 1:
 				mis.mX = x;
-				mis.mY = y - 1;
+				mis.mY = y;
 				break;
 			case 2:
-				mis.mX = x + 1;
+				mis.mX = x;
 				mis.mY = y;
 				break;
 			case 3:
 				mis.mX = x;
-				mis.mY = y + 1;
+				mis.mY = y;
 				break;
 			case 4:
 				mis.mX = x ;
@@ -69,25 +69,28 @@ void Enemy::manageMissiles()
 	for (int i = 0; i < static_cast<int>(missiles.size()); i++) {
 		switch (direction) {
 		default:
+			if (missiles[i].mX == 0) missiles.erase((missiles.begin()));
 			if (missiles[i].mX > 0) {
 				missiles[i].mX = missiles[i].mX - 1;
 				missiles[i].mY = y;
+			}			break;
+		case 1:
+			if (missiles[i].mY == 0) missiles.erase((missiles.begin()));
+			if (missiles[i].mY > 0) {
+				missiles[i].mX = x;
+				missiles[i].mY = missiles[i].mY - 1;
 				FIELD->tileField[missiles[i].mY][missiles[i].mX].missile = true;
 			}
-			else missiles.erase((missiles.begin() + i-1));
-			break;
-		case 1:
-			missiles[i].mX = x;
-			missiles[i].mY = missiles[i].mY - 1;
-			FIELD->tileField[missiles[i].mY][missiles[i].mX].missile = true;
 			break;
 		case 2:
-			missiles[i].mX = missiles[i].mX + 1;
-			missiles[i].mY = y;
-			FIELD->tileField[missiles[i].mY][missiles[i].mX].missile = true;
+			if (missiles[i].mY == FIELD->getPlayfieldXSize()) missiles.erase((missiles.begin()));
+			if (missiles[i].mY < FIELD->getPlayfieldXSize()) {
+				missiles[i].mX = missiles[i].mX + 1;
+				missiles[i].mY = y;
+			}
 			break;
 		case 3:
-			if (missiles[i].mY == FIELD->getPlayfieldYSize()) missiles.erase((missiles.begin()));
+			if (missiles[i].mY == FIELD->getPlayfieldYSize()-1) missiles.erase((missiles.begin()));
 			if (missiles[i].mY < FIELD->getPlayfieldYSize()) {
 				missiles[i].mX = x;
 				missiles[i].mY = missiles[i].mY + 1;
@@ -99,10 +102,7 @@ void Enemy::manageMissiles()
 			if (missiles[i].mX > 0) {
 				missiles[i].mX = missiles[i].mX - 1;
 				missiles[i].mY = y;
-				
-			}
-			
-			break;
+			}			break;
 		}
 	}
 	drawAllMissiles();
