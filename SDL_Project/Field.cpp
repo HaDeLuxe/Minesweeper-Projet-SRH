@@ -316,7 +316,7 @@ void Field::bombsProx()
 				
 				if (getObjectAtCoord(x, y) == BOMB) tileField[y][x].bombcount = 0;
 			}
-			std::cout << std::endl;
+			//std::cout << std::endl;
 		}
 		
 	
@@ -545,7 +545,7 @@ void Field::initializeTex()
 
 void Field::drawField()
 {
-	std::cout << "Lifepoints (3) in Field.cpp: " << lifePoints << std::endl;
+	//std::cout << "Lifepoints (3) in Field.cpp: " << lifePoints << std::endl;
 
 
 	int r = 0;

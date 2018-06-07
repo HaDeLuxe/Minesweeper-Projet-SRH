@@ -122,24 +122,28 @@ void PollEvents() {
 					if (currentGameState == States::Game) {
 						movement->moveUp();
 						FIELD->getDirection(1);
+						gameManager->manageMissiles();
 					}
 					break;
 				case SDLK_s:
 					if (currentGameState == States::Game) {
 						movement->moveDown();
 						FIELD->getDirection(3);
+						gameManager->manageMissiles();
 					}
 					break;
 				case SDLK_d:
 					if (currentGameState == States::Game) {
 						movement->moveRight();
 						FIELD->getDirection(2);
+						gameManager->manageMissiles();
 					}
 					break;
 				case SDLK_a:
 					if (currentGameState == States::Game) {
 						movement->moveLeft();
 						FIELD->getDirection(4);
+						gameManager->manageMissiles();
 					}
 					break;
 				case SDLK_f:
