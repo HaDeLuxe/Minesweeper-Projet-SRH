@@ -7,6 +7,7 @@
 #include "Enemy.h"
 
 
+
 #define FIELD Field::Instance()
 extern short ammuCount;
 extern int currentLevel;
@@ -16,7 +17,17 @@ class GameManager
 private:
 	bool isSolvable = false;
 	Levels * levels = new Levels();
-	std::vector<Enemy> enemies;
+	Enemy* enemy1 = NULL;
+	Enemy* enemy2 = NULL;
+	Enemy* enemy3 = NULL;
+	Enemy* enemy4 = NULL;
+	Enemy* enemy5 = NULL;
+	Enemy* enemy6 = NULL;
+	Enemy* enemy7 = NULL;
+	Enemy* enemy8 = NULL;
+	Enemy* enemy9 = NULL;
+	Enemy* enemy10 = NULL;
+
 public:
 	GameManager();
 	~GameManager();

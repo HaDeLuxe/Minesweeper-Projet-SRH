@@ -15,9 +15,15 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::spawnMissile(int steps)
+void Enemy::changeEnemyPos(int pX, int pY)
 {
-	int tempSteps = steps;
+	x = pX;
+	y = pY;
+}
+
+void Enemy::spawnMissile()
+{
+	tempSteps = steps;
 
 	while (tempSteps >= 0) {
 		if (tempSteps == 0) {
@@ -59,18 +65,28 @@ void Enemy::manageMissiles()
 	for (int i = 0; i < missiles.size(); i++) {
 		switch (direction) {
 		default:
+			missiles[i].mX = x - 1;
+			missiles[i].mY = y;
 			FIELD->tileField[missiles[i].mY - 1][missiles[i].mX].missile = true;
 			break;
 		case 1:
+			missiles[i].mX = x;
+			missiles[i].mY = y - 1;
 			FIELD->tileField[missiles[i].mY - 1][missiles[i].mX].missile = true;
 			break;
 		case 2:
+			missiles[i].mX = x + 1;
+			missiles[i].mY = y;
 			FIELD->tileField[missiles[i].mY][missiles[i].mX+1].missile = true;
 			break;
 		case 3:
+			missiles[i].mX = x;
+			missiles[i].mY = y + 1;
 			FIELD->tileField[missiles[i].mY + 1][missiles[i].mX].missile = true;
 			break;
 		case 4:
+			missiles[i].mX = x - 1;
+			missiles[i].mY = y;
 			FIELD->tileField[missiles[i].mY][missiles[i].mX-1].missile = true;
 			break;
 		}
