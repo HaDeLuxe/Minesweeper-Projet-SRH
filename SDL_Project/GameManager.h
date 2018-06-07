@@ -16,6 +16,7 @@ class GameManager
 private:
 	bool isSolvable = false;
 	Levels * levels = new Levels();
+	std::vector<Enemy> enemies;
 public:
 	GameManager();
 	~GameManager();
@@ -26,7 +27,7 @@ public:
 	void TutorialRemoveMask();
 	void Level1();
 
-	void manageMissiles(std::vector<Enemy>);
+	void manageMissiles(/*std::vector<Enemy>*/);
 	
 	void changeFlag(int crosshairX, int crosshairY);
 	void addAmmuCount();

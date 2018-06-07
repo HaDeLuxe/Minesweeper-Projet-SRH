@@ -74,8 +74,9 @@ void GameManager::Tutorial()
 	FIELD->enterObjectInField(5, 5, PLAYER);
 
 	Enemy * enemy1 = new Enemy(5,10, 4);
-	enemy1->spawnMissile(0);
-	enemy1->manageMissiles();
+	Enemy * enemy2 = new Enemy(14, 2, 4);
+	enemy1->spawnMissile(3);
+	enemy2->spawnMissile(4);
 
 
 }
@@ -94,10 +95,10 @@ void GameManager::Level1()
 	
 }
 
-void GameManager::manageMissiles(std::vector<Enemy> pTemp)
+void GameManager::manageMissiles(/*std::vector<Enemy> pTemp*/)
 {
-	for (int i = 0; i < pTemp.size(); i++) {
-		pTemp[i].manageMissiles();
+	for (int i = 0; i < static_cast<int>(enemies.size()); i++) {
+		enemies[i].manageMissiles();
 	}
 }
 
