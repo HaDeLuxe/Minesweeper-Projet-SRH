@@ -45,6 +45,7 @@ public:
 	SDL_Texture * laserRight			= NULL;
 	SDL_Texture * laserDown				= NULL;
 	SDL_Texture * laserLeft				= NULL;
+	SDL_Texture * shield				= NULL;
 	
 
 	SDL_Texture* loadTexture(const std::string &file, SDL_Renderer *ren);

@@ -74,6 +74,7 @@ void GameManager::Tutorial()
 	FIELD->enterObjectInField(5, 5, PLAYER);
 	enemy1 = new Enemy(15,2,3);
 	enemy1->changeEnemyPos(15, 2);
+	FIELD->enterObjectInField(5, 10, SHIELD);
 }
 
 void GameManager::TutorialRemoveMask()

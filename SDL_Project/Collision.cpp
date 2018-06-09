@@ -62,6 +62,15 @@ bool Collision::detectGoalCollision(int adX, int adY)
 	return false;
 }
 
+bool Collision::detectShieldCollision(int adX, int adY)
+{
+	FIELD->calculatePlayerPos();
+	if (FIELD->getObjectAtCoord(FIELD->getPlayerXPos() + adX, FIELD->getPlayerYPos() + adY) == SHIELD) {
+		return true;
+	}
+	return false;
+}
+
 
 
 

@@ -21,7 +21,7 @@ public:
 	void resetAmmuCollisionBool();
 
 	bool detectGoalCollision(int adX, int adY);
-	
+	bool detectShieldCollision(int adX, int adY);
 
 	
 };

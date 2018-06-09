@@ -15,6 +15,7 @@
 #define DOOR 6
 #define AMMU 7
 #define ENEMY 8
+#define SHIELD 9
 
 
 

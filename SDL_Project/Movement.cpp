@@ -26,6 +26,13 @@ void Movement::ammuCollision() //do this when collision with ammu detected
 	}
 }
 
+void Movement::shieldCollision()
+{
+	lifePoints++;
+}
+
+
+
 
 
 
@@ -48,6 +55,7 @@ void Movement::moveUp()
 					alreadyCheckedIfCol = true;
 					bombCollision();
 					ammuCollision();
+					shieldCollision();
 					col->resetCollisionBool();
 					col->resetAmmuCollisionBool();
 				}
@@ -91,6 +99,7 @@ void Movement::moveDown()
 					alreadyCheckedIfCol = true;
 					bombCollision();
 					ammuCollision();
+					shieldCollision();
 					col->resetCollisionBool();
 					col->resetAmmuCollisionBool();
 				}
@@ -132,6 +141,7 @@ void Movement::moveRight()
 					alreadyCheckedIfCol = true;
 					bombCollision();
 					ammuCollision();
+					shieldCollision();
 					col->resetCollisionBool();
 					col->resetAmmuCollisionBool();
 				}
@@ -173,6 +183,7 @@ void Movement::moveLeft()
 					alreadyCheckedIfCol = true;
 					bombCollision();
 					ammuCollision();
+					shieldCollision();
 					col->resetCollisionBool();
 					col->resetAmmuCollisionBool();
 				}

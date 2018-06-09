@@ -668,6 +668,9 @@ void Field::drawField()
 			if (tileField[y][x].tileType == DOOR) {
 				tex->renderTexture(tex->doorEnemy, ren, xOrigin + c * 50, 115 + r * 50+4, 50, 41);
 			}
+			if (tileField[y][x].tileType == SHIELD) {
+				tex->renderTexture(tex->shield, ren, xOrigin + c * 50, 115 + r * 50 + 4, 50, 41);
+			}
 			if (tileField[y][x].crosshair == true) {
 				tex->renderTexture(tex->crosshairTex, ren, xOrigin + c * 50+2, 115 + r * 50+2, 45, 45);
 			}

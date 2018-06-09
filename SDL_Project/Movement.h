@@ -33,6 +33,7 @@ public:
 	~Movement();
 	void bombCollision();
 	void ammuCollision();
+	void shieldCollision();
 
 	void moveUp();
 	void moveRight();
