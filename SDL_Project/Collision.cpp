@@ -53,6 +53,15 @@ void Collision::resetAmmuCollisionBool()
 	ammuCollision = false;
 }
 
+bool Collision::detectGoalCollision(int adX, int adY)
+{
+	FIELD->calculatePlayerPos();
+	if (FIELD->getObjectAtCoord(FIELD->getPlayerXPos() + adX, FIELD->getPlayerYPos() + adY) == GOAL) {
+		return true;
+	}
+	return false;
+}
+
 
 
 

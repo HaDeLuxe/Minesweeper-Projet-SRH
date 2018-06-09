@@ -19,19 +19,17 @@ void Window::renderPauseScreen()
 	FIELD->drawFillRect(0, 0, 1920, 1080);
 
 	FIELD->setRendererColor(66, 195, 148, 255);
-	//FIELD->drawFillRect(305, 505, 280, 55);
 	SDL_Color color = { 255, 255, 255, 255 };
-	textC->writeText(305, 505, 280, 65, 95, "Continue", FIELD->getRenderer(), color);
+	textC->writeText(1400, 505, 280, 65, 95, "Continue", FIELD->getRenderer(), color);
 
 	FIELD->setRendererColor(66, 195, 148, 255);
-	//FIELD->drawFillRect(305, 505, 280, 55);
 	
-	textC->writeText(305, 705, 280, 65, 95, "Main Menu", FIELD->getRenderer(), color);
+	textC->writeText(1400, 705, 280, 65, 95, "Main Menu", FIELD->getRenderer(), color);
 }
 
 bool Window::continueButtonPushed(int x, int y)
 {
-	if (x > 305 && x < 585 && y > 505 && y < 570) {
+	if (x > 1400 && x < 1680 && y > 505 && y < 570) {
 		return true;
 	}
 	else return false;
@@ -39,7 +37,7 @@ bool Window::continueButtonPushed(int x, int y)
 
 bool Window::pauseExitButtonPushed(int x, int y)
 {
-	if (x > 305 && x < 585 && y > 705 && y < 770) {
+	if (x > 1400 && x < 1680 && y > 705 && y < 770) {
 		return true;
 	}
 	else return false;
@@ -71,9 +69,9 @@ void Menu::RenderMenu()
 	textC->writeText(345, 705, 200, 65, 95, "Quit", FIELD->getRenderer(), color);
 
 	//Render Credits Button
-	FIELD->setRendererColor(66, 195, 148, 255);
-	FIELD->drawFillRect(1450, 700, 300, 75);
-	textC->writeText(1500, 705, 200, 65, 95, "Credits", FIELD->getRenderer(), color);
+	//FIELD->setRendererColor(66, 195, 148, 255);
+	//FIELD->drawFillRect(1450, 700, 300, 75);
+	textC->writeText(900, 705, 200, 65, 95, "Credits", FIELD->getRenderer(), color);
 }
 
 bool Menu::startButtonPushed(int x, int y) {
@@ -94,7 +92,7 @@ bool Menu::exitButtonPushed(int x, int y)
 
 bool Menu::creditsButtonPushed(int x, int y)
 {
-	if (x > 1450 && x < 1750 && y > 700 && y < 775) {
+	if (x > 900 && x < 1100 && y > 700 && y < 775) {
 		return true;
 	}
 	else return false;
@@ -161,5 +159,16 @@ void credits::renderCreditsWindow()
 	FIELD->drawFillRect(0, 0, 1920, 1080);
 	SDL_Color color = { 0, 0, 0, 255 };
 	textC->writeText(100, 100, 150, 100, 300, "Credits", FIELD->getRenderer(), color);
-	textC->writeText(700, 390, 350, 75, 100, "Haas Pascal", FIELD->getRenderer(), color);
+	textC->writeText(700, 390, 350, 75, 300, "Haas Pascal", FIELD->getRenderer(), color);
+	textC->writeText(1700, 100, 120, 100, 300, "Back", FIELD->getRenderer(), color);
 }
+
+bool credits::creditsBackButtonPushed(int x, int y)
+{
+	if (x > 1700 && x < 1820 && y > 100 && y < 200) {
+		return true;
+	}
+	else return false;
+}
+
+

@@ -132,8 +132,3 @@ void Enemy::destroyMissile(int x, int y)
 		}
 	}
 }
-
-
-
-
-

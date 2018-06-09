@@ -185,11 +185,14 @@ void PollEvents() {
 					}
 					if (currentGameState == States::MainMenu) {
 						if (mainMenu->startButtonPushed(mouseX, mouseY)) currentGameState = States::Game;
-						//if (mainMenu->exitButtonPushed(mouseX, mouseY)) i = 0;
+						if (mainMenu->exitButtonPushed(mouseX, mouseY)) i = 0;
 						if (mainMenu->creditsButtonPushed(mouseX, mouseY)) currentGameState = States::Credits;
 					}
 					if (currentGameState == States::Splashscreen) {
 						currentGameState = States::MainMenu;
+					}
+					if (currentGameState == States::Credits) {
+						if (creditsS->creditsBackButtonPushed(mouseX, mouseY)) currentGameState = States::MainMenu;
 					}
 					break;
 

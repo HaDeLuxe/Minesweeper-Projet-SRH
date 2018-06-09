@@ -11,7 +11,7 @@
 #define WALL 2
 #define PLAYER 3
 #define BOMB 4
-#define DEST 5
+#define GOAL 5
 #define DOOR 6
 #define AMMU 7
 #define ENEMY 8

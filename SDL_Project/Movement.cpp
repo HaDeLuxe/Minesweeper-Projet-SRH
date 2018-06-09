@@ -28,6 +28,8 @@ void Movement::ammuCollision() //do this when collision with ammu detected
 
 
 
+
+
 #pragma region Moving Functions
 
 void Movement::moveUp()

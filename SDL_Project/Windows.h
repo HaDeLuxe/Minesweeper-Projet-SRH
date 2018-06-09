@@ -66,4 +66,5 @@ class credits : public Window {
 private:
 public:
 	void renderCreditsWindow();
+	bool creditsBackButtonPushed(int x, int y);
 };

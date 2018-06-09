@@ -46,7 +46,7 @@ void Field::createPlayField(int pX, int pY)
 	enterObjectInField(10, 12, BOMB);
 	enterObjectInField(10, 14, BOMB);
 	enterObjectInField(12, 12, BOMB);
-	enterObjectInField(48, 8, DEST);
+	enterObjectInField(48, 8, GOAL);
 	
 }
 
@@ -584,7 +584,7 @@ void Field::drawField()
 				tex->renderTexture(tex->bombLaser, ren, xOrigin + c * 50+12, 115 + r * 50+12, 25, 25);
 			}
 
-			if (tileField[y][x].tileType == DEST) {
+			if (tileField[y][x].tileType == GOAL) {
 				setRendererColor(255, 255, 255, 255);
 				drawFillCircle(xOrigin + c * 50, 115 + r * 50, 25);
 			}

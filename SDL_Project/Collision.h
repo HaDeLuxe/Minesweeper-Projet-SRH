@@ -20,6 +20,9 @@ public:
 	bool getAmmuCollisionStatus();
 	void resetAmmuCollisionBool();
 
+	bool detectGoalCollision(int adX, int adY);
+	
+
 	
 };
 
