@@ -5,7 +5,8 @@ enum class States {
 	MainMenu,
 	Game,
 	Credits,
-	End
+	End,
+	Language
 };
 
 enum class TileTypes {
@@ -26,5 +27,12 @@ enum class Levels {
 	Level1,
 	Level2,
 	Level3,
-	Level4,
+	Level4
+};
+
+enum class Language {
+	German,
+	English,
+	Francais,
+	Letzebuergesch
 };

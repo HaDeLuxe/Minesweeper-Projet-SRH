@@ -41,8 +41,8 @@ public:
 	void moveLeft();
 	bool getBombCollisionStatus();
 	void resetBombBool();
-	void moveAfterClick(int x, int y);
+
 	int getCrosshairXPos();
 	int getCrosshairYPos();
-
+	void initController();
 };

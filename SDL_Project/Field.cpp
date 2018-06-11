@@ -157,7 +157,7 @@ void Field::drawTransparentRect(int x1, int y1, int x2, int y2)
 	
 }
 
-void Field::drawHUD()
+void Field::drawUI()
 {
 	if (ammuCount <= 0) {
 		tex->renderTexture(tex->HUD_ammu, ren, 700, 910, 32, 32);
@@ -179,6 +179,11 @@ void Field::drawHUD()
 		tex->renderTexture(tex->ammu, ren, 740, 910, 32, 32);
 		tex->renderTexture(tex->ammu, ren, 780, 910, 32, 32);
 	}
+	tex->renderTexture(tex->arrowUp, ren, 200,900,28,42);
+	tex->renderTexture(tex->arrowDown, ren, 200, 950, 28, 42);
+	tex->renderTexture(tex->arrowRight, ren, 233, 936, 39, 31);
+	tex->renderTexture(tex->arrowLeft, ren, 155, 936, 39, 31);
+	tex->renderTexture(tex->checkmark, ren, 280, 900, 100, 100);
 }
 
 
@@ -243,8 +248,8 @@ bool Field::getFlagStatus(int x, int y)
 int Field::getCorrectFlags()
 {
 	int correctFlagsCount = 0;
-	for (int y = 0; y < tileField.size(); y++) {
-		for (int x = 0; x < tileField.size(); x++) {
+	for (int y = 0; y < static_cast<int>(tileField.size()); y++) {
+		for (int x = 0; x < static_cast<int>(tileField.size()); x++) {
 			if (tileField[y][x].tileType == BOMB && tileField[y][x].flag == true) {
 				correctFlagsCount++;
 			}
@@ -558,28 +563,26 @@ void Field::initializeTex()
 
 void Field::drawField()
 {
-	//std::cout << "Lifepoints (3) in Field.cpp: " << lifePoints << std::endl;
 	SDL_SetRenderDrawBlendMode(FIELD->getRenderer(), SDL_BLENDMODE_NONE);
 
 	int r = 0;
 	int c = 0;
 
-	for (int y = 0; y < static_cast<int>(tileField.size()) ; y++) {/*field.size()*/
-		for (int x = 0; x < static_cast<int>(tileField[y].size()) ; x++) {/*field[y].size()*/ /*25*/
+	for (int y = 0; y < static_cast<int>(tileField.size()) ; y++) {
+		for (int x = 0; x < static_cast<int>(tileField[y].size()) ; x++) {
 			xOrigin = (getWindowWidth()/2) - (playerXPos * 50) ;
 			
 
-			if (tileField[y][x].tileType == BACKGROUND) {/*field[y][x]*/
+			if (tileField[y][x].tileType == BACKGROUND) {
 				setRendererColor(100, 100, 255, 50);
 
 				drawRect(xOrigin + c*50, 115 + r * 50, 50, 50);
-				//tex->renderTexture(tex->loadTexture("Assets//meteorBrown_med1.png", ren), ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+				
 			}
 			
 			if (tileField[y][x].tileType == BOMB) {
 				setRendererColor(100, 100, 255, 50);
-				/*drawRect(xOrigin + c * 50, 115 + r * 50, 50, 50);
-				drawFillCircle(xOrigin + c * 50, 115 + r * 50, 25);*/
+
 				drawRect(xOrigin + c * 50, 115 + r * 50, 50, 50);
 				tex->renderTexture(tex->bombLaser, ren, xOrigin + c * 50+12, 115 + r * 50+12, 25, 25);
 			}
@@ -690,7 +693,7 @@ void Field::drawField()
 			c++;
 			if (c >= static_cast<int>(tileField[r].size()) ) c = 0;
 
-			drawHUD();
+			drawUI();
 
 		}
 		r++;

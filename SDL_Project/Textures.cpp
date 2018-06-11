@@ -72,6 +72,11 @@ void Textures::preLoadTextures(SDL_Renderer * ren)
 	laserDown		= loadTexture("Assets/laserRed16Down.png",				ren);
 	laserLeft		= loadTexture("Assets/laserRed16Left.png",				ren);
 	shield			= loadTexture("Assets/shield_gold.png",					ren);
+	arrowUp			= loadTexture("Assets/grey_sliderUp.png",				ren);
+	arrowRight		= loadTexture("Assets/grey_sliderRight.png",			ren);
+	arrowDown		= loadTexture("Assets/grey_sliderDown.png",				ren);
+	arrowLeft		= loadTexture("Assets/grey_sliderLeft.png",				ren);
+	checkmark		= loadTexture("Assets/checkmark.png",					ren);
 }
 
 SDL_Texture * Textures::getTex()

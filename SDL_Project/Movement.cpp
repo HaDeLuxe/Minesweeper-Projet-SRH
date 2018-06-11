@@ -28,6 +28,7 @@ void Movement::ammuCollision() //do this when collision with ammu detected
 
 void Movement::shieldCollision()
 {
+	if(col->detectShieldCollision(0,-1))
 	lifePoints++;
 }
 
@@ -52,10 +53,12 @@ void Movement::moveUp()
 				if (!alreadyCheckedIfCol) {
 					col->detectBombCollision(0, -1);
 					col->detectAmmuCollision(0, -1);
+					if (col->detectShieldCollision(0, -1)) {
+						lifePoints++;
+					}
 					alreadyCheckedIfCol = true;
 					bombCollision();
 					ammuCollision();
-					shieldCollision();
 					col->resetCollisionBool();
 					col->resetAmmuCollisionBool();
 				}
@@ -99,7 +102,9 @@ void Movement::moveDown()
 					alreadyCheckedIfCol = true;
 					bombCollision();
 					ammuCollision();
-					shieldCollision();
+					if (col->detectShieldCollision(0, 1)) {
+						lifePoints++;
+					}
 					col->resetCollisionBool();
 					col->resetAmmuCollisionBool();
 				}
@@ -141,7 +146,9 @@ void Movement::moveRight()
 					alreadyCheckedIfCol = true;
 					bombCollision();
 					ammuCollision();
-					shieldCollision();
+					if (col->detectShieldCollision(1, 0)) {
+						lifePoints++;
+					}
 					col->resetCollisionBool();
 					col->resetAmmuCollisionBool();
 				}
@@ -183,7 +190,9 @@ void Movement::moveLeft()
 					alreadyCheckedIfCol = true;
 					bombCollision();
 					ammuCollision();
-					shieldCollision();
+					if (col->detectShieldCollision(-1, 0)) {
+						lifePoints++;
+					}
 					col->resetCollisionBool();
 					col->resetAmmuCollisionBool();
 				}
@@ -222,33 +231,6 @@ void Movement::resetBombBool()
 
 #pragma endregion
 
-void Movement::moveAfterClick(int x, int y) {
-	FIELD->calculatePlayerPos();
-	pX = FIELD->getPlayerXPos();
-	pY = FIELD->getPlayerYPos();
-
-
-	if (((x >= (335 + (pX - 1) * 50)) && (x <= (335 + (pX) * 50))) && ((y >= (165 + (pY + 0) * 50)) && (y < (165 + (pY + 1) * 50)))) {
-		moveLeft();
-		//std::cout << "Left Mouse Move was triggered" << std::endl;
-	}
-
-	if (((x >= (335 + (pX + 1) * 50)) && (x <= (335 + (pX + 2) * 50))) && ((y >= (165 + (pY + 0) * 50)) && (y < (165 + (pY + 1) * 50)))) {
-		moveRight();
-		//std::cout << "Right Mouse Move was triggered" << std::endl;
-	}
-
-	if (((x >= (335 + (pX) * 50)) && (x <= (335 + (pX + 1) * 50))) && ((y >= (165 + (pY + 1) * 50)) && (y < (165 + (pY + 2) * 50)))) {
-		moveDown();
-		//std::cout << "Right Mouse Move was triggered" << std::endl;
-	}
-
-	if (((x >= (335 + (pX) * 50)) && (x <= (335 + (pX + 1) * 50))) && ((y >= (165 + (pY - 1) * 50)) && (y < (165 + pY * 50)))) {
-		moveUp();
-		//std::cout << "Right Mouse Move was triggered" << std::endl;
-	}
-	//std::cout << "Movement demand was triggered" << std::endl;
-}
 
 int Movement::getCrosshairXPos()
 {
@@ -259,3 +241,14 @@ int Movement::getCrosshairYPos()
 {
 	return _lastCrosshairYPos;
 }
+
+void Movement::initController()
+{
+	bool success = true;
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK) < 0) {
+		printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
+		success = false;
+	}
+}
+
+

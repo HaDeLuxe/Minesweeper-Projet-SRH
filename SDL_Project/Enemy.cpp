@@ -110,7 +110,7 @@ void Enemy::manageMissiles()
 
 void Enemy::drawAllMissiles()
 {
-	for (int i = 0; i < missiles.size(); i++) {
+	for (int i = 0; i < static_cast<int>(missiles.size()); i++) {
 		FIELD->tileField[missiles[i].mY][missiles[i].mX].missile = true;
 	}
 }
