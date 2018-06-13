@@ -35,7 +35,7 @@ public:
 	void renewField();
 	void readWallData(std::string filePath);
 	void Tutorial();
-	void TutorialRemoveMask();
+	void prepareTutorial();
 	void Level1();
 
 	void manageMissiles(/*std::vector<Enemy>*/);

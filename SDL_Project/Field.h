@@ -99,7 +99,7 @@ public:
 	void bombsProx();
 	int returnBombCount(int x, int y);
 	void setRandomWalls();
-	void setRandomMines();
+	void setRandomMines(int mineCount);
 	void floodFillOpenFieldsUR(int nextPositionX, int nextPositionY);
 	
 	void drawField();

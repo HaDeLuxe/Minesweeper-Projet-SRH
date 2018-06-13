@@ -40,12 +40,12 @@ void Field::createPlayField(int pX, int pY)
 		}
 		tileField.push_back(temp);
 	}
-	enterObjectInField(2, 2, PLAYER);
+	//enterObjectInField(2, 2, PLAYER);
 	
-	enterObjectInField(10, 10, BOMB);
+	/*enterObjectInField(10, 10, BOMB);
 	enterObjectInField(10, 12, BOMB);
 	enterObjectInField(10, 14, BOMB);
-	enterObjectInField(12, 12, BOMB);
+	enterObjectInField(12, 12, BOMB);*/
 	enterObjectInField(48, 8, GOAL);
 	
 }
@@ -161,8 +161,7 @@ void Field::drawUI()
 {
 	SDL_Rect drawRect = { static_cast<int>(timer->getTicks(100) % 4) * 40,0,40,40 };
 	if (ammuCount <= 0) {
-		tex->renderTexture(tex->Ammu_Glowing, ren, 700, 910, 32, 32, drawRect);
-		//tex->renderTexture(tex->HUD_ammu, ren, 700, 910, 32, 32);
+		tex->renderTexture(tex->HUD_ammu, ren, 700, 910, 32, 32);
 		tex->renderTexture(tex->HUD_ammu, ren, 750, 910, 32, 32);
 		tex->renderTexture(tex->HUD_ammu, ren, 800, 910, 32, 32);
 	}
@@ -499,14 +498,14 @@ void Field::setRandomWalls() //nicht benutzt in momentenan Build, da es nocht ni
 
 }
 
-void Field::setRandomMines()
+void Field::setRandomMines(int mineCount)
 {
-	int maxMinesCount = 50;
+	//int maxMinesCount = 50;
 	int i = 1;
 	int x = 0;
 	int y = 0;
 	srand((unsigned int)time(NULL));
-	while (i < maxMinesCount) {
+	while (i < mineCount) {
 		x = rand() % 50;
 		y = rand() % 15;
 		if (tileField[y][x].tileType == BACKGROUND) {
@@ -514,7 +513,7 @@ void Field::setRandomMines()
 			i++;
 		}
 	}
-	bombsProx();
+	
 }
 
 void Field::floodFillOpenFieldsUR(int nextPositionX, int nextPositionY)
@@ -622,6 +621,8 @@ void Field::drawField()
 				textC->renderNumber(9, ren, xOrigin + c * 50 + 15, 115 + r * 50 + 10, 20, 35);
 			}
 			if (tileField[y][x].tileType == AMMU) {
+				setRendererColor(100, 100, 255, 50);
+				drawRect(xOrigin + c * 50, 115 + r * 50, 50, 50);
 				tex->renderTexture(tex->ammu, ren, xOrigin + c * 50 + 9, 115 + r * 50 + 9, 32, 32);
 			}
 			if (!tileField[y][x].isShown) {
@@ -672,9 +673,13 @@ void Field::drawField()
 
 			}
 			if (tileField[y][x].tileType == DOOR) {
+				setRendererColor(100, 100, 255, 50);
+				drawRect(xOrigin + c * 50, 115 + r * 50, 50, 50);
 				tex->renderTexture(tex->doorEnemy, ren, xOrigin + c * 50, 115 + r * 50+4, 50, 41);
 			}
 			if (tileField[y][x].tileType == SHIELD) {
+				setRendererColor(100, 100, 255, 50);
+				drawRect(xOrigin + c * 50, 115 + r * 50, 50, 50);
 				tex->renderTexture(tex->shield, ren, xOrigin + c * 50, 115 + r * 50 + 4, 50, 41);
 			}
 			if (tileField[y][x].crosshair == true) {

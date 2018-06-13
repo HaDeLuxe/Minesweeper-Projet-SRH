@@ -24,7 +24,7 @@ void GameManager::renewField()
 			}
 		}
 		FIELD->setRandomWalls();
-		FIELD->setRandomMines();
+		FIELD->setRandomMines(50);
 		
 		isSolvable = true;
 	}
@@ -64,27 +64,29 @@ void GameManager::readWallData(std::string filePath)
 
 void GameManager::Tutorial()
 {
-	readWallData("Levels\\Level1.txt");
-	/*for (int y = 0; y < 10; y++) {
-		for (int x = 0; x < 10; x++) {
-			FIELD->enterObjectInField(x, y, BACKGROUND);
-		}
-	}*/
+	FIELD->createPlayField(50, 15);
+	readWallData("Levels\\Tutorial.txt");
 	FIELD->enterObjectInField(5, 5, PLAYER);
-	enemy1 = new Enemy(15,2,3);
-	enemy1->changeEnemyPos(15, 2);
+	FIELD->setRandomMines(50);
+	FIELD->placeMask();
+	prepareTutorial();
+	/*enemy1 = new Enemy(15,2,3);
+	enemy1->changeEnemyPos(15, 2);*/
+	FIELD->bombsProx();
 	FIELD->enterObjectInField(5, 10, SHIELD);
 }
 
 
 
-void GameManager::TutorialRemoveMask()
+void GameManager::prepareTutorial()
 {
 	for (int y = 0; y < 10; y++) {
 		for (int x = 0; x < 10; x++) {
 			FIELD->tileField[y][x].isShown = true;
+			if (FIELD->tileField[y][x].tileType == BOMB) FIELD->tileField[y][x].tileType = BACKGROUND;
 		}
 	}
+
 }
 
 void GameManager::Level1()

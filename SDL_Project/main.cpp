@@ -30,7 +30,7 @@ Losescreen * losescreen;
 credits * creditsS;
 Music * music;
 SDL_Joystick* gameController = NULL;
-const int Joystick_Dead_Zone = 32000;
+const int Joystick_Dead_Zone = 32200;
 void PollEvents();
 
 
@@ -92,13 +92,13 @@ int main(int argc, char* argv[])
 	FIELD->initializeTex();
 	textures->preLoadTextures(FIELD->getRenderer());
 	
-	FIELD->createPlayField(50, 15);
+	//FIELD->createPlayField(50, 15);
 	//gameManager->readWallData("Assets/Level1");
-	
 	gameManager->Tutorial();
-	FIELD->setRandomMines();
-	FIELD->placeMask();
-	gameManager->TutorialRemoveMask();
+	//gameManager->Tutorial();
+	//FIELD->setRandomMines();
+	//FIELD->placeMask();
+	//gameManager->prepareTutorial();
 
 	music->initMusic();
 	music->loadBackGroundMusic();
@@ -154,6 +154,7 @@ void PollEvents() {
 				if (event.jaxis.which == 0) {
 					//X axis
 					if (event.jaxis.axis == 0) {
+						
 						if (event.jaxis.value < -Joystick_Dead_Zone) {
 							
 							if (currentGameState == States::Game) {
@@ -177,24 +178,18 @@ void PollEvents() {
 								}
 							}
 						}
-						else alreadyMoved = true;
+						else alreadyMoved = false;
 					}
 
 					if (event.jaxis.axis == 1) {
 						if (event.jaxis.value < -Joystick_Dead_Zone) {
-
-							if (currentGameState == States::Game) {
+							if (currentGameState == States::Game && !pause) {
 								while (alreadyMoved == false) {
 									movement->moveUp();
 									FIELD->getDirection(1);
 									gameManager->manageMissiles();
 									alreadyMoved = true;
 								}
-							}
-							if (currentGameState == States::Game && !pause) {
-								movement->moveUp();
-								FIELD->getDirection(1);
-								gameManager->manageMissiles();
 							}
 							if (currentGameState == States::MainMenu) {
 								mainMenu->menuSelectionUp();
@@ -204,19 +199,13 @@ void PollEvents() {
 							}
 						}
 						else if (event.jaxis.value > Joystick_Dead_Zone) {
-
-							if (currentGameState == States::Game) {
+							if (currentGameState == States::Game && !pause) {
 								while (alreadyMoved == false) {
 									movement->moveDown();
 									FIELD->getDirection(3);
 									gameManager->manageMissiles();
 									alreadyMoved = true;
 								}
-							}
-							if (currentGameState == States::Game && !pause) {
-								movement->moveDown();
-								FIELD->getDirection(3);
-								gameManager->manageMissiles();
 							}
 							if (currentGameState == States::MainMenu) {
 								mainMenu->menuSelectionDown();
@@ -225,7 +214,7 @@ void PollEvents() {
 								window->langSelectionDown();
 							}
 						}
-						else alreadyMoved = true;
+						else if(event.jaxis.value < Joystick_Dead_Zone && event.jaxis.value > -Joystick_Dead_Zone) alreadyMoved = false;
 					}
 				}
 			}

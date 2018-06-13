@@ -59,7 +59,7 @@ void Textures::preLoadTextures(SDL_Renderer * ren)
 	playerTexRight	= loadTexture("Assets/playerShip2_blue -Right.png",		ren);
 	playerTexDown	= loadTexture("Assets/playerShip2_blue - Down.png",		ren);
 	playerDam1Up	= loadTexture("Assets/playerShip2_damage1_Up.png",		ren);
-	playerDam2Right = loadTexture("Assets/playerShip2_damage1_Right.png",	ren);
+	playerDam1Right = loadTexture("Assets/playerShip2_damage1_Right.png",	ren);
 	playerDam1Down	= loadTexture("Assets/playerShip2_damage1_Down.png",	ren);
 	playerDam1Left	= loadTexture("Assets/playerShip2_damage1_Left.png",	ren);
 	playerDam2Up	= loadTexture("Assets/playerShip2_damage2_Up.png",		ren);
