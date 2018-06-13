@@ -153,18 +153,6 @@ void PollEvents() {
 				bool alreadyMoved = false;
 				if (event.jaxis.which == 0) {
 					//X axis
-					if (SDL_JOYBUTTONDOWN) {
-						if (event.jbutton.button == SDL_CONTROLLER_BUTTON_A) {
-							if (currentGameState == States::Game) {
-								gameManager->changeFlag(movement->getCrosshairXPos(), movement->getCrosshairYPos());
-								music->playMarkSound();
-								if (FIELD->tileField[movement->getCrosshairYPos()][movement->getCrosshairXPos()].tileType == DOOR && ammuCount == 3) {
-									FIELD->enterObjectInField(movement->getCrosshairXPos(), movement->getCrosshairYPos(), BACKGROUND);
-									ammuCount = 0;
-								}
-							}
-						}
-					}
 					if (event.jaxis.axis == 0) {
 						if (event.jaxis.value < -Joystick_Dead_Zone) {
 							
@@ -176,6 +164,7 @@ void PollEvents() {
 									alreadyMoved = true;
 								}
 							}
+							
 						}
 						else if (event.jaxis.value > Joystick_Dead_Zone) {
 							
@@ -202,6 +191,17 @@ void PollEvents() {
 									alreadyMoved = true;
 								}
 							}
+							if (currentGameState == States::Game && !pause) {
+								movement->moveUp();
+								FIELD->getDirection(1);
+								gameManager->manageMissiles();
+							}
+							if (currentGameState == States::MainMenu) {
+								mainMenu->menuSelectionUp();
+							}
+							if (currentGameState == States::Language) {
+								window->langSelectionUp();
+							}
 						}
 						else if (event.jaxis.value > Joystick_Dead_Zone) {
 
@@ -213,9 +213,106 @@ void PollEvents() {
 									alreadyMoved = true;
 								}
 							}
+							if (currentGameState == States::Game && !pause) {
+								movement->moveDown();
+								FIELD->getDirection(3);
+								gameManager->manageMissiles();
+							}
+							if (currentGameState == States::MainMenu) {
+								mainMenu->menuSelectionDown();
+							}
+							if (currentGameState == States::Language) {
+								window->langSelectionDown();
+							}
 						}
 						else alreadyMoved = true;
 					}
+				}
+			}
+
+
+			if (event.type == SDL_JOYBUTTONDOWN) {
+				switch (event.jbutton.button) {
+
+				/*case SDL_CONTROLLER_BUTTON_DPAD_UP:
+					if (currentGameState == States::Game && !pause) {
+						movement->moveUp();
+						FIELD->getDirection(1);
+						gameManager->manageMissiles();
+					}
+					if (currentGameState == States::MainMenu) {
+						mainMenu->menuSelectionUp();
+					}
+					if (currentGameState == States::Language) {
+						window->langSelectionUp();
+					}
+					break;
+
+				case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
+					if (currentGameState == States::Game && !pause) {
+						movement->moveDown();
+						FIELD->getDirection(3);
+						gameManager->manageMissiles();
+					}
+					if (currentGameState == States::MainMenu) {
+						mainMenu->menuSelectionDown();
+					}
+					if (currentGameState == States::Language) {
+						window->langSelectionDown();
+					}
+					break;*/
+
+				case SDL_CONTROLLER_BUTTON_A:
+					if (currentGameState == States::Game) {
+						gameManager->changeFlag(movement->getCrosshairXPos(), movement->getCrosshairYPos());
+						music->playMarkSound();
+						if (FIELD->tileField[movement->getCrosshairYPos()][movement->getCrosshairXPos()].tileType == DOOR && ammuCount == 3) {
+							FIELD->enterObjectInField(movement->getCrosshairXPos(), movement->getCrosshairYPos(), BACKGROUND);
+							ammuCount = 0;
+						}
+					}
+					if (currentGameState == States::Credits) {
+						currentGameState = States::MainMenu;
+						break;
+					}
+					if (currentGameState == States::MainMenu) {
+						switch (mainMenu->getCurrentSelection()) {
+						case 1:
+							currentGameState = States::Game;
+							break;
+						case 2:
+							i = 0;
+							break;
+						case 3:
+							currentGameState = States::Credits;
+							break;
+						case 4:
+							currentGameState = States::Language;
+							break;
+						}
+						break;
+					}
+					if (currentGameState == States::Language) {
+						switch (window->getCurrentSelection()) {
+						case 1:
+							currentGameState = States::MainMenu;
+							break;
+						case 2:
+							FIELD->currentLanguage = Language::German;
+							break;
+						case 3:
+							FIELD->currentLanguage = Language::English;
+							break;
+						case 4:
+							FIELD->currentLanguage = Language::Francais;
+							break;
+						case 5:
+							FIELD->currentLanguage = Language::Letzebuergesch;
+							break;
+						}
+						break;
+					}
+					break;
 				}
 			}
 
@@ -326,13 +423,8 @@ void PollEvents() {
 						}
 						break;
 					}
-					
 					break;
-				
-
-
 				}
-
 			}
 
 			}
@@ -432,14 +524,9 @@ void PollEvents() {
 					}
 					break;
 				}
-			
-			if (currentGameState == States::Game) {
-				//FIELD->drawField();
-			}
 		}
 
 			
-
 		lastTimestamp = currentTimestamp;
 		currentTimestamp = SDL_GetPerformanceCounter();
 		deltaTime = ((currentTimestamp - lastTimestamp) / (float)SDL_GetPerformanceFrequency());
