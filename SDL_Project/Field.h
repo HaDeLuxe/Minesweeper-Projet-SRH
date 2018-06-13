@@ -5,7 +5,7 @@
 #include "Textures.h"
 #include "Player.h"
 #include "GameManager.h"
-
+#include "Timer.h"
 
 #define BACKGROUND 1
 #define WALL 2
@@ -42,7 +42,7 @@ private:
 	//Language * lang = new Language();
 	static Field* instance;
 	Textures * tex = new Textures();
-	
+	Timer * timer;
 	
 
 	Field();

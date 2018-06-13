@@ -181,6 +181,7 @@ xcopy /y /d  "$(SolutionDir)Dependencies\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "
     <ClCompile Include="text.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Windows.cpp" />
     <ClCompile Include="Movement.cpp" />
     <ClCompile Include="Textures.cpp" />
@@ -196,6 +197,7 @@ xcopy /y /d  "$(SolutionDir)Dependencies\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Header.h" />
     <ClInclude Include="Enums.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="Windows.h" />
     <ClInclude Include="Movement.h" />
     <ClInclude Include="Textures.h" />

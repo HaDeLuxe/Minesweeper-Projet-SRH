@@ -4,7 +4,7 @@
 
 Field::Field()
 {
-	
+	timer = new Timer();
 }
 
 Field* Field::m_pInstance = NULL;
@@ -159,25 +159,27 @@ void Field::drawTransparentRect(int x1, int y1, int x2, int y2)
 
 void Field::drawUI()
 {
+	SDL_Rect drawRect = { static_cast<int>(timer->getTicks(100) % 4) * 40,0,40,40 };
 	if (ammuCount <= 0) {
-		tex->renderTexture(tex->HUD_ammu, ren, 700, 910, 32, 32);
-		tex->renderTexture(tex->HUD_ammu, ren, 740, 910, 32, 32);
-		tex->renderTexture(tex->HUD_ammu, ren, 780, 910, 32, 32);
+		tex->renderTexture(tex->Ammu_Glowing, ren, 700, 910, 32, 32, drawRect);
+		//tex->renderTexture(tex->HUD_ammu, ren, 700, 910, 32, 32);
+		tex->renderTexture(tex->HUD_ammu, ren, 750, 910, 32, 32);
+		tex->renderTexture(tex->HUD_ammu, ren, 800, 910, 32, 32);
 	}
 	if (ammuCount == 1) {
-		tex->renderTexture(tex->ammu, ren, 700, 910, 32, 32);
-		tex->renderTexture(tex->HUD_ammu, ren, 740, 910, 32, 32);
-		tex->renderTexture(tex->HUD_ammu, ren, 780, 910, 32, 32);
+		tex->renderTexture(tex->Ammu_Glowing, ren, 700, 910, 32, 32, drawRect);
+		tex->renderTexture(tex->HUD_ammu, ren, 750, 910, 32, 32);
+		tex->renderTexture(tex->HUD_ammu, ren, 800, 910, 32, 32);
 	}
 	if (ammuCount == 2) {
-		tex->renderTexture(tex->ammu, ren, 700, 910, 32, 32);
-		tex->renderTexture(tex->ammu, ren, 740, 910, 32, 32);
-		tex->renderTexture(tex->HUD_ammu, ren, 780, 910, 32, 32);
+		tex->renderTexture(tex->Ammu_Glowing, ren, 700, 910, 32, 32, drawRect);
+		tex->renderTexture(tex->Ammu_Glowing, ren, 750, 910, 32, 32, drawRect);
+		tex->renderTexture(tex->HUD_ammu, ren, 800, 910, 32, 32);
 	}
 	if (ammuCount == 3) {
-		tex->renderTexture(tex->ammu, ren, 700, 910, 32, 32);
-		tex->renderTexture(tex->ammu, ren, 740, 910, 32, 32);
-		tex->renderTexture(tex->ammu, ren, 780, 910, 32, 32);
+		tex->renderTexture(tex->Ammu_Glowing, ren, 700, 910, 32, 32, drawRect);
+		tex->renderTexture(tex->Ammu_Glowing, ren, 750, 910, 32, 32, drawRect);
+		tex->renderTexture(tex->Ammu_Glowing, ren, 800, 910, 32, 32, drawRect);
 	}
 	tex->renderTexture(tex->arrowUp, ren, 200,900,28,42);
 	tex->renderTexture(tex->arrowDown, ren, 200, 950, 28, 42);
@@ -641,27 +643,28 @@ void Field::drawField()
 				setRendererColor(100, 100, 255, 50);
 				drawRect(xOrigin + c * 50, 115 + r * 50, 50, 50);
 				//drawFillCircle(xOrigin + c * 50, 115 + r * 50, 25);
-				
+				SDL_Rect drawRectUpDown = { static_cast<int>(timer->getTicks(250) % 4) * 112,0,112,100 };
+				SDL_Rect drawRectLeftRight = { 0, static_cast<int>(timer->getTicks(250) % 4) * 112,100,112 };
 				if (lastDirection == 1) {
-					tex->renderTexture(tex->playerTexUp, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+					tex->renderTexture(tex->playerSpriteSheetUp, ren, xOrigin + c * 50, 115 + r * 50, 50, 50, drawRectUpDown);
 					if (lifePoints == 3) tex->renderTexture(tex->playerDam1Up, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
 					if (lifePoints == 2) tex->renderTexture(tex->playerDam2Up, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
 					if (lifePoints == 1) tex->renderTexture(tex->playerDam3Up, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
 				}
 				if (lastDirection == 2) {
-					tex->renderTexture(tex->playerTexRight, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+					tex->renderTexture(tex->playerSpriteSheetRight, ren, xOrigin + c * 50, 115 + r * 50, 50, 50, drawRectLeftRight);
 					if (lifePoints == 3) tex->renderTexture(tex->playerDam1Right, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
 					if (lifePoints == 2) tex->renderTexture(tex->playerDam2Right, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
 					if (lifePoints == 1) tex->renderTexture(tex->playerDam3Right, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
 				}
 				if (lastDirection == 3) {
-					tex->renderTexture(tex->playerTexDown, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+					tex->renderTexture(tex->playerSpriteSheetDown, ren, xOrigin + c * 50, 115 + r * 50, 50, 50, drawRectUpDown);
 					if (lifePoints == 3) tex->renderTexture(tex->playerDam1Down, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
 					if (lifePoints == 2) tex->renderTexture(tex->playerDam2Down, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
 					if (lifePoints == 1) tex->renderTexture(tex->playerDam3Down, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
 				}
 				if (lastDirection == 4) {
-					tex->renderTexture(tex->playerTexLeft, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+					tex->renderTexture(tex->playerSpriteSheetLeft, ren, xOrigin + c * 50, 115 + r * 50, 50, 50, drawRectLeftRight);
 					if (lifePoints == 3) tex->renderTexture(tex->playerDam1Left, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
 					if (lifePoints == 2) tex->renderTexture(tex->playerDam2Left, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
 					if (lifePoints == 1) tex->renderTexture(tex->playerDam3Left, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);

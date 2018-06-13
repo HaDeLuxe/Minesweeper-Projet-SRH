@@ -51,11 +51,16 @@ public:
 	SDL_Texture * arrowLeft				= NULL;
 	SDL_Texture * arrowRight			= NULL;
 	SDL_Texture * checkmark				= NULL;
-	
+	SDL_Texture * playerSpriteSheetUp	= NULL;
+	SDL_Texture * playerSpriteSheetDown = NULL;
+	SDL_Texture * playerSpriteSheetRight = NULL;
+	SDL_Texture * playerSpriteSheetLeft = NULL;
+	SDL_Texture * Ammu_Glowing = NULL;
 
 	SDL_Texture* loadTexture(const std::string &file, SDL_Renderer *ren);
 	
 	void renderTexture(SDL_Texture * tex, SDL_Renderer * ren, int x, int y,int w, int h);
+	void renderTexture(SDL_Texture * tex, SDL_Renderer * ren, int x, int y, int w, int h, SDL_Rect drawRect);
 
 	void preLoadTextures(SDL_Renderer * ren);
 

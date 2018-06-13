@@ -38,6 +38,18 @@ void Textures::renderTexture(SDL_Texture * tex, SDL_Renderer * ren, int x, int y
 	//SDL_DestroyTexture(tex);
 }
 
+void Textures::renderTexture(SDL_Texture * tex, SDL_Renderer * ren, int x, int y, int w, int h, SDL_Rect drawRect)
+{
+	SDL_Rect dst;
+	dst.x = x;
+	dst.y = y;
+	//SDL_QueryTexture(tex, NULL, NULL, &dst.w, &dst.h);
+	dst.h = h;
+	dst.w = w;
+	SDL_RenderCopy(ren, tex, &drawRect, &dst);
+	//SDL_DestroyTexture(tex);
+}
+
 void Textures::preLoadTextures(SDL_Renderer * ren)
 {
 	backgroundTex	= loadTexture("Assets/milky-way.jpg",					ren);
@@ -77,6 +89,11 @@ void Textures::preLoadTextures(SDL_Renderer * ren)
 	arrowDown		= loadTexture("Assets/grey_sliderDown.png",				ren);
 	arrowLeft		= loadTexture("Assets/grey_sliderLeft.png",				ren);
 	checkmark		= loadTexture("Assets/checkmark.png",					ren);
+	playerSpriteSheetUp = loadTexture("Assets/PlayerSpriteSheetUp.png",		ren);
+	playerSpriteSheetDown = loadTexture("Assets/PlayerSpriteSheetDown.png", ren);
+	playerSpriteSheetRight = loadTexture("Assets/PlayerSpriteSheetRight.png", ren);
+	playerSpriteSheetLeft = loadTexture("Assets/PlayerSpriteSheetLeft.png", ren);
+	Ammu_Glowing = loadTexture("Assets/Ammu_Glowing.png",					ren);
 }
 
 SDL_Texture * Textures::getTex()
