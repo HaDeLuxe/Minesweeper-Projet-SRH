@@ -33,7 +33,7 @@ void GameManager::renewField()
 void GameManager::readWallData(std::string filePath)
 {
 	FILE* file;
-	fopen_s(&file, "Levels\\Tutorial.txt","r");
+	fopen_s(&file, filePath.c_str(),"r");
 	int x = 0;
 	int x1 = 0;
 	for (int y = 0; y < 15; y++) {
@@ -60,22 +60,23 @@ void GameManager::readWallData(std::string filePath)
 		x = 0;
 		x1 = 0;
 	}
-		
 	}
 
 void GameManager::Tutorial()
 {
 	readWallData("Levels\\Level1.txt");
-	for (int y = 0; y < 10; y++) {
+	/*for (int y = 0; y < 10; y++) {
 		for (int x = 0; x < 10; x++) {
 			FIELD->enterObjectInField(x, y, BACKGROUND);
 		}
-	}
+	}*/
 	FIELD->enterObjectInField(5, 5, PLAYER);
 	enemy1 = new Enemy(15,2,3);
 	enemy1->changeEnemyPos(15, 2);
 	FIELD->enterObjectInField(5, 10, SHIELD);
 }
+
+
 
 void GameManager::TutorialRemoveMask()
 {
@@ -88,7 +89,7 @@ void GameManager::TutorialRemoveMask()
 
 void GameManager::Level1()
 {
-	
+	readWallData("Levels\\Level1.txt");
 }
 
 void GameManager::manageMissiles()

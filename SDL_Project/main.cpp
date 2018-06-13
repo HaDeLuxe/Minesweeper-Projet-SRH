@@ -233,35 +233,6 @@ void PollEvents() {
 
 			if (event.type == SDL_JOYBUTTONDOWN) {
 				switch (event.jbutton.button) {
-
-				/*case SDL_CONTROLLER_BUTTON_DPAD_UP:
-					if (currentGameState == States::Game && !pause) {
-						movement->moveUp();
-						FIELD->getDirection(1);
-						gameManager->manageMissiles();
-					}
-					if (currentGameState == States::MainMenu) {
-						mainMenu->menuSelectionUp();
-					}
-					if (currentGameState == States::Language) {
-						window->langSelectionUp();
-					}
-					break;
-
-				case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
-					if (currentGameState == States::Game && !pause) {
-						movement->moveDown();
-						FIELD->getDirection(3);
-						gameManager->manageMissiles();
-					}
-					if (currentGameState == States::MainMenu) {
-						mainMenu->menuSelectionDown();
-					}
-					if (currentGameState == States::Language) {
-						window->langSelectionDown();
-					}
-					break;*/
-
 				case SDL_CONTROLLER_BUTTON_A:
 					if (currentGameState == States::Game) {
 						gameManager->changeFlag(movement->getCrosshairXPos(), movement->getCrosshairYPos());
