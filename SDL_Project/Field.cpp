@@ -187,6 +187,25 @@ void Field::drawUI()
 	tex->renderTexture(tex->checkmark, ren, 280, 900, 100, 100);
 }
 
+void Field::drawTutorial()
+{
+	
+	switch (currentLanguage) {
+	case Language::German:
+		tex->renderTexture(tex->Tutorial_Bombs_DE, ren, 100, 100, 400, 400);
+		break;
+	case Language::English:
+		tex->renderTexture(tex->Tutorial_Bombs_EN, ren, 100, 100, 400, 400);
+		break;
+	case Language::Francais:
+		tex->renderTexture(tex->Tutorial_Bombs_FR, ren, 100, 100, 400, 400);
+		break;
+	case Language::Letzebuergesch:
+		tex->renderTexture(tex->Tutorial_Bombs_LU, ren, 100, 100, 400, 400);
+		break;
+	}
+}
+
 
 #pragma endregion Hier sind die Funktionen um Objekte wie Kreise und Rechtecke zu zeichnen.
 
@@ -345,158 +364,158 @@ int Field::returnBombCount(int x, int y) {
 	return tileField[y][x].bombcount;
 }
 
-void Field::setRandomWalls() //nicht benutzt in momentenan Build, da es nocht nicht möglich ist gute, spielbare Maps zu bauen
-{
-	int maxWallsCount = 4;
-	int i = 1;
-	int x = 0;
-	int y = 0;
-	int beginDir = 0;
-	int secondDir = 0;
-	int count = 0;
-	(srand((unsigned int)time(NULL)));
-	while (i <= maxWallsCount) {
-
-		count = 0;
-		x = rand() % 50;
-		y = rand() % 15;
-		int a = (rand() % 50) + 5;
-		int b = (rand() % 50);
-		beginDir = rand() % 4;
-		secondDir = rand() % 2;
-		
-
-		if (tileField[y][x].tileType != WALL) {
-			if (x > 1 && x < static_cast<int>(tileField[0].size()) - 1 && y > 1 && y < static_cast<int>(tileField.size()) - 1) {
-				if (tileField[y-1][x].tileType == WALL)
-					count++;
-				if (tileField[y+1][x].tileType == WALL)
-					count++;
-				if (tileField[y][x+1].tileType == WALL)
-					count++;
-				if (tileField[y][x-1].tileType == WALL)
-					count++;
-
-				int tempx, tempy;
-				
-			
-				enterObjectInField(x, y, WALL);
-				tempx = x;
-				tempy = y;
-				i++;
-
-				switch (beginDir) {
-				case 0: //down
-					for (int m = 0; m < a; m++) {
-						if (count <= 2 && tempy < static_cast<int>(tileField.size()) - 1) {
-							tempy++;
-							enterObjectInField(tempx, tempy, WALL);
-							switch (secondDir) {
-							case 0: // right
-								for (int m = 0; m < b; m++) {
-									if (count <= 2 && tempx < static_cast<int>(tileField[0].size()) - 1) {
-										tempx++;
-										enterObjectInField(tempx, tempy, WALL);
-									}
-								}
-								break;
-							case 1: //left
-								for (int m = 0; m < b; m++) {
-									if (count <= 2 && tempx > 0) {
-										tempx--;
-										enterObjectInField(tempx, tempy, WALL);
-									}
-								}
-								break;
-							}
-						}
-					}
-					break;
-				case 1: //up
-					for (int m = 0; m < a; m++) {
-						if (count <= 2 && tempy > 1 ) {
-							tempy--;
-							enterObjectInField(tempx, tempy, WALL);
-							switch (secondDir) {
-							case 0: // right
-								for (int m = 0; m < b; m++) {
-									if (count <= 2 && tempx < static_cast<int>(tileField[0].size()) - 1) {
-										tempx++;
-										enterObjectInField(tempx, tempy, WALL);
-									}
-								}
-								break;
-							case 1: //left
-								for (int m = 0; m < b; m++) {
-									if (count <= 2 && tempx > 0) {
-										tempx--;
-										enterObjectInField(tempx, tempy, WALL);
-									}
-								}
-								break;
-							}
-						}
-					}
-					break;
-				case 2: //right
-					for (int m = 0; m < a; m++) {
-						if (count <= 2 && tempx < static_cast<int>(tileField[0].size() -1)) {
-							tempx++;
-							enterObjectInField(tempx, tempy, WALL);
-							switch (secondDir) {
-							case 0: // up
-								for (int m = 0; m < b; m++) {
-									if (count <= 2 && tempy > 1) {
-										tempy--;
-										enterObjectInField(tempx, tempy, WALL);
-									}
-								}
-								break;
-							case 1: //down
-								for (int m = 0; m < b; m++) {
-									if (count <= 2 && tempy < static_cast<int>(tileField.size() - 1)) {
-										tempy++;
-										enterObjectInField(tempx, tempy, WALL);
-									}
-								}
-								break;
-							}
-						}
-					}
-					break;
-				case 3: //left
-					for (int m = 0; m < a; m++) {
-						if (count <= 2 && tempx > 0) {
-							tempx--;
-							enterObjectInField(tempx, tempy, WALL);
-							switch (secondDir) {
-							case 0: // up
-								for (int m = 0; m < b; m++) {
-									if (count <= 2 && tempy > 1) {
-										tempy--;
-										enterObjectInField(tempx, tempy, WALL);
-									}
-								}
-								break;
-							case 1: //down
-								for (int m = 0; m < b; m++) {
-									if (count <= 2 && tempy <  static_cast<int>(tileField.size() - 1)) {
-										tempy++;
-										enterObjectInField(tempx, tempy, WALL);
-									}
-								}
-								break;
-							}
-						}
-					}
-					break;
-				}				
-			}
-		}		
-		
-	}
-
-}
+//void Field::setRandomWalls() //nicht benutzt in momentenan Build, da es nocht nicht möglich ist gute, spielbare Maps zu bauen
+//{
+//	int maxWallsCount = 4;
+//	int i = 1;
+//	int x = 0;
+//	int y = 0;
+//	int beginDir = 0;
+//	int secondDir = 0;
+//	int count = 0;
+//	(srand((unsigned int)time(NULL)));
+//	while (i <= maxWallsCount) {
+//
+//		count = 0;
+//		x = rand() % 50;
+//		y = rand() % 15;
+//		int a = (rand() % 50) + 5;
+//		int b = (rand() % 50);
+//		beginDir = rand() % 4;
+//		secondDir = rand() % 2;
+//		
+//
+//		if (tileField[y][x].tileType != WALL) {
+//			if (x > 1 && x < static_cast<int>(tileField[0].size()) - 1 && y > 1 && y < static_cast<int>(tileField.size()) - 1) {
+//				if (tileField[y-1][x].tileType == WALL)
+//					count++;
+//				if (tileField[y+1][x].tileType == WALL)
+//					count++;
+//				if (tileField[y][x+1].tileType == WALL)
+//					count++;
+//				if (tileField[y][x-1].tileType == WALL)
+//					count++;
+//
+//				int tempx, tempy;
+//				
+//			
+//				enterObjectInField(x, y, WALL);
+//				tempx = x;
+//				tempy = y;
+//				i++;
+//
+//				switch (beginDir) {
+//				case 0: //down
+//					for (int m = 0; m < a; m++) {
+//						if (count <= 2 && tempy < static_cast<int>(tileField.size()) - 1) {
+//							tempy++;
+//							enterObjectInField(tempx, tempy, WALL);
+//							switch (secondDir) {
+//							case 0: // right
+//								for (int m = 0; m < b; m++) {
+//									if (count <= 2 && tempx < static_cast<int>(tileField[0].size()) - 1) {
+//										tempx++;
+//										enterObjectInField(tempx, tempy, WALL);
+//									}
+//								}
+//								break;
+//							case 1: //left
+//								for (int m = 0; m < b; m++) {
+//									if (count <= 2 && tempx > 0) {
+//										tempx--;
+//										enterObjectInField(tempx, tempy, WALL);
+//									}
+//								}
+//								break;
+//							}
+//						}
+//					}
+//					break;
+//				case 1: //up
+//					for (int m = 0; m < a; m++) {
+//						if (count <= 2 && tempy > 1 ) {
+//							tempy--;
+//							enterObjectInField(tempx, tempy, WALL);
+//							switch (secondDir) {
+//							case 0: // right
+//								for (int m = 0; m < b; m++) {
+//									if (count <= 2 && tempx < static_cast<int>(tileField[0].size()) - 1) {
+//										tempx++;
+//										enterObjectInField(tempx, tempy, WALL);
+//									}
+//								}
+//								break;
+//							case 1: //left
+//								for (int m = 0; m < b; m++) {
+//									if (count <= 2 && tempx > 0) {
+//										tempx--;
+//										enterObjectInField(tempx, tempy, WALL);
+//									}
+//								}
+//								break;
+//							}
+//						}
+//					}
+//					break;
+//				case 2: //right
+//					for (int m = 0; m < a; m++) {
+//						if (count <= 2 && tempx < static_cast<int>(tileField[0].size() -1)) {
+//							tempx++;
+//							enterObjectInField(tempx, tempy, WALL);
+//							switch (secondDir) {
+//							case 0: // up
+//								for (int m = 0; m < b; m++) {
+//									if (count <= 2 && tempy > 1) {
+//										tempy--;
+//										enterObjectInField(tempx, tempy, WALL);
+//									}
+//								}
+//								break;
+//							case 1: //down
+//								for (int m = 0; m < b; m++) {
+//									if (count <= 2 && tempy < static_cast<int>(tileField.size() - 1)) {
+//										tempy++;
+//										enterObjectInField(tempx, tempy, WALL);
+//									}
+//								}
+//								break;
+//							}
+//						}
+//					}
+//					break;
+//				case 3: //left
+//					for (int m = 0; m < a; m++) {
+//						if (count <= 2 && tempx > 0) {
+//							tempx--;
+//							enterObjectInField(tempx, tempy, WALL);
+//							switch (secondDir) {
+//							case 0: // up
+//								for (int m = 0; m < b; m++) {
+//									if (count <= 2 && tempy > 1) {
+//										tempy--;
+//										enterObjectInField(tempx, tempy, WALL);
+//									}
+//								}
+//								break;
+//							case 1: //down
+//								for (int m = 0; m < b; m++) {
+//									if (count <= 2 && tempy <  static_cast<int>(tileField.size() - 1)) {
+//										tempy++;
+//										enterObjectInField(tempx, tempy, WALL);
+//									}
+//								}
+//								break;
+//							}
+//						}
+//					}
+//					break;
+//				}				
+//			}
+//		}		
+//		
+//	}
+//
+//}
 
 void Field::setRandomMines(int mineCount)
 {
@@ -700,7 +719,7 @@ void Field::drawField()
 			
 			c++;
 			if (c >= static_cast<int>(tileField[r].size()) ) c = 0;
-
+			drawTutorial();
 			drawUI();
 
 		}

@@ -94,7 +94,8 @@ int main(int argc, char* argv[])
 	
 	//FIELD->createPlayField(50, 15);
 	//gameManager->readWallData("Assets/Level1");
-	gameManager->Tutorial();
+	
+	
 	//gameManager->Tutorial();
 	//FIELD->setRandomMines();
 	//FIELD->placeMask();
@@ -448,7 +449,10 @@ void PollEvents() {
 						}
 					}
 					if (currentGameState == States::MainMenu) {
-						if (mainMenu->startButtonPushed(mouseX, mouseY)) currentGameState = States::Game;
+						if (mainMenu->startButtonPushed(mouseX, mouseY)) {
+							gameManager->manageLevels();
+							currentGameState = States::Game;
+						}
 						if (mainMenu->exitButtonPushed(mouseX, mouseY)) i = 0;
 						if (mainMenu->creditsButtonPushed(mouseX, mouseY)) currentGameState = States::Credits;
 						if (mainMenu->langButtonPushed(mouseX, mouseY)) currentGameState = States::Language;
@@ -508,7 +512,7 @@ void PollEvents() {
 			if (!pause) {
 				FIELD->renderClear();
 				textures->renderTexture(textures->backgroundTex, FIELD->getRenderer(), 0, 0, 1920, 1080);
-
+				
 				FIELD->drawField();
 				if (player->returnLifePoints() == 0) currentGameState = States::End;
 			}
@@ -531,11 +535,6 @@ void PollEvents() {
 			window->renderLangMenu();
 			break;
 		}
-		
-		
-		
-
-		
 		SDL_RenderPresent(FIELD->getRenderer());
 #pragma endregion
 

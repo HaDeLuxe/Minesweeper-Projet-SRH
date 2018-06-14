@@ -57,6 +57,19 @@ public:
 	SDL_Texture * playerSpriteSheetLeft = NULL;
 	SDL_Texture * Ammu_Glowing = NULL;
 
+	SDL_Texture * Tutorial_Bombs_DE = NULL;
+	SDL_Texture * Tutorial_Bombs_FR = NULL;
+	SDL_Texture * Tutorial_Bombs_EN = NULL;
+	SDL_Texture * Tutorial_Bombs_LU = NULL;
+	SDL_Texture * Tutorial_LifeBomb_DE = NULL;
+	SDL_Texture * Tutorial_LifeBomb_FR = NULL;
+	SDL_Texture * Tutorial_LifeBomb_EN = NULL;
+	SDL_Texture * Tutorial_LifeBomb_LU = NULL;
+	SDL_Texture * Tutorial_Move_DE = NULL;
+	SDL_Texture * Tutorial_Move_FR = NULL;
+	SDL_Texture * Tutorial_Move_EN = NULL;
+	SDL_Texture * Tutorial_Move_LU = NULL;
+
 	SDL_Texture* loadTexture(const std::string &file, SDL_Renderer *ren);
 	
 	void renderTexture(SDL_Texture * tex, SDL_Renderer * ren, int x, int y,int w, int h);

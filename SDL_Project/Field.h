@@ -52,7 +52,7 @@ private:
 
 	text *textC = new text();
 public:
-	Language currentLanguage = Language::Letzebuergesch;
+	Language currentLanguage = Language::Francais;
 	
 	std::vector<std::vector<tile>> tileField;
 	
@@ -82,6 +82,7 @@ public:
 	void drawTransparentRect(int x1, int y1, int x2, int y2);
 #pragma endregion Hier sind die Funktionen um Objekte wie Kreise und Rechtecke zu zeichnen.
 	void drawUI();
+	void drawTutorial();
 
 	int getPlayerXPos();
 	int getPlayerYPos();

@@ -94,6 +94,19 @@ void Textures::preLoadTextures(SDL_Renderer * ren)
 	playerSpriteSheetRight = loadTexture("Assets/PlayerSpriteSheetRight.png", ren);
 	playerSpriteSheetLeft = loadTexture("Assets/PlayerSpriteSheetLeft.png", ren);
 	Ammu_Glowing = loadTexture("Assets/Ammu_Glowing.png",					ren);
+
+	Tutorial_Bombs_DE = loadTexture("Assets/Tutorial Felder/Tutorial_Bombs_DE.png", ren);
+	Tutorial_Bombs_EN = loadTexture("Assets/Tutorial Felder/Tutorial_Bombs_EN.png", ren);
+	Tutorial_Bombs_FR = loadTexture("Assets/Tutorial Felder/Tutorial_Bombs_FR.png", ren);
+	Tutorial_Bombs_LU = loadTexture("Assets/Tutorial Felder/Tutorial_Bombs_LU.png", ren);
+	Tutorial_LifeBomb_DE = loadTexture("Assets/Tutorial Felder/Tutorial_LifeBomb_DE.png", ren);
+	Tutorial_LifeBomb_FR = loadTexture("Assets/Tutorial Felder/Tutorial_LifeBomb_FR.png", ren);
+	Tutorial_LifeBomb_EN = loadTexture("Assets/Tutorial Felder/Tutorial_LifeBomb_EN.png", ren);
+	Tutorial_LifeBomb_LU = loadTexture("Assets/Tutorial Felder/Tutorial_LifeBomb_LU.png", ren);
+	Tutorial_Move_DE = loadTexture("Assets/Tutorial Felder/Tutorial_Movment_DE.png", ren);
+	Tutorial_Move_FR = loadTexture("Assets/Tutorial Felder/Tutorial_Movment_FR.png", ren);
+	Tutorial_Move_EN = loadTexture("Assets/Tutorial Felder/Tutorial_Movment_EN.png", ren);
+	Tutorial_Move_LU = loadTexture("Assets/Tutorial Felder/Tutorial_Movment_LU.png", ren);
 }
 
 SDL_Texture * Textures::getTex()

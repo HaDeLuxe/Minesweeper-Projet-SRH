@@ -14,21 +14,7 @@ GameManager::~GameManager()
 
  
 
-void GameManager::renewField()
-{
-	
-	while (!isSolvable) {
-		for (int y = 0; y < FIELD->getPlayfieldYSize(); y++) {
-			for (int x = 0; x < FIELD->getPlayfieldXSize(); x++) {
-				if (FIELD->getObjectAtCoord(x, y) == WALL) FIELD->enterObjectInField(x, y, BACKGROUND);
-			}
-		}
-		FIELD->setRandomWalls();
-		FIELD->setRandomMines(50);
-		
-		isSolvable = true;
-	}
-}
+
 
 void GameManager::readWallData(std::string filePath)
 {
@@ -62,6 +48,19 @@ void GameManager::readWallData(std::string filePath)
 	}
 	}
 
+void GameManager::manageLevels()
+{
+	switch (currentLevel) {
+	case static_cast<int>(Levels::Tutorial) :
+		Tutorial();
+		break;
+	}
+}
+
+void GameManager::manageLevels(int level)
+{
+}
+
 void GameManager::Tutorial()
 {
 	FIELD->createPlayField(50, 15);
@@ -70,10 +69,11 @@ void GameManager::Tutorial()
 	FIELD->setRandomMines(50);
 	FIELD->placeMask();
 	prepareTutorial();
-	/*enemy1 = new Enemy(15,2,3);
-	enemy1->changeEnemyPos(15, 2);*/
+	enemy1 = new Enemy(15,2,4);
+	enemy1->changeEnemyPos(15, 2);
 	FIELD->bombsProx();
 	FIELD->enterObjectInField(5, 10, SHIELD);
+	
 }
 
 

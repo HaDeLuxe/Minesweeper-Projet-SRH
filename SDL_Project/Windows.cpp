@@ -311,6 +311,8 @@ int Window::getCurrentSelection()
 	return langSelection;
 }
 
+
+
 Splashscreen::Splashscreen() {
 }
 

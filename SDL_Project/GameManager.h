@@ -5,6 +5,7 @@
 #include "Enums.h"
 #include "text.h"
 #include "Enemy.h"
+#include "Textures.h"
 
 
 
@@ -17,6 +18,7 @@ class GameManager
 private:
 	bool isSolvable = false;
 	Levels * levels = new Levels();
+	Textures * tex = new Textures();
 	class Enemy* enemy1 = NULL;
 	class Enemy* enemy2 = NULL;
 	class Enemy* enemy3 = NULL;
@@ -32,8 +34,9 @@ public:
 	GameManager();
 	~GameManager();
 
-	void renewField();
 	void readWallData(std::string filePath);
+	void manageLevels();
+	void manageLevels(int level);
 	void Tutorial();
 	void prepareTutorial();
 	void Level1();
