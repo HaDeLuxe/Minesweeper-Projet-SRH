@@ -70,8 +70,11 @@ void GameManager::Tutorial()
 	FIELD->setRandomMines(100);
 	//FIELD->placeMask();
 	prepareTutorial();
-	enemy1 = new Enemy(15,2,4);
-	enemy1->changeEnemyPos(15, 2);
+	//enemy1 = new Enemy(5, 14, 1);
+	enemy1 = new Enemy(31,12,3);
+	enemy2 = new Enemy(25, 13, 1); //25
+	enemy3 = new Enemy(39, 1, 4);
+	enemy4 = new Enemy(28, 14, 1);
 	
 	FIELD->enterObjectInField(5, 10, SHIELD);
 
@@ -212,9 +215,42 @@ void GameManager::changeMapInstance()
 
 void GameManager::manageMissiles()
 {
+	
 	if (enemy1 != NULL) {
 		enemy1->spawnMissile();
 		enemy1->manageMissiles();
+	}
+	if (enemy2 != NULL) {
+		enemy2->spawnMissile();
+		enemy2->manageMissiles();
+	}
+	if (enemy3 != NULL) {
+		enemy3->spawnMissile();
+		enemy3->manageMissiles();
+	}
+	if (enemy4 != NULL) {
+		enemy4->spawnMissile();
+		enemy4->manageMissiles();
+	}
+	if (enemy5 != NULL) {
+		enemy5->spawnMissile();
+		enemy5->manageMissiles();
+	}
+	if (enemy6 != NULL) {
+		enemy6->spawnMissile();
+		enemy6->manageMissiles();
+	}
+	if (enemy7 != NULL) {
+		enemy7->spawnMissile();
+		enemy7->manageMissiles();
+	}
+	if (enemy8 != NULL) {
+		enemy8->spawnMissile();
+		enemy8->manageMissiles();
+	}
+	if (enemy9 != NULL) {
+		enemy9->spawnMissile();
+		enemy9->manageMissiles();
 	}
 }
 

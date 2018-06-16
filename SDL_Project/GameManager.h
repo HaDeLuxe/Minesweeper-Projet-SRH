@@ -43,7 +43,7 @@ public:
 	void prepareTutorial();
 	void Level1();
 	void changeMapInstance();
-	void manageMissiles(/*std::vector<Enemy>*/);
+	void manageMissiles();
 	
 	void changeFlag(int crosshairX, int crosshairY);
 	void addAmmuCount();
