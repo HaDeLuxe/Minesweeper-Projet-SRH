@@ -16,6 +16,7 @@
 #define AMMU 7
 #define ENEMY 8
 #define SHIELD 9
+#define PILL 10
 
 
 
@@ -38,7 +39,7 @@ private:
 	int playerXPos;
 	int playerYPos;
 	int lastDirection = 1;
-	
+	bool activeTutorialWindow = true;
 	//Language * lang = new Language();
 	static Field* instance;
 	Textures * tex = new Textures();
@@ -93,13 +94,15 @@ public:
 	int getObjectAtCoord(int x, int y);
 	void enterObjectInField(int x, int y, int type);
 	bool getFlagStatus(int x, int y);
-	
+	void removeAllWalls();
 	int getCorrectFlags();
 	bool bombCollision();
+	bool pillCollision();
 	void placeMask();
 	void bombsProx();
 	int returnBombCount(int x, int y);
-	void setRandomWalls();
+	/*void setRandomWalls();*/
+	
 	void setRandomMines(int mineCount);
 	void floodFillOpenFieldsUR(int nextPositionX, int nextPositionY);
 	

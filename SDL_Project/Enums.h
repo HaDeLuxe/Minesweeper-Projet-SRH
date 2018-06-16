@@ -34,5 +34,6 @@ enum class Language {
 	German,
 	English,
 	Francais,
-	Letzebuergesch
+	Letzebuergesch,
+	noLang
 };

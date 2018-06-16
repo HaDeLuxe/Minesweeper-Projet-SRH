@@ -15,6 +15,7 @@
 
 
 
+
 class Movement
 {
 private:
@@ -28,12 +29,14 @@ private:
 	int _lastCrosshairYPos = 0;
 	int lastDirection = 1;
 	bool alreadyCheckedIfCol = false;
+	
 public:
 	Movement();
 	~Movement();
 	void bombCollision();
 	void ammuCollision();
 	void shieldCollision();
+	void pillCollision();
 
 	void moveUp();
 	void moveRight();

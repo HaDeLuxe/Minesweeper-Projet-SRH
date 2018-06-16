@@ -12,6 +12,8 @@
 #define FIELD Field::Instance()
 extern short ammuCount;
 extern int currentLevel;
+extern short currentMapInstance;
+
 
 class GameManager
 {
@@ -40,7 +42,7 @@ public:
 	void Tutorial();
 	void prepareTutorial();
 	void Level1();
-
+	void changeMapInstance();
 	void manageMissiles(/*std::vector<Enemy>*/);
 	
 	void changeFlag(int crosshairX, int crosshairY);

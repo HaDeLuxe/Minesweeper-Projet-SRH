@@ -2,6 +2,7 @@
 
 short ammuCount = 0;
 int currentLevel = (int)(Levels::Tutorial);
+short currentMapInstance = 1;
 
 GameManager::GameManager()
 {
@@ -65,14 +66,98 @@ void GameManager::Tutorial()
 {
 	FIELD->createPlayField(50, 15);
 	readWallData("Levels\\Tutorial.txt");
-	FIELD->enterObjectInField(5, 5, PLAYER);
-	FIELD->setRandomMines(50);
-	FIELD->placeMask();
+	FIELD->enterObjectInField(1, 1, PLAYER);
+	FIELD->setRandomMines(100);
+	//FIELD->placeMask();
 	prepareTutorial();
 	enemy1 = new Enemy(15,2,4);
 	enemy1->changeEnemyPos(15, 2);
-	FIELD->bombsProx();
+	
 	FIELD->enterObjectInField(5, 10, SHIELD);
+
+	// Level is solvable:
+	int x = 1;
+	int y = 1;
+	while (x < 6) {
+		if (FIELD->getObjectAtCoord(x, y) == BOMB) {
+			FIELD->enterObjectInField(x, y, BACKGROUND);
+		}
+		x++;
+	}
+	while (y < 7) {
+		if (FIELD->getObjectAtCoord(x, y) == BOMB) {
+			FIELD->enterObjectInField(x, y, BACKGROUND);
+		}
+		y++;
+	}
+	while (x > 2) {
+		if (FIELD->getObjectAtCoord(x, y) == BOMB) {
+			FIELD->enterObjectInField(x, y, BACKGROUND);
+		}
+		x--;
+	}
+	while (y < 13) {
+		if (FIELD->getObjectAtCoord(x, y) == BOMB) {
+			FIELD->enterObjectInField(x, y, BACKGROUND);
+		}
+		y++;
+	}
+	while (x < 10) {
+		if (FIELD->getObjectAtCoord(x, y) == BOMB) {
+			FIELD->enterObjectInField(x, y, BACKGROUND);
+		}
+		x++;
+	}
+	while (y > 12) {
+		if (FIELD->getObjectAtCoord(x, y) == BOMB) {
+			FIELD->enterObjectInField(x, y, BACKGROUND);
+		}
+		y--;
+	}
+	while (x < 15) {
+		if (FIELD->getObjectAtCoord(x, y) == BOMB) {
+			FIELD->enterObjectInField(x, y, BACKGROUND);
+		}
+		x++;
+	}
+	while (y > 1) {
+		if (FIELD->getObjectAtCoord(x, y) == BOMB) {
+			FIELD->enterObjectInField(x, y, BACKGROUND);
+		}
+		y--;
+	}
+	while (x < 27) {
+		if (FIELD->getObjectAtCoord(x, y) == BOMB) {
+			FIELD->enterObjectInField(x, y, BACKGROUND);
+		}
+		x++;
+	}
+	while (y < 9) {
+		if (FIELD->getObjectAtCoord(x, y) == BOMB) {
+			FIELD->enterObjectInField(x, y, BACKGROUND);
+		}
+		y++;
+	}
+	while (x < 40) {
+		if (FIELD->getObjectAtCoord(x, y) == BOMB) {
+			FIELD->enterObjectInField(x, y, BACKGROUND);
+		}
+		x++;
+	}
+	while (y < 12) {
+		if (FIELD->getObjectAtCoord(x, y) == BOMB) {
+			FIELD->enterObjectInField(x, y, BACKGROUND);
+		}
+		y++;
+	}
+	while (x < 48) {
+		if (FIELD->getObjectAtCoord(x, y) == BOMB) {
+			FIELD->enterObjectInField(x, y, BACKGROUND);
+		}
+		x++;
+	}
+
+	FIELD->bombsProx();
 	
 }
 
@@ -80,18 +165,49 @@ void GameManager::Tutorial()
 
 void GameManager::prepareTutorial()
 {
-	for (int y = 0; y < 10; y++) {
-		for (int x = 0; x < 10; x++) {
+	for (int y = 0; y < 11; y++) {
+		for (int x = 0; x < 9; x++) {
 			FIELD->tileField[y][x].isShown = true;
 			if (FIELD->tileField[y][x].tileType == BOMB) FIELD->tileField[y][x].tileType = BACKGROUND;
 		}
 	}
+	FIELD->enterObjectInField(2, 6, BOMB);
+	FIELD->enterObjectInField(4, 8, BOMB);
+	FIELD->enterObjectInField(9, 7, PILL);
 
 }
 
 void GameManager::Level1()
 {
 	readWallData("Levels\\Level1.txt");
+}
+
+void GameManager::changeMapInstance()
+{
+	
+		FIELD->removeAllWalls();
+		switch (currentLevel) {
+		case (int)Levels::Tutorial:
+			if (currentMapInstance == 1)	readWallData("Levels/Tutorial.txt");
+			else if (currentMapInstance == 2) readWallData("Levels/Tutorial 2.txt");
+			break;
+		case (int)Levels::Level1:
+			if (currentMapInstance == 1) readWallData("Levels/Level1.txt");
+			else readWallData("Levels/Level1(2)");
+			break;
+		case (int)Levels::Level2:
+			if (currentMapInstance == 1) readWallData("Levels/Level2.txt");
+			else readWallData("Levels/Level2(2).txt");
+			break;
+		case (int)Levels::Level3:
+			if (currentMapInstance == 1) readWallData("Levels/Level3.txt");
+			else readWallData("Levels/Level3(2).txt");
+			break;
+		case (int)Levels::Level4:
+			if (currentMapInstance == 1) readWallData("Levels/Level4.txt");
+			else readWallData("Levels/Level4(2)");
+			break;
+		}
 }
 
 void GameManager::manageMissiles()

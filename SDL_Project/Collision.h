@@ -1,5 +1,6 @@
 #pragma once
 #include "Field.h"
+#include "GameManager.h"
 
 #define FIELD Field::Instance()
 
@@ -8,6 +9,7 @@ class Collision
 private:
 	bool bombCollision = false;
 	bool ammuCollision = false;
+	GameManager* gameManager = new GameManager();
 public:
 	Collision();
 	~Collision();
@@ -22,6 +24,7 @@ public:
 
 	bool detectGoalCollision(int adX, int adY);
 	bool detectShieldCollision(int adX, int adY);
+	bool detectPillCollision(int adX, int adY);
 
 	
 };

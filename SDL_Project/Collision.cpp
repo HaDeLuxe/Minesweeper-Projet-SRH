@@ -71,6 +71,17 @@ bool Collision::detectShieldCollision(int adX, int adY)
 	return false;
 }
 
+bool Collision::detectPillCollision(int adX, int adY)
+{
+
+	FIELD->calculatePlayerPos();
+	if (FIELD->getObjectAtCoord(FIELD->getPlayerXPos() + adX, FIELD->getPlayerYPos() + adY) == PILL) {
+		std::cout << "Pill Collision detected!" << std::endl;
+		return true;
+	}
+	return false;
+}
+
 
 
 

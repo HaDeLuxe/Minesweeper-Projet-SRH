@@ -32,6 +32,16 @@ void Movement::shieldCollision()
 	lifePoints++;
 }
 
+void Movement::pillCollision()
+{
+	if (currentMapInstance == 1) {
+		currentMapInstance = 2;
+	}
+	else currentMapInstance = 1;
+	
+	gameManager->changeMapInstance();
+}
+
 
 
 
@@ -55,6 +65,9 @@ void Movement::moveUp()
 					col->detectAmmuCollision(0, -1);
 					if (col->detectShieldCollision(0, -1)) {
 						lifePoints++;
+					}
+					if (col->detectPillCollision(0, -1)) {
+						pillCollision();
 					}
 					alreadyCheckedIfCol = true;
 					bombCollision();
@@ -105,6 +118,9 @@ void Movement::moveDown()
 					if (col->detectShieldCollision(0, 1)) {
 						lifePoints++;
 					}
+					if (col->detectPillCollision(0, 1)) {
+						pillCollision();
+					}
 					col->resetCollisionBool();
 					col->resetAmmuCollisionBool();
 				}
@@ -148,6 +164,9 @@ void Movement::moveRight()
 					ammuCollision();
 					if (col->detectShieldCollision(1, 0)) {
 						lifePoints++;
+					}
+					if (col->detectPillCollision(1, 0)) {
+						pillCollision();
 					}
 					col->resetCollisionBool();
 					col->resetAmmuCollisionBool();
@@ -193,6 +212,7 @@ void Movement::moveLeft()
 					if (col->detectShieldCollision(-1, 0)) {
 						lifePoints++;
 					}
+					if (col->detectPillCollision(-1,0)) pillCollision();
 					col->resetCollisionBool();
 					col->resetAmmuCollisionBool();
 				}

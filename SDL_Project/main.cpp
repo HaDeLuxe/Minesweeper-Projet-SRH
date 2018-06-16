@@ -240,6 +240,7 @@ void PollEvents() {
 						switch (mainMenu->getCurrentSelection()) {
 						case 1:
 							currentGameState = States::Game;
+							gameManager->manageLevels();
 							break;
 						case 2:
 							i = 0;
@@ -346,6 +347,7 @@ void PollEvents() {
 							switch (mainMenu->getCurrentSelection()) {
 							case 1:
 								currentGameState = States::Game;
+								gameManager->manageLevels();
 								break;
 							case 2:
 								i = 0;
@@ -447,15 +449,26 @@ void PollEvents() {
 								ammuCount = 0;
 							}
 						}
+						
 					}
+
+
 					if (currentGameState == States::MainMenu) {
 						if (mainMenu->startButtonPushed(mouseX, mouseY)) {
 							gameManager->manageLevels();
 							currentGameState = States::Game;
+							mouseX = -1;
+							mouseY = -1;
 						}
-						if (mainMenu->exitButtonPushed(mouseX, mouseY)) i = 0;
+						if (mainMenu->exitButtonPushed(mouseX, mouseY)) {
+							i = 0;
+						}
 						if (mainMenu->creditsButtonPushed(mouseX, mouseY)) currentGameState = States::Credits;
-						if (mainMenu->langButtonPushed(mouseX, mouseY)) currentGameState = States::Language;
+						if (mainMenu->langButtonPushed(mouseX, mouseY)) {
+							currentGameState = States::Language;
+							mouseX = -1;
+							mouseY = -1;
+						}
 					}
 					if (currentGameState == States::Splashscreen) {
 						currentGameState = States::MainMenu;
@@ -463,31 +476,43 @@ void PollEvents() {
 					if (currentGameState == States::Credits) {
 						if (creditsS->creditsBackButtonPushed(mouseX, mouseY)) currentGameState = States::MainMenu;
 					}
-					if (currentGameState == States::Language) {
-						/*FIELD->currentLanguage = window->languagesButtonPushed(mouseX, mouseY);*/
-						switch (window->languagesButtonPushed(mouseX, mouseY)) {
-						case Language::German:
-							FIELD->currentLanguage = Language::German;
-							break;
-						case Language::English:
-							FIELD->currentLanguage = Language::English;
-							break;
-						case Language::Francais:
-							FIELD->currentLanguage = Language::Francais;
-							break;
-						case Language::Letzebuergesch:
-							FIELD->currentLanguage = Language::Letzebuergesch;
-						}
-						std::cout << (int)FIELD->currentLanguage;
-						if (window->langBackButtonPushed(mouseX, mouseY)) currentGameState = States::MainMenu;
+					
+						
+					if (window->langBackButtonPushed(mouseX, mouseY)) {
+						currentGameState = States::MainMenu;
+						//std::cout << (int)FIELD->currentLanguage;
 					}
 					if (currentGameState == States::End) {
 						if (losescreen->EndBackButtonPushed(mouseX, mouseY)) {
 							currentGameState = States::MainMenu;
 						}
 					}
-					break;
+
+					if (currentGameState == States::Language) {
+						/*FIELD->currentLanguage = window->languagesButtonPushed(mouseX, mouseY);*/
+						switch (window->languagesButtonPushed(mouseX, mouseY)) {
+
+						case Language::German:
+							std::cout << "Language changed!";
+							FIELD->currentLanguage = Language::German;
+							break;
+						case Language::English:
+							std::cout << "Language changed!";
+							FIELD->currentLanguage = Language::English;
+							break;
+						case Language::Francais:
+							std::cout << "Language changed!";
+							FIELD->currentLanguage = Language::Francais;
+							break;
+						case Language::Letzebuergesch:
+							std::cout << "Language changed!";
+							FIELD->currentLanguage = Language::Letzebuergesch;
+							break;
+						}
+						break;
+					}
 				}
+					
 		}
 
 			
@@ -514,7 +539,8 @@ void PollEvents() {
 				textures->renderTexture(textures->backgroundTex, FIELD->getRenderer(), 0, 0, 1920, 1080);
 				
 				FIELD->drawField();
-				if (player->returnLifePoints() == 0) currentGameState = States::End;
+				if (player->returnLifePoints() == 0) { 
+					currentGameState = States::End; }
 			}
 			if (pause) {
 				window->renderPauseScreen();

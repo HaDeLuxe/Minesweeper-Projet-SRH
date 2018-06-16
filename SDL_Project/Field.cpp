@@ -189,20 +189,23 @@ void Field::drawUI()
 
 void Field::drawTutorial()
 {
-	
-	switch (currentLanguage) {
-	case Language::German:
-		tex->renderTexture(tex->Tutorial_Bombs_DE, ren, 100, 100, 400, 400);
-		break;
-	case Language::English:
-		tex->renderTexture(tex->Tutorial_Bombs_EN, ren, 100, 100, 400, 400);
-		break;
-	case Language::Francais:
-		tex->renderTexture(tex->Tutorial_Bombs_FR, ren, 100, 100, 400, 400);
-		break;
-	case Language::Letzebuergesch:
-		tex->renderTexture(tex->Tutorial_Bombs_LU, ren, 100, 100, 400, 400);
-		break;
+	calculatePlayerPos();
+	if (getPlayerXPos() > 12) activeTutorialWindow = false;
+	if (activeTutorialWindow) {
+		switch (currentLanguage) {
+		case Language::German:
+			tex->renderTexture(tex->Tutorial_Controls_DE, ren, 100, 100, 400, 400);
+			break;
+		case Language::English:
+			tex->renderTexture(tex->Tutorial_Controls_EN, ren, 100, 100, 400, 400);
+			break;
+		case Language::Francais:
+			tex->renderTexture(tex->Tutorial_Controls_FR, ren, 100, 100, 400, 400);
+			break;
+		case Language::Letzebuergesch:
+			tex->renderTexture(tex->Tutorial_Controls_LU, ren, 100, 100, 400, 400);
+			break;
+		}
 	}
 }
 
@@ -262,6 +265,17 @@ bool Field::getFlagStatus(int x, int y)
 	return tileField[y][x].flag;
 }
 
+void Field::removeAllWalls()
+{
+	for (int y = 0; y < static_cast<int>(tileField.size()); y++) {
+		for (int x = 0; x < static_cast<int>(tileField[y].size()); x++) {
+			if (tileField[y][x].tileType == WALL) {
+				tileField[y][x].tileType = BACKGROUND;
+			}
+		}
+	}
+}
+
 
 
 
@@ -269,7 +283,7 @@ int Field::getCorrectFlags()
 {
 	int correctFlagsCount = 0;
 	for (int y = 0; y < static_cast<int>(tileField.size()); y++) {
-		for (int x = 0; x < static_cast<int>(tileField.size()); x++) {
+		for (int x = 0; x < static_cast<int>(tileField[y].size()); x++) {
 			if (tileField[y][x].tileType == BOMB && tileField[y][x].flag == true) {
 				correctFlagsCount++;
 			}
@@ -281,6 +295,11 @@ int Field::getCorrectFlags()
 bool Field::bombCollision()
 {
 	return tileField[playerYPos][playerXPos].tileType == BOMB;
+}
+
+bool Field::pillCollision()
+{
+	return tileField[playerYPos][playerXPos].tileType == PILL;
 }
 
 void Field::placeMask()
@@ -517,6 +536,8 @@ int Field::returnBombCount(int x, int y) {
 //
 //}
 
+
+
 void Field::setRandomMines(int mineCount)
 {
 	//int maxMinesCount = 50;
@@ -527,7 +548,7 @@ void Field::setRandomMines(int mineCount)
 	while (i < mineCount) {
 		x = rand() % 50;
 		y = rand() % 15;
-		if (tileField[y][x].tileType == BACKGROUND) {
+		if (tileField[y][x].tileType == BACKGROUND && tileField[y][x].tileType != AMMU) {
 			enterObjectInField(x, y, BOMB);
 			i++;
 		}
@@ -606,6 +627,8 @@ void Field::drawField()
 				drawRect(xOrigin + c * 50, 115 + r * 50, 50, 50);
 				tex->renderTexture(tex->bombLaser, ren, xOrigin + c * 50+12, 115 + r * 50+12, 25, 25);
 			}
+
+			
 
 			if (tileField[y][x].tileType == GOAL) {
 				setRendererColor(255, 255, 255, 255);
@@ -700,6 +723,12 @@ void Field::drawField()
 				setRendererColor(100, 100, 255, 50);
 				drawRect(xOrigin + c * 50, 115 + r * 50, 50, 50);
 				tex->renderTexture(tex->shield, ren, xOrigin + c * 50, 115 + r * 50 + 4, 50, 41);
+			}
+			if (tileField[y][x].tileType == PILL) {
+				setRendererColor(100, 100, 255, 50);
+
+				drawRect(xOrigin + c * 50, 115 + r * 50, 50, 50);
+				tex->renderTexture(tex->pill, ren, xOrigin + c * 50 + 12, 115 + r * 50 + 12, 25, 25);
 			}
 			if (tileField[y][x].crosshair == true) {
 				tex->renderTexture(tex->crosshairTex, ren, xOrigin + c * 50+2, 115 + r * 50+2, 45, 45);

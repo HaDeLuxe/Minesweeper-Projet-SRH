@@ -254,7 +254,7 @@ Language Window::languagesButtonPushed(int x, int y)
 	if (x > 1400 && x < 1680 && y > 805 && y < 900) {
 		return Language::Letzebuergesch;
 	}
-	return Language::German;
+	return Language::noLang;
 }
 
 bool Window::langBackButtonPushed(int x, int y)
