@@ -44,10 +44,10 @@ void Enemy::spawnMissile()
 	}
 }
 
-void Enemy::manageMissiles()
+void Enemy::manageMissiles(int enemyNumber)
 {
 	std::cout << "Missiles: " << missiles.size() << std::endl;
-	resetMissilesOnField();
+	resetMissilesOnField(enemyNumber);
 	for (int i = 0; i < static_cast<int>(missiles.size()); i++) {
 		switch (direction) {
 		default:
@@ -90,20 +90,82 @@ void Enemy::manageMissiles()
 			}			break;
 		}
 	}
-	drawAllMissiles();
+	drawAllMissiles(enemyNumber);
 }
 
-void Enemy::drawAllMissiles()
+void Enemy::drawAllMissiles(int enemyNumber)
 {
 	for (int i = 0; i < static_cast<int>(missiles.size()); i++) {
-		FIELD->tileField[missiles[i].mY][missiles[i].mX].missile = true;
+		switch (enemyNumber) {
+		case 1:
+			FIELD->tileField[missiles[i].mY][missiles[i].mX].missile1 = true;
+			break;
+		case 2:
+			FIELD->tileField[missiles[i].mY][missiles[i].mX].missile2 = true;
+			break;
+		case 3:
+			FIELD->tileField[missiles[i].mY][missiles[i].mX].missile3 = true;
+			break;
+		case 4:
+			FIELD->tileField[missiles[i].mY][missiles[i].mX].missile4 = true;
+			break;
+		case 5:
+			FIELD->tileField[missiles[i].mY][missiles[i].mX].missile5 = true;
+			break;
+		case 6:
+			FIELD->tileField[missiles[i].mY][missiles[i].mX].missile6 = true;
+			break;
+		case 7:
+			FIELD->tileField[missiles[i].mY][missiles[i].mX].missile7 = true;
+			break;
+		case 8:
+			FIELD->tileField[missiles[i].mY][missiles[i].mX].missile8 = true;
+			break;
+		case 9:
+			FIELD->tileField[missiles[i].mY][missiles[i].mX].missile9 = true;
+			break;
+		case 10:
+			FIELD->tileField[missiles[i].mY][missiles[i].mX].missile10 = true;
+			break;
+		}
 	}
 }
 
-void Enemy::resetMissilesOnField()
+void Enemy::resetMissilesOnField(int enemyNumber)
 {
-	for (int i = 0; i < missiles.size(); i++) {
-		FIELD->tileField[missiles[i].mY][missiles[i].mX].missile = false;
+	for (int i = 0; i < static_cast<int>(missiles.size()); i++) {
+		switch (enemyNumber) {
+		case 1:
+			FIELD->tileField[missiles[i].mY][missiles[i].mX].missile1 = false;
+			break;
+		case 2:
+			FIELD->tileField[missiles[i].mY][missiles[i].mX].missile2 = false;
+			break;
+		case 3:
+			FIELD->tileField[missiles[i].mY][missiles[i].mX].missile3 = false;
+			break;
+		case 4:
+			FIELD->tileField[missiles[i].mY][missiles[i].mX].missile4 = false;
+			break;
+		case 5:
+			FIELD->tileField[missiles[i].mY][missiles[i].mX].missile5 = false;
+			break;
+		case 6:
+			FIELD->tileField[missiles[i].mY][missiles[i].mX].missile6 = false;
+			break;
+		case 7:
+			FIELD->tileField[missiles[i].mY][missiles[i].mX].missile7 = false;
+			break;
+		case 8:
+			FIELD->tileField[missiles[i].mY][missiles[i].mX].missile8 = false;
+			break;
+		case 9:
+			FIELD->tileField[missiles[i].mY][missiles[i].mX].missile9 = false;
+			break;
+		case 10:
+			FIELD->tileField[missiles[i].mY][missiles[i].mX].missile10 = false;
+			break;
+		}
 	}
 }
 

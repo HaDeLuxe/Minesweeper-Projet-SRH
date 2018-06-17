@@ -12,6 +12,7 @@ public:
 	Player();
 	~Player();
 
+
 	bool reduceLife();
 	int returnLifePoints();
 };

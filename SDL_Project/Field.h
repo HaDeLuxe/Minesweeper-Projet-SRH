@@ -26,7 +26,16 @@ typedef struct tile {
 	bool isShown = true;
 	bool crosshair = false;
 	bool flag = false;
-	bool missile = false;
+	bool missile1 = false;
+	bool missile2 = false;
+	bool missile3 = false;
+	bool missile4 = false;
+	bool missile5 = false;
+	bool missile6 = false;
+	bool missile7 = false;
+	bool missile8 = false;
+	bool missile9 = false;
+	bool missile10 = false;
 }tile;
 
 class Field
@@ -38,32 +47,40 @@ private:
 	SDL_Renderer *ren;
 	int playerXPos;
 	int playerYPos;
-	int lastDirection = 1;
-	bool activeTutorialWindow = true;
-	//Language * lang = new Language();
+	int lastDirection = 1;						// last Direction that was moved to
+	bool activeTutorialWindow = true;			// is the Tutorial Window still active?
 	static Field* instance;
 	Textures * tex = new Textures();
-	Timer * timer;
+	Timer * timer = new Timer();
 	
-
 	Field();
 	Field(Field const&) {};
 	Field& operator =(Field const&) {};
 	static Field* m_pInstance;
 
+
+	int tickInit = timer->getTicks(10);				//initial Ticks value for easterEgg Anim.
+	int tickInitDamage = timer->getTicks(500);		//initial Ticks value for damage Anim.
+	int easterEggXPos = -200;
+	int easterEggYPos = 700;
+	int easterEggAngle = 180;
+	int easterEggStage = 1;
+	int damageAnimCounter = 5;
 	text *textC = new text();
 public:
-	Language currentLanguage = Language::Francais;
+	bool damgageTriggered = false;		//trigger when damage has been triggered
+	Language currentLanguage = Language::German;
 	
-	std::vector<std::vector<tile>> tileField;
+	std::vector<std::vector<tile>> tileField;		//2d vector for Field representation
 	
 	
-	int xOrigin;
+	int xOrigin;				//x pos of first tile
 	static Field* Instance();
 	
 	~Field();
-	void createPlayField(int pX, int pY);
-	void createWindow();
+	void createPlayField(int pX, int pY);		//enters values into field vector
+	void clearPlayField();
+	void createWindow();		
 	void createRenderer();
 	SDL_Renderer* getRenderer();
 	SDL_Window* getWindow();
@@ -72,7 +89,7 @@ public:
 	void renderClear();
 
 	void calculatePlayerPos(); //Gets the player coordinates
-	void initializeTextC();
+	void initializeTextC();	
 	void initializeTex();
 
 #pragma region object draw functions
@@ -90,23 +107,24 @@ public:
 	int getPlayfieldXSize();
 	int getPlayfieldYSize();
 	int getWindowWidth();
-	void getDirection(int dir);
-	int getObjectAtCoord(int x, int y);
-	void enterObjectInField(int x, int y, int type);
-	bool getFlagStatus(int x, int y);
-	void removeAllWalls();
-	int getCorrectFlags();
+	void getDirection(int dir);	//return direction
+	int getObjectAtCoord(int x, int y);	//return Object at specific position
+	void enterObjectInField(int x, int y, int type);	//creates object at specific position
+	bool getFlagStatus(int x, int y);	//returns if flag has been placed at specific position
+	void removeAllWalls();	
+	int getCorrectFlags();	//return number of all flags placed over bombs
 	bool bombCollision();
 	bool pillCollision();
-	void placeMask();
-	void bombsProx();
+	void placeMask();	//placec Mask over gamefield
+	void bombsProx();	//calculates numbers around bombs
 	int returnBombCount(int x, int y);
 	/*void setRandomWalls();*/
+	void easterEggAnimation();	//animates the easter egg
+	void triggerDamageAnim();	// excecute to trigger damage Animation
 	
 	void setRandomMines(int mineCount);
-	void floodFillOpenFieldsUR(int nextPositionX, int nextPositionY);
-	
-	void drawField();
+	void floodFillOpenFieldsUR(int nextPositionX, int nextPositionY);	//removes free masktiles with floodfill algorithm
+	void drawField();	//draws everything on the field
 };
 
 

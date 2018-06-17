@@ -15,10 +15,19 @@ Collision::~Collision()
 void Collision::detectBombCollision(int adX, int adY)
 {
 	FIELD->calculatePlayerPos();
-	if (FIELD->getObjectAtCoord(FIELD->getPlayerXPos() + adX, FIELD->getPlayerYPos() + adY) == BOMB ||
-		FIELD->tileField[FIELD->getPlayerYPos() + adY][FIELD->getPlayerXPos() + adX].missile == true) {
+	if (FIELD->getObjectAtCoord(FIELD->getPlayerXPos() + adX, FIELD->getPlayerYPos() + adY) == BOMB) {
 		std::cout << "Bomb Collision" << std::endl;
 		bombCollision = true;
+		FIELD->damgageTriggered = true;
+	}
+	if (FIELD->tileField[FIELD->getPlayerYPos() + adY][FIELD->getPlayerXPos() + adX].missile1 == true ||
+		FIELD->tileField[FIELD->getPlayerYPos() + adY][FIELD->getPlayerXPos() + adX].missile2 == true ||
+		FIELD->tileField[FIELD->getPlayerYPos() + adY][FIELD->getPlayerXPos() + adX].missile3 == true ||
+		FIELD->tileField[FIELD->getPlayerYPos() + adY][FIELD->getPlayerXPos() + adX].missile4 == true ||
+		FIELD->tileField[FIELD->getPlayerYPos() + adY][FIELD->getPlayerXPos() + adX].missile5 == true) {
+		std::cout << "Laser Collision" << std::endl;
+		bombCollision = true;
+		FIELD->damgageTriggered = true;
 	}
 
 }

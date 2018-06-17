@@ -12,8 +12,8 @@ private:
 public:
 	Music();
 	~Music();
-	void initMusic();
-	void loadBackGroundMusic();
+	void initMusic();	//iniate music
+	void loadBackGroundMusic();	
 	void playBackgroundMusic();
 	void loadSounds();
 	void playMarkSound();

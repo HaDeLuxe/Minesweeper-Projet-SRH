@@ -3,12 +3,12 @@
 #include "Header.h"
 
 #define FIELD Field::Instance()
-extern int direction; //Move directions for missiles up = 1, right = 2, down = 3, left = 4
 class Enemy
 {
 private:
 
-	
+	int direction; //Move directions for missiles up = 1, right = 2, down = 3, left = 4
+
 	int x;				//x position enemy
 	int y;				//y position enemy
 		
@@ -28,9 +28,9 @@ public:
 
 	void changeEnemyPos(int x, int y);
 	void spawnMissile();	//spawn a new missiles on the adjacent position to the enemy
-	void manageMissiles();			//manages the position of all the missiles in the vector missiles and moves them
-	void drawAllMissiles();
-	void resetMissilesOnField();	//cleans the field of missiles
+	void manageMissiles(int enemyNumber);			//manages the position of all the missiles in the vector missiles and moves them
+	void drawAllMissiles(int enemyNumber);
+	void resetMissilesOnField(int enemyNumber);	//cleans the field of missiles
 	void destroyMissile(int x, int y); // destroy a specific missile
 };
 

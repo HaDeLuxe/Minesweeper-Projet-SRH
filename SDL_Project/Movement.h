@@ -29,21 +29,26 @@ private:
 	int _lastCrosshairYPos = 0;
 	int lastDirection = 1;
 	bool alreadyCheckedIfCol = false;
+	bool goalCollisionFlag = false;
 	
 public:
 	Movement();
 	~Movement();
-	void bombCollision();
-	void ammuCollision();
-	void shieldCollision();
-	void pillCollision();
+	void bombCollision(); // reduces life after collision
+	void ammuCollision(); // adds ammu after ammu collision
+	void shieldCollision();	//add shield after shield collison
+	void pillCollision();	//manages mapinstance change
+	void goalCollision(); // return true if goalCollision
+	bool returnGoalCollision();
+	
 
 	void moveUp();
 	void moveRight();
 	void moveDown();
 	void moveLeft();
-	bool getBombCollisionStatus();
+	bool getBombCollisionStatus();	
 	void resetBombBool();
+	void resetGoalFlag();
 
 	int getCrosshairXPos();
 	int getCrosshairYPos();

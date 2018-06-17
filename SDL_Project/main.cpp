@@ -91,16 +91,8 @@ int main(int argc, char* argv[])
 	FIELD->initializeTextC();
 	FIELD->initializeTex();
 	textures->preLoadTextures(FIELD->getRenderer());
+	FIELD->createPlayField(50, 15);
 	
-	//FIELD->createPlayField(50, 15);
-	//gameManager->readWallData("Assets/Level1");
-	
-	
-	//gameManager->Tutorial();
-	//FIELD->setRandomMines();
-	//FIELD->placeMask();
-	//gameManager->prepareTutorial();
-
 	music->initMusic();
 	music->loadBackGroundMusic();
 	music->playBackgroundMusic();
@@ -236,6 +228,13 @@ void PollEvents() {
 						currentGameState = States::MainMenu;
 						break;
 					}
+					if (currentGameState == States::Win) {
+						movement->resetGoalFlag();
+						gameManager->changeLevel();
+						gameManager->manageLevels();
+						lifePoints = 4;
+						currentGameState = States::Game;
+					}
 					if (currentGameState == States::MainMenu) {
 						switch (mainMenu->getCurrentSelection()) {
 						case 1:
@@ -274,6 +273,10 @@ void PollEvents() {
 						}
 						break;
 					}
+					break;
+				case SDL_CONTROLLER_BUTTON_START:
+					if (!pause) pause = true;
+					else pause = false;
 					break;
 				}
 			}
@@ -363,8 +366,16 @@ void PollEvents() {
 						//}
 					}
 					if (currentGameState == States::End) {
+						lifePoints = 4;
 						currentGameState = States::MainMenu;
 						break;
+					}
+					if (currentGameState == States::Win) {
+						movement->resetGoalFlag();
+						gameManager->changeLevel();
+						gameManager->manageLevels();
+						lifePoints = 4;
+						currentGameState = States::Game;
 					}
 					if (currentGameState == States::Language) {
 						switch (window->getCurrentSelection()) {
@@ -439,7 +450,10 @@ void PollEvents() {
 						}
 						if(pause) {
 							if (window->continueButtonPushed(mouseX, mouseY)) pause = false;
-							if (window->pauseExitButtonPushed(mouseX, mouseY)) currentGameState = States::MainMenu;
+							if (window->pauseExitButtonPushed(mouseX, mouseY)){
+								pause = false;
+								currentGameState = States::MainMenu;
+							}
 						}
 						if (window->flagButtonPushed(mouseX, mouseY)) {
 							gameManager->changeFlag(movement->getCrosshairXPos(), movement->getCrosshairYPos());
@@ -484,7 +498,17 @@ void PollEvents() {
 					}
 					if (currentGameState == States::End) {
 						if (losescreen->EndBackButtonPushed(mouseX, mouseY)) {
+							lifePoints = 4;
 							currentGameState = States::MainMenu;
+						}
+					}
+					if (currentGameState == States::Win) {
+						if (window->continueWinButtonPushed(mouseX, mouseY)) {
+							movement->resetGoalFlag();
+							gameManager->changeLevel();
+							gameManager->manageLevels();
+							lifePoints = 4;
+							currentGameState = States::Game;
 						}
 					}
 
@@ -541,10 +565,14 @@ void PollEvents() {
 				FIELD->drawField();
 				if (player->returnLifePoints() == 0) { 
 					currentGameState = States::End; }
+				if (movement->returnGoalCollision()) {
+					currentGameState = States::Win;
+				}
 			}
 			if (pause) {
 				window->renderPauseScreen();
 			}
+
 			break;
 		case States::End:
 			losescreen->RenderEndScreen();
@@ -559,6 +587,9 @@ void PollEvents() {
 			FIELD->renderClear();
 			textures->renderTexture(textures->backgroundTex, FIELD->getRenderer(), 0, 0, 1920, 1080);
 			window->renderLangMenu();
+			break;
+		case States::Win:
+			window->RenderWinScreen();
 			break;
 		}
 		SDL_RenderPresent(FIELD->getRenderer());

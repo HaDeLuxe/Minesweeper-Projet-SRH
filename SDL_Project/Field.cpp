@@ -4,7 +4,7 @@
 
 Field::Field()
 {
-	timer = new Timer();
+
 }
 
 Field* Field::m_pInstance = NULL;
@@ -46,8 +46,24 @@ void Field::createPlayField(int pX, int pY)
 	enterObjectInField(10, 12, BOMB);
 	enterObjectInField(10, 14, BOMB);
 	enterObjectInField(12, 12, BOMB);*/
-	enterObjectInField(48, 8, GOAL);
+	//enterObjectInField(48, 8, GOAL);
 	
+}
+
+void Field::clearPlayField()
+{
+	for (int y = 0; y < static_cast<int>(tileField.size()); y++) {
+		for (int x = 0; x < static_cast<int>(tileField[y].size()); x++) {
+			tileField[y][x].tileType = BACKGROUND;
+			tileField[y][x].flag = false;
+			tileField[y][x].bombcount = 0;
+			tileField[y][x].missile1 = false;
+			tileField[y][x].missile2 = false;
+			tileField[y][x].missile3 = false;
+			tileField[y][x].missile4 = false;
+			tileField[y][x].missile5 = false;
+		}
+	}
 }
 
 
@@ -185,6 +201,8 @@ void Field::drawUI()
 	tex->renderTexture(tex->arrowRight, ren, 233, 936, 39, 31);
 	tex->renderTexture(tex->arrowLeft, ren, 155, 936, 39, 31);
 	tex->renderTexture(tex->checkmark, ren, 280, 900, 100, 100);
+	/*SDL_Color textColor = { 255, 255, 255, 255 };
+	textC->writeText(50, 50, 50, 20, 300, "Pause", ren, textColor);*/ //Could not implement a Pause Button, because it did cost too much performance
 }
 
 void Field::drawTutorial()
@@ -383,6 +401,24 @@ int Field::returnBombCount(int x, int y) {
 	return tileField[y][x].bombcount;
 }
 
+void Field::easterEggAnimation()
+{
+	int ticks;
+	ticks = timer->getTicks(10);
+	tex->renderTurnedTexture(tex->starDestroyer, ren,easterEggAngle, easterEggXPos, easterEggYPos, 180, 105);
+	if (easterEggXPos < 2000 && ticks != tickInit) {
+		tex->renderTurnedTexture(tex->starDestroyer, ren, easterEggAngle, easterEggXPos, easterEggYPos, 180, 105);
+		easterEggXPos  += 3;
+		tickInit = ticks;
+	}
+}
+
+void Field::triggerDamageAnim()
+{
+	damgageTriggered = true;
+	damageAnimCounter = 5;
+}
+
 //void Field::setRandomWalls() //nicht benutzt in momentenan Build, da es nocht nicht möglich ist gute, spielbare Maps zu bauen
 //{
 //	int maxWallsCount = 4;
@@ -534,7 +570,7 @@ int Field::returnBombCount(int x, int y) {
 //		
 //	}
 //
-//}
+//} 
 
 
 
@@ -591,6 +627,7 @@ void Field::floodFillOpenFieldsUR(int nextPositionX, int nextPositionY)
 
 
 
+
 void Field::initializeTextC() {
 	textC->TTF_Initiate();
 	textC->preIntializeTexts(ren);
@@ -612,7 +649,8 @@ void Field::drawField()
 	for (int y = 0; y < static_cast<int>(tileField.size()) ; y++) {
 		for (int x = 0; x < static_cast<int>(tileField[y].size()) ; x++) {
 			xOrigin = (getWindowWidth()/2) - (playerXPos * 50) ;
-			
+
+			easterEggAnimation();
 
 			if (tileField[y][x].tileType == BACKGROUND) {
 				setRendererColor(100, 100, 255, 50);
@@ -630,10 +668,7 @@ void Field::drawField()
 
 			
 
-			if (tileField[y][x].tileType == GOAL) {
-				setRendererColor(255, 255, 255, 255);
-				drawFillCircle(xOrigin + c * 50, 115 + r * 50, 25);
-			}
+			
 			if (returnBombCount(x, y) == 1 && getObjectAtCoord(x,y)) {
 				textC->renderNumber(1, ren, xOrigin + c * 50+15, 115 + r * 50+10, 20, 35);
 			}
@@ -693,31 +728,77 @@ void Field::drawField()
 					if (lifePoints == 3) tex->renderTexture(tex->playerDam1Up, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
 					if (lifePoints == 2) tex->renderTexture(tex->playerDam2Up, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
 					if (lifePoints == 1) tex->renderTexture(tex->playerDam3Up, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+					
+					if (damgageTriggered == true) {
+						if (damageAnimCounter > 0) {
+							SDL_Rect drawDamageRectUpDown = { static_cast<int>(timer->getTicks(50) % 4) * 112,0,112,100 };
+							tex->renderTurnedTexture(tex->playerDamage, ren, 0, xOrigin + c * 50, 115 + r * 50, 50, 50, drawDamageRectUpDown);
+							damageAnimCounter--;
+						}
+						else if (damageAnimCounter == 0) {
+							damgageTriggered = false;
+							damageAnimCounter = 5;
+						}
+					}
 				}
 				if (lastDirection == 2) {
 					tex->renderTexture(tex->playerSpriteSheetRight, ren, xOrigin + c * 50, 115 + r * 50, 50, 50, drawRectLeftRight);
 					if (lifePoints == 3) tex->renderTexture(tex->playerDam1Right, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
 					if (lifePoints == 2) tex->renderTexture(tex->playerDam2Right, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
 					if (lifePoints == 1) tex->renderTexture(tex->playerDam3Right, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+					if (damgageTriggered == true) {
+						if (damageAnimCounter > 0) {
+							SDL_Rect drawDamageRectLeftRight = { static_cast<int>(timer->getTicks(250) % 4) * 112,0,112,100 };
+							tex->renderTurnedTexture(tex->playerDamage, ren, 90, xOrigin + c * 50, 115 + r * 50, 50, 50, drawDamageRectLeftRight);
+							damageAnimCounter--;
+						}
+						else if (damageAnimCounter == 0) {
+							damgageTriggered = false;
+							damageAnimCounter = 5;
+						}
+					}
 				}
 				if (lastDirection == 3) {
 					tex->renderTexture(tex->playerSpriteSheetDown, ren, xOrigin + c * 50, 115 + r * 50, 50, 50, drawRectUpDown);
 					if (lifePoints == 3) tex->renderTexture(tex->playerDam1Down, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
 					if (lifePoints == 2) tex->renderTexture(tex->playerDam2Down, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
 					if (lifePoints == 1) tex->renderTexture(tex->playerDam3Down, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+					if (damgageTriggered == true) {
+						if (damageAnimCounter > 0) {
+							SDL_Rect drawDamageRectUpDown = { static_cast<int>(timer->getTicks(50) % 4) * 112,0,112,100 };
+							tex->renderTurnedTexture(tex->playerDamage, ren, 180, xOrigin + c * 50, 115 + r * 50, 50, 50, drawDamageRectUpDown);
+							damageAnimCounter--;
+						}
+						else if (damageAnimCounter == 0) {
+							damgageTriggered = false;
+							damageAnimCounter = 5;
+						}
+					}
 				}
 				if (lastDirection == 4) {
 					tex->renderTexture(tex->playerSpriteSheetLeft, ren, xOrigin + c * 50, 115 + r * 50, 50, 50, drawRectLeftRight);
 					if (lifePoints == 3) tex->renderTexture(tex->playerDam1Left, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
 					if (lifePoints == 2) tex->renderTexture(tex->playerDam2Left, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
 					if (lifePoints == 1) tex->renderTexture(tex->playerDam3Left, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+					if (damgageTriggered == true) {
+						if (damageAnimCounter > 0) {
+							SDL_Rect drawDamageRectLeftRight = { static_cast<int>(timer->getTicks(250) % 4) * 112,0,112,100 };
+							tex->renderTurnedTexture(tex->playerDamage, ren, 270, xOrigin + c * 50, 115 + r * 50, 50, 50, drawDamageRectLeftRight);
+							damageAnimCounter--;
+						}
+						else if (damageAnimCounter == 0) {
+							damgageTriggered = false;
+							damageAnimCounter = 5;
+						}
+					}
 				}
-
+				
 			}
 			if (tileField[y][x].tileType == DOOR) {
 				setRendererColor(100, 100, 255, 50);
 				drawRect(xOrigin + c * 50, 115 + r * 50, 50, 50);
-				tex->renderTexture(tex->doorEnemy, ren, xOrigin + c * 50, 115 + r * 50+4, 50, 41);
+				//tex->renderTexture(tex->doorEnemy, ren, xOrigin + c * 50, 115 + r * 50+4, 50, 41);
+				tex->renderTurnedTexture(tex->doorEnemy, ren, 90, xOrigin + c * 50, 115 + r * 50 + 4, 50, 41);
 			}
 			if (tileField[y][x].tileType == SHIELD) {
 				setRendererColor(100, 100, 255, 50);
@@ -730,6 +811,11 @@ void Field::drawField()
 				drawRect(xOrigin + c * 50, 115 + r * 50, 50, 50);
 				tex->renderTexture(tex->pill, ren, xOrigin + c * 50 + 12, 115 + r * 50 + 12, 25, 25);
 			}
+			if (tileField[y][x].tileType == GOAL) {
+				setRendererColor(255, 255, 255, 50);
+				drawFillCircle(xOrigin + c * 50, 115 + r * 50, 25);
+				tex->renderTexture(tex->goalShip, ren, xOrigin + c * 50, 115 + r * 50, 50, 50);
+			}
 			if (tileField[y][x].crosshair == true) {
 				tex->renderTexture(tex->crosshairTex, ren, xOrigin + c * 50+2, 115 + r * 50+2, 45, 45);
 			}
@@ -737,13 +823,68 @@ void Field::drawField()
 				tex->renderTexture(tex->flag, ren, xOrigin + c * 50 + 15, 115 + r * 50 + 10, 19, 30);
 			}
 			if (tileField[y][x].tileType == ENEMY) {
-				tex->renderTexture(tex->doorEnemy, ren, xOrigin + c * 50, 115 + r * 50 + 4, 50, 41);
+				tex->renderTurnedTexture(tex->doorEnemy, ren, 180, xOrigin + c * 50, 115 + r * 50 + 4, 50, 41);
+				
 			}
-			if (tileField[y][x].missile == true) {
-				if(direction == 1) tex->renderTexture(tex->laserUp, ren, xOrigin + c * 50 + 20, 115 + r * 50, 10, 50);
-				if(direction == 2) tex->renderTexture(tex->laserRight, ren, xOrigin + c * 50, 115 + r * 50 + 20, 50, 10);
-				if(direction == 3) tex->renderTexture(tex->laserDown, ren, xOrigin + c * 50 + 20, 115 + r * 50, 10, 50);
-				if(direction == 4) tex->renderTexture(tex->laserLeft, ren, xOrigin + c * 50, 115 + r * 50 + 20, 50, 10);
+			if (tileField[y][x].missile1 == true) {
+				if(dirEnemy1 == 1) tex->renderTexture(tex->laserUp, ren, xOrigin + c * 50 + 20, 115 + r * 50, 10, 50);
+				if(dirEnemy1 == 2) tex->renderTexture(tex->laserRight, ren, xOrigin + c * 50, 115 + r * 50 + 20, 50, 10);
+				if(dirEnemy1 == 3) tex->renderTexture(tex->laserDown, ren, xOrigin + c * 50 + 20, 115 + r * 50, 10, 50);
+				if(dirEnemy1 == 4) tex->renderTexture(tex->laserLeft, ren, xOrigin + c * 50, 115 + r * 50 + 20, 50, 10);
+			}
+			if (tileField[y][x].missile2 == true) {
+				if (dirEnemy2 == 1) tex->renderTexture(tex->laserUp, ren, xOrigin + c * 50 + 20, 115 + r * 50, 10, 50);
+				if (dirEnemy2 == 2) tex->renderTexture(tex->laserRight, ren, xOrigin + c * 50, 115 + r * 50 + 20, 50, 10);
+				if (dirEnemy2 == 3) tex->renderTexture(tex->laserDown, ren, xOrigin + c * 50 + 20, 115 + r * 50, 10, 50);
+				if (dirEnemy2 == 4) tex->renderTexture(tex->laserLeft, ren, xOrigin + c * 50, 115 + r * 50 + 20, 50, 10);
+			}
+			if (tileField[y][x].missile3 == true) {
+				if (dirEnemy3 == 1) tex->renderTexture(tex->laserUp, ren, xOrigin + c * 50 + 20, 115 + r * 50, 10, 50);
+				if (dirEnemy3 == 2) tex->renderTexture(tex->laserRight, ren, xOrigin + c * 50, 115 + r * 50 + 20, 50, 10);
+				if (dirEnemy3 == 3) tex->renderTexture(tex->laserDown, ren, xOrigin + c * 50 + 20, 115 + r * 50, 10, 50);
+				if (dirEnemy3 == 4) tex->renderTexture(tex->laserLeft, ren, xOrigin + c * 50, 115 + r * 50 + 20, 50, 10);
+			}
+			if (tileField[y][x].missile4 == true) {
+				if (dirEnemy4 == 1) tex->renderTexture(tex->laserUp, ren, xOrigin + c * 50 + 20, 115 + r * 50, 10, 50);
+				if (dirEnemy4 == 2) tex->renderTexture(tex->laserRight, ren, xOrigin + c * 50, 115 + r * 50 + 20, 50, 10);
+				if (dirEnemy4 == 3) tex->renderTexture(tex->laserDown, ren, xOrigin + c * 50 + 20, 115 + r * 50, 10, 50);
+				if (dirEnemy4 == 4) tex->renderTexture(tex->laserLeft, ren, xOrigin + c * 50, 115 + r * 50 + 20, 50, 10);
+			}
+			if (tileField[y][x].missile5 == true) {
+				if (dirEnemy5 == 1) tex->renderTexture(tex->laserUp, ren, xOrigin + c * 50 + 20, 115 + r * 50, 10, 50);
+				if (dirEnemy5 == 2) tex->renderTexture(tex->laserRight, ren, xOrigin + c * 50, 115 + r * 50 + 20, 50, 10);
+				if (dirEnemy5 == 3) tex->renderTexture(tex->laserDown, ren, xOrigin + c * 50 + 20, 115 + r * 50, 10, 50);
+				if (dirEnemy5 == 4) tex->renderTexture(tex->laserLeft, ren, xOrigin + c * 50, 115 + r * 50 + 20, 50, 10);
+			}
+			if (tileField[y][x].missile6 == true) {
+				if (dirEnemy6 == 1) tex->renderTexture(tex->laserUp, ren, xOrigin + c * 50 + 20, 115 + r * 50, 10, 50);
+				if (dirEnemy6 == 2) tex->renderTexture(tex->laserRight, ren, xOrigin + c * 50, 115 + r * 50 + 20, 50, 10);
+				if (dirEnemy6 == 3) tex->renderTexture(tex->laserDown, ren, xOrigin + c * 50 + 20, 115 + r * 50, 10, 50);
+				if (dirEnemy6 == 4) tex->renderTexture(tex->laserLeft, ren, xOrigin + c * 50, 115 + r * 50 + 20, 50, 10);
+			}
+			if (tileField[y][x].missile7 == true) {
+				if (dirEnemy7 == 1) tex->renderTexture(tex->laserUp, ren, xOrigin + c * 50 + 20, 115 + r * 50, 10, 50);
+				if (dirEnemy7 == 2) tex->renderTexture(tex->laserRight, ren, xOrigin + c * 50, 115 + r * 50 + 20, 50, 10);
+				if (dirEnemy7 == 3) tex->renderTexture(tex->laserDown, ren, xOrigin + c * 50 + 20, 115 + r * 50, 10, 50);
+				if (dirEnemy7 == 4) tex->renderTexture(tex->laserLeft, ren, xOrigin + c * 50, 115 + r * 50 + 20, 50, 10);
+			}
+			if (tileField[y][x].missile8 == true) {
+				if (dirEnemy8 == 1) tex->renderTexture(tex->laserUp, ren, xOrigin + c * 50 + 20, 115 + r * 50, 10, 50);
+				if (dirEnemy8 == 2) tex->renderTexture(tex->laserRight, ren, xOrigin + c * 50, 115 + r * 50 + 20, 50, 10);
+				if (dirEnemy8 == 3) tex->renderTexture(tex->laserDown, ren, xOrigin + c * 50 + 20, 115 + r * 50, 10, 50);
+				if (dirEnemy8 == 4) tex->renderTexture(tex->laserLeft, ren, xOrigin + c * 50, 115 + r * 50 + 20, 50, 10);
+			}
+			if (tileField[y][x].missile9 == true) {
+				if (dirEnemy9 == 1) tex->renderTexture(tex->laserUp, ren, xOrigin + c * 50 + 20, 115 + r * 50, 10, 50);
+				if (dirEnemy9 == 2) tex->renderTexture(tex->laserRight, ren, xOrigin + c * 50, 115 + r * 50 + 20, 50, 10);
+				if (dirEnemy9 == 3) tex->renderTexture(tex->laserDown, ren, xOrigin + c * 50 + 20, 115 + r * 50, 10, 50);
+				if (dirEnemy9 == 4) tex->renderTexture(tex->laserLeft, ren, xOrigin + c * 50, 115 + r * 50 + 20, 50, 10);
+			}
+			if (tileField[y][x].missile10 == true) {
+				if (dirEnemy10 == 1) tex->renderTexture(tex->laserUp, ren, xOrigin + c * 50 + 20, 115 + r * 50, 10, 50);
+				if (dirEnemy10 == 2) tex->renderTexture(tex->laserRight, ren, xOrigin + c * 50, 115 + r * 50 + 20, 50, 10);
+				if (dirEnemy10 == 3) tex->renderTexture(tex->laserDown, ren, xOrigin + c * 50 + 20, 115 + r * 50, 10, 50);
+				if (dirEnemy10 == 4) tex->renderTexture(tex->laserLeft, ren, xOrigin + c * 50, 115 + r * 50 + 20, 50, 10);
 			}
 			
 			c++;

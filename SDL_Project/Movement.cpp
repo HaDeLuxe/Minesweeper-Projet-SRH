@@ -42,6 +42,16 @@ void Movement::pillCollision()
 	gameManager->changeMapInstance();
 }
 
+void Movement::goalCollision()
+{
+	goalCollisionFlag = true;
+}
+
+bool Movement::returnGoalCollision()
+{
+	return goalCollisionFlag;
+}
+
 
 
 
@@ -63,6 +73,7 @@ void Movement::moveUp()
 				if (!alreadyCheckedIfCol) {
 					col->detectBombCollision(0, -1);
 					col->detectAmmuCollision(0, -1);
+					if(col->detectGoalCollision(0, -1)) goalCollision();
 					if (col->detectShieldCollision(0, -1)) {
 						lifePoints++;
 					}
@@ -112,6 +123,7 @@ void Movement::moveDown()
 				if (!alreadyCheckedIfCol) {
 					col->detectBombCollision(0, 1);
 					col->detectAmmuCollision(0, 1);
+					if (col->detectGoalCollision(0, 1)) goalCollision();
 					alreadyCheckedIfCol = true;
 					bombCollision();
 					ammuCollision();
@@ -159,6 +171,7 @@ void Movement::moveRight()
 				if (!alreadyCheckedIfCol) {
 					col->detectBombCollision(1, 0);
 					col->detectAmmuCollision(1, 0);
+					if (col->detectGoalCollision(1, 0)) goalCollision();
 					alreadyCheckedIfCol = true;
 					bombCollision();
 					ammuCollision();
@@ -206,6 +219,9 @@ void Movement::moveLeft()
 				if (!alreadyCheckedIfCol) {
 					col->detectBombCollision(-1, 0);
 					col->detectAmmuCollision(-1, 0);
+					if (col->detectGoalCollision(-1, 0)) {
+						goalCollision();
+					}
 					alreadyCheckedIfCol = true;
 					bombCollision();
 					ammuCollision();
@@ -247,6 +263,11 @@ bool Movement::getBombCollisionStatus()
 void Movement::resetBombBool()
 {
 	col->resetCollisionBool();
+}
+
+void Movement::resetGoalFlag()
+{
+	goalCollisionFlag = false;
 }
 
 #pragma endregion

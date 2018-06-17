@@ -14,6 +14,7 @@ private:
 public:
 	Textures();
 	~Textures();
+	//creates all textures for textures
 	SDL_Texture * backgroundTex = NULL;
 	SDL_Texture * wallTex = NULL;
 	SDL_Texture * playerTexUp = NULL;
@@ -58,6 +59,9 @@ public:
 	SDL_Texture * Ammu_Glowing = NULL;
 	SDL_Texture * pill = NULL;
 	SDL_Texture * starDestroyer = NULL;
+	SDL_Texture * playerDamage = NULL;
+	SDL_Texture * goalShip = NULL;
+	SDL_Texture * story = NULL;
 
 	SDL_Texture * Tutorial_Controls_DE = NULL;
 	SDL_Texture * Tutorial_Controls_FR = NULL;
@@ -65,13 +69,14 @@ public:
 	SDL_Texture * Tutorial_Controls_LU = NULL;
 
 
-	SDL_Texture* loadTexture(const std::string &file, SDL_Renderer *ren);
+	SDL_Texture* loadTexture(const std::string &file, SDL_Renderer *ren); //loads texture
 	
 	void renderTexture(SDL_Texture * tex, SDL_Renderer * ren, int x, int y,int w, int h);
 	void renderTexture(SDL_Texture * tex, SDL_Renderer * ren, int x, int y, int w, int h, SDL_Rect drawRect);
 
-	void preLoadTextures(SDL_Renderer * ren);
-	void turnTexture(const std::string &file);
+	void preLoadTextures(SDL_Renderer * ren);// preloades all textures for better performance
+	void renderTurnedTexture(SDL_Texture* tex, SDL_Renderer * ren, int deg, int x, int y, int w, int h);
+	void renderTurnedTexture(SDL_Texture* tex, SDL_Renderer * ren, int deg, int x, int y, int w, int h, SDL_Rect drawRect);
 	SDL_Texture* getTex();
 
 };

@@ -14,6 +14,7 @@ private:
 	int langSelection = 0;
 protected:
 	text * textC;
+	Textures * tex = new Textures();
 public:
 	Window();
 	~Window();
@@ -27,7 +28,10 @@ public:
 	bool flagButtonPushed(int x, int y);
 	void langSelectionUp();
 	void langSelectionDown();
-	int getCurrentSelection();
+	int getCurrentSelection();		//returns currently selected button
+	void renderStoryScreen();
+	void RenderWinScreen();
+	bool continueWinButtonPushed(int x, int y);
 };
 
 class Menu : public Window
@@ -38,13 +42,15 @@ public:
 	Menu();
 	~Menu();
 	void RenderMenu();
-	void menuSelectionUp();
-	void menuSelectionDown();
+	void menuSelectionUp();				//moves the selection up
+	void menuSelectionDown();			//moves the selection down
 	bool startButtonPushed(int x, int y);
 	bool exitButtonPushed(int x, int y);
 	bool creditsButtonPushed(int x, int y);
 	bool langButtonPushed(int x, int y);
-	int getCurrentSelection();
+	int getCurrentSelection(); //returns currently selected button
+
+	
 	
 };
 
@@ -64,7 +70,6 @@ class EndScreen : public Window{
 protected:
 	
 public:
-	
 	EndScreen();
 	~EndScreen();
 	void RenderEndScreen();

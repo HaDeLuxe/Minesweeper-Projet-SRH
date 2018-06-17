@@ -131,6 +131,9 @@ Menu::~Menu()
 
 void Menu::RenderMenu()
 {
+	SDL_Color textColor = { 255, 255, 255, 255 };
+	textC->writeText(500, 100, 500, 100, 300, "Asteroid Sweeper", FIELD->getRenderer() , textColor);
+
 	SDL_Color StartColor = { 255, 255, 255, 255 };
 	SDL_Color QuitColor = { 255, 255, 255, 255 };
 	SDL_Color creditsColor = { 255, 255, 255, 255 };
@@ -240,6 +243,48 @@ int Menu::getCurrentSelection()
 	return MenuSelection;
 }
 
+void Window::RenderWinScreen()
+{
+	SDL_SetRenderDrawBlendMode(FIELD->getRenderer(), SDL_BLENDMODE_BLEND);
+	FIELD->setRendererColor(255, 255, 255, 1);
+	FIELD->drawFillRect(0, 0, 1920, 1080);
+	SDL_Color color = { 255, 0, 0, 255 };
+	std::stringstream temporary;
+	switch (FIELD->currentLanguage) {
+	case Language::German:
+		textC->writeText(700, 390, 500, 200, 300, "Level geschafft", FIELD->getRenderer(), color);
+		textC->writeText(850, 700, 200, 50, 300, "Fortfahren", FIELD->getRenderer(), color);
+		//textC->writeText(850, 900, 200, 50, 300, "Fortfahren", FIELD->getRenderer(), color);
+		temporary << "Gefundene Bomben: " << (int)(FIELD->getCorrectFlags());
+		break;
+	case Language::English:
+		textC->writeText(700, 390, 500, 200, 300, "Level accomplished", FIELD->getRenderer(), color);
+		textC->writeText(850, 700, 200, 50, 300, "Continue", FIELD->getRenderer(), color);
+		temporary << "Bombs found: " << (int)(FIELD->getCorrectFlags());
+		break;
+	case Language::Francais:
+		textC->writeText(700, 390, 500, 200, 300, "Level gagné", FIELD->getRenderer(), color);
+		textC->writeText(850, 700, 200, 50, 300, "Continuer", FIELD->getRenderer(), color);
+		temporary << "Bombes trouvées: " << (int)(FIELD->getCorrectFlags());
+		break;
+	case Language::Letzebuergesch:
+		textC->writeText(600, 390, 700, 200, 300, "Level gewonn", FIELD->getRenderer(), color);
+		textC->writeText(850, 700, 200, 50, 300, "Weider", FIELD->getRenderer(), color);
+		temporary << "Bommen fonnt: " << (int)(FIELD->getCorrectFlags());
+		break;
+	}
+	std::string highscore = temporary.str();
+	textC->writeText(100, 700, 500, 50, 300, highscore, FIELD->getRenderer(), color);
+}
+
+bool Window::continueWinButtonPushed(int x, int y)
+{
+	if (x > 850 && x < 1050 && y > 700 && y < 750) {
+		return true;
+	}
+	return false;
+}
+
 Language Window::languagesButtonPushed(int x, int y)
 {
 	if (x > 1400 && x < 1680 && y > 205 && y < 300) {
@@ -309,6 +354,12 @@ void Window::langSelectionDown()
 int Window::getCurrentSelection()
 {
 	return langSelection;
+}
+
+void Window::renderStoryScreen()
+{
+	FIELD->renderClear();
+	tex->renderTexture(tex->story, FIELD->getRenderer(), 0, 0, 1920, 1080);
 }
 
 
@@ -386,6 +437,7 @@ void Losescreen::writeWinText()
 	case Language::German:
 		textC->writeText(700, 390, 500, 200, 300, "Du hast verloren", FIELD->getRenderer(), color);
 		textC->writeText(850, 700, 200, 50, 300, "Zurück", FIELD->getRenderer(), color);
+		//textC->writeText(850, 900, 200, 50, 300, "Fortfahren", FIELD->getRenderer(), color);
 		temporary << "Gefundene Bomben: " << (int)(FIELD->getCorrectFlags());
 		break;
 	case Language::English:
@@ -418,7 +470,8 @@ void credits::renderCreditsWindow()
 	case Language::German:
 		textC->writeText(100, 100, 150, 100, 300, "Credits", FIELD->getRenderer(), color);
 		textC->writeText(700, 390, 350, 75, 300, "Haas Pascal", FIELD->getRenderer(), color);
-		textC->writeText(1700, 100, 120, 100, 300, "Zurück", FIELD->getRenderer(), color);
+		textC->writeText(1700, 100, 150, 100, 300, "Zurück", FIELD->getRenderer(), color);
+
 		break;
 	case Language::English:
 		textC->writeText(100, 100, 150, 100, 300, "Credits", FIELD->getRenderer(), color);
@@ -428,7 +481,7 @@ void credits::renderCreditsWindow()
 	case Language::Francais:
 		textC->writeText(100, 100, 150, 100, 300, "Générique", FIELD->getRenderer(), color);
 		textC->writeText(700, 390, 350, 75, 300, "Haas Pascal", FIELD->getRenderer(), color);
-		textC->writeText(1700, 100, 120, 100, 300, "Retourner", FIELD->getRenderer(), color);
+		textC->writeText(1700, 100, 150, 100, 300, "Retourner", FIELD->getRenderer(), color);
 		break;
 	case Language::Letzebuergesch:
 		textC->writeText(100, 100, 150, 100, 300, "Credits", FIELD->getRenderer(), color);
@@ -436,7 +489,11 @@ void credits::renderCreditsWindow()
 		textC->writeText(1700, 100, 120, 100, 300, "Zereck", FIELD->getRenderer(), color);
 		break;
 	}
-	
+	textC->writeText(300, 750, 400, 30, 300, "Assets: www.kenney.nl", FIELD->getRenderer(), color);
+	textC->writeText(300, 800, 300, 30, 300, "Background:", FIELD->getRenderer(), color);
+	textC->writeText(300, 850, 1300, 30, 300, "https://pixabay.com/de/milchstraße-sternenhimmel-2695569/", FIELD->getRenderer(), color);
+	textC->writeText(300, 900, 1300, 30, 300, "https://pixabay.com/de/entdeckungsreise-wissenschaft-planet-3160528/", FIELD->getRenderer(), color);
+	textC->writeText(300, 950, 1300, 30, 300, "Font: http://www.fontspace.com/shyfoundry/sf-distant-galaxy", FIELD->getRenderer(), color);
 }
 
 bool credits::creditsBackButtonPushed(int x, int y)
