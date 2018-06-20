@@ -238,7 +238,7 @@ void PollEvents() {
 					if (currentGameState == States::MainMenu) {
 						switch (mainMenu->getCurrentSelection()) {
 						case 1:
-							currentGameState = States::Game;
+							currentGameState = States::Story;
 							gameManager->manageLevels();
 							break;
 						case 2:
@@ -253,6 +253,7 @@ void PollEvents() {
 						}
 						break;
 					}
+					if (currentGameState == States::Story) currentGameState = States::Game;
 					if (currentGameState == States::Language) {
 						switch (window->getCurrentSelection()) {
 						case 1:
@@ -349,7 +350,7 @@ void PollEvents() {
 						//if (mainMenu->getCurrentSelection() >= 1 && mainMenu->getCurrentSelection() <= 4) {
 							switch (mainMenu->getCurrentSelection()) {
 							case 1:
-								currentGameState = States::Game;
+								currentGameState = States::Story;
 								gameManager->manageLevels();
 								break;
 							case 2:
@@ -364,6 +365,9 @@ void PollEvents() {
 							}
 							break;
 						//}
+					}
+					if (currentGameState == States::Story) {
+						currentGameState = States::Game;
 					}
 					if (currentGameState == States::End) {
 						lifePoints = 4;
@@ -470,7 +474,7 @@ void PollEvents() {
 					if (currentGameState == States::MainMenu) {
 						if (mainMenu->startButtonPushed(mouseX, mouseY)) {
 							gameManager->manageLevels();
-							currentGameState = States::Game;
+							currentGameState = States::Story;
 							mouseX = -1;
 							mouseY = -1;
 						}
@@ -535,6 +539,9 @@ void PollEvents() {
 						}
 						break;
 					}
+					if (currentGameState == States::Story) {
+						if(mouseX > 500) currentGameState = States::Game;
+					}
 				}
 					
 		}
@@ -590,6 +597,10 @@ void PollEvents() {
 			break;
 		case States::Win:
 			window->RenderWinScreen();
+			break;
+		case States::Story:
+			FIELD->RenderStoryScreen();
+			SDL_RenderPresent(FIELD->getRenderer());
 			break;
 		}
 		SDL_RenderPresent(FIELD->getRenderer());

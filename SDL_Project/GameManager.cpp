@@ -92,7 +92,7 @@ void GameManager::Tutorial()
 	FIELD->enterObjectInField(1, 1, PLAYER);
 	FIELD->enterObjectInField(48, 12, GOAL);
 	FIELD->setRandomMines(75);
-	//FIELD->placeMask();
+	FIELD->placeMask();
 	prepareTutorial();
 	
 	enemy1 = new Enemy(31,12,1);
@@ -218,7 +218,7 @@ void GameManager::Level1()
 	FIELD->enterObjectInField(17, 0, PILL);
 	FIELD->enterObjectInField(43, 6, DOOR);
 	FIELD->setRandomMines(100);
-	//FIELD->placeMask();
+	FIELD->placeMask();
 	
 	enemy1 = new Enemy(21, 12, 1);
 	dirEnemy1 = 1;

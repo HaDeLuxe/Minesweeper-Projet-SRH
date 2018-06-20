@@ -84,6 +84,7 @@ public:
 	void createRenderer();
 	SDL_Renderer* getRenderer();
 	SDL_Window* getWindow();
+	void RenderStoryScreen();
 
 	void setRendererColor(int r, int g, int b, int a);
 	void renderClear();

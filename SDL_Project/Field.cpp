@@ -98,6 +98,13 @@ SDL_Window* Field::getWindow() {
 	return win;
 }
 
+void Field::RenderStoryScreen()
+{
+	renderClear();
+	tex->renderTexture(tex->story, ren, 0, 0, 1920, 1080);
+	//SDL_RenderPresent(FIELD->getRenderer());
+}
+
 void Field::setRendererColor(int r, int g, int b, int a)
 {
 	SDL_SetRenderDrawColor(ren, r, g, b, a);

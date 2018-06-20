@@ -29,7 +29,7 @@ public:
 	void langSelectionUp();
 	void langSelectionDown();
 	int getCurrentSelection();		//returns currently selected button
-	void renderStoryScreen();
+	void renderStoryScreen();	// Story Window
 	void RenderWinScreen();
 	bool continueWinButtonPushed(int x, int y);
 };

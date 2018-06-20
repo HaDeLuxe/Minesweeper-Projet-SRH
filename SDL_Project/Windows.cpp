@@ -360,6 +360,7 @@ void Window::renderStoryScreen()
 {
 	FIELD->renderClear();
 	tex->renderTexture(tex->story, FIELD->getRenderer(), 0, 0, 1920, 1080);
+	//SDL_RenderPresent(FIELD->getRenderer());
 }
 
 

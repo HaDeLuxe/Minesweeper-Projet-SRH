@@ -7,7 +7,8 @@ enum class States {
 	Credits,
 	End,
 	Language,
-	Win
+	Win,
+	Story
 };
 
 enum class TileTypes {
